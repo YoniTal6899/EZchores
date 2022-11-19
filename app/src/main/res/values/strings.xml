@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">EZchores</string>
+    <string name="app_logo">App logo</string>
+    <string name="log_in">Log In</string>
+    <string name="sign_up">Sign up</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="welcome_back">Welcome Back!</string>
+    <string name="welcomeBack">Welcome Back!</string>
+    <string name="email">Email:</string>
+    <string name="password">Password</string>
+    <string name="forgot_password">Forgot your password?</string>
+    <string name="welcome1">Welcome!</string>
+    <string name="back">BACK</string>
+    <string name="full_name">Full name:</string>
+    <string name="enter_email">Enter Email:</string>
+    <string name="password1">Password:</string>
+    <string name="sign_up1">SIGN UP</string>
+</resources>
