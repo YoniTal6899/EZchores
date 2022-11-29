@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Pending_Items_Activity"
+    android:background="@color/grey">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/pending_items"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:text="Pending Items"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.6"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/back_to_shoplst"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="35dp"
+            android:background="@color/black"
+            android:text="@string/back"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/item1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="35dp"
+            android:text="Item1..."
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/back_to_shoplst" />
+
+        <ImageView
+            android:id="@+id/icon1"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="15dp"
+            android:contentDescription="@string/personal_information"
+            app:layout_constraintStart_toEndOf="@id/item1"
+            app:layout_constraintTop_toTopOf="@id/item1"
+            app:srcCompat="@drawable/person"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.4"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <EditText
+            android:id="@+id/name1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="name1..."
+            android:textSize="20sp"
+            android:background="@null"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/icon1"
+            app:layout_constraintTop_toTopOf="@id/icon1" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/agree1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/_0"
+            android:src="@drawable/agree"
+            android:backgroundTint="@color/green"
+            app:backgroundTint="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/item1"
+            app:maxImageSize="40dp" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/disagree1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/_0"
+            android:src="@drawable/disagree"
+            android:backgroundTint="@color/red"
+            app:backgroundTint="@color/white"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintEnd_toStartOf="@id/agree1"
+            app:layout_constraintTop_toTopOf="@id/agree1"
+            app:maxImageSize="40dp"/>
+
+        <TextView
+            android:id="@+id/item2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="35dp"
+            android:text="Item2..."
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/item1" />
+
+        <ImageView
+            android:id="@+id/icon2"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="15dp"
+            android:contentDescription="@string/personal_information"
+            app:layout_constraintStart_toEndOf="@id/item2"
+            app:layout_constraintTop_toTopOf="@id/item2"
+            app:srcCompat="@drawable/person"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.4"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <EditText
+            android:id="@+id/name2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="name2..."
+            android:textSize="20sp"
+            android:background="@null"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/icon2"
+            app:layout_constraintTop_toTopOf="@id/icon2" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/agree2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/_0"
+            android:src="@drawable/agree"
+            android:backgroundTint="@color/green"
+            app:backgroundTint="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/item2"
+            app:maxImageSize="40dp" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/disagree2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/_0"
+            android:src="@drawable/disagree"
+            android:backgroundTint="@color/red"
+            app:backgroundTint="@color/white"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintEnd_toStartOf="@id/agree2"
+            app:layout_constraintTop_toTopOf="@id/agree2"
+            app:maxImageSize="40dp"/>
+
+        <TextView
+            android:id="@+id/item3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="35dp"
+            android:text="Item3..."
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/item2" />
+
+        <ImageView
+            android:id="@+id/icon3"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="15dp"
+            android:contentDescription="@string/personal_information"
+            app:layout_constraintStart_toEndOf="@id/item3"
+            app:layout_constraintTop_toTopOf="@id/item3"
+            app:srcCompat="@drawable/person"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.4"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <EditText
+            android:id="@+id/name3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="name3..."
+            android:textSize="20sp"
+            android:background="@null"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/icon3"
+            app:layout_constraintTop_toTopOf="@id/icon3" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/agree3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/_0"
+            android:src="@drawable/agree"
+            android:backgroundTint="@color/green"
+            app:backgroundTint="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/item3"
+            app:maxImageSize="40dp" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/disagree3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/_0"
+            android:src="@drawable/disagree"
+            android:backgroundTint="@color/red"
+            app:backgroundTint="@color/white"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintEnd_toStartOf="@id/agree3"
+            app:layout_constraintTop_toTopOf="@id/agree3"
+            app:maxImageSize="40dp"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
