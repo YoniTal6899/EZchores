@@ -38,4 +38,11 @@
     <string name="task_1_content">Task 1 content</string>
     <string name="coins">COINS</string>
     <string name="back_to_groups">Back to groups</string>
+    <string name="add_item">Add item</string>
+    <string-array name="task_assignee">
+        <item>Assignee</item>
+        <item>mem1</item>
+        <item>mem2</item>
+        <item>mem3</item>
+    </string-array>
 </resources>

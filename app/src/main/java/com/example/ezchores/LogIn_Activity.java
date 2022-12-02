@@ -143,7 +143,35 @@ public class LogIn_Activity extends AppCompatActivity implements View.OnClickLis
             }
         }
     }
+    
+    ActivityResultLauncher<Intent> activityResultLaunch = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(result.getData());
+                    handleSignInResult(task);
+                }
+            });
 
+    // [START handleSignInResult]
+    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+        try {
+            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+            Log.i("Connected", "googleSignInSuccess: \nID:" + account.getId() + "\nDisplay name: " + account.getDisplayName() + "\nEmail: " + account.getEmail() + "\n");
+            Intent Login = new Intent(this, My_Groups_Activity.class);
+            startActivity(Login);
+            // Signed in successfully, show authenticated UI.
+            ;
+        } catch (ApiException e) {
+            // The ApiException status code indicates the detailed failure reason.
+            // Please refer to the GoogleSignInStatusCodes class reference for more information.
+            Log.w("GoogleFails", "signInResult:failed code=" + e.getStatusCode());
+            Intent backHome = new Intent(this, MainActivity.class);
+            startActivity(backHome);
+        }
+    }
+    
     // login function
     private void loginUser() {
 

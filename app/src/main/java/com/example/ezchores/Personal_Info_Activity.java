@@ -7,37 +7,52 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class Personal_Info_Activity extends AppCompatActivity {
-    Button log_out,apply;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+public class Personal_Info_Activity extends AppCompatActivity implements View.OnClickListener {
+    // Buttons
+    Button log_out, apply;
+    FloatingActionButton icon;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_info);
-        log_out=findViewById(R.id.log_out);
-        apply = findViewById(R.id.apply_changes);
-        log_out.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                LogOut();
-            }
-        });
-        apply.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Apply();
-            }
-        });
+
+        // Init buttons
+        log_out = (Button) findViewById(R.id.log_out);
+        apply = (Button) findViewById(R.id.apply_changes);
+        icon = (FloatingActionButton) findViewById(R.id.person_photo);
+
+        // Listeners
+        log_out.setOnClickListener(this);
+        apply.setOnClickListener(this);
+        icon.setOnClickListener(this);
     }
 
-    public void LogOut(){
-        Intent LO = new Intent(this, MainActivity.class);
-        startActivity(LO);
+    // Override the 'onClick' method, divided by button id
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.log_out:
+                // Needs to disconnect from DB as well
+                Intent i = new Intent(this, MainActivity.class);
+                startActivity(i);
+                break;
+
+            case R.id.apply_changes:
+                // Needs to save the new data in the DB as well
+                Intent j = new Intent(this, My_Groups_Activity.class);
+                startActivity(j);
+                break;
+
+            case R.id.person_photo:
+                // Needs to open phone gallery
+                break;
+
+            default:
+                break;
+        }
+
     }
-
-    public void Apply(){
-        Intent AP = new Intent(this, My_Groups_Activity.class);
-        startActivity(AP);
-    }
-
-
 }

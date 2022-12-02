@@ -1,5 +1,6 @@
 package com.example.ezchores;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -13,7 +14,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
   //Buttons
   private Button login, signup;
 
@@ -27,38 +28,38 @@ public class MainActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
+    mAuth = FirebaseAuth.getInstance();
     //Buttons init
     login = (Button)findViewById(R.id.log_in_button);
     signup = (Button)findViewById(R.id.sign_up_button);
-    mAuth = FirebaseAuth.getInstance();
 
-    // login listener
-    login.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        open_LogIn_Activity();
-      }
-    });
+    //Listeners
+    login.setOnClickListener(this);
+    signup.setOnClickListener(this);
 
-
-    // sign listener
-    signup.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        open_SignUp_Activity();
-      }
-    });
   }
 
-  public void open_LogIn_Activity() {
-    Intent home_to_login = new Intent(this, LogIn_Activity.class);
-    startActivity(home_to_login);
+  // Override the 'onClick' method, divided by button id
+  @Override
+  public void onClick(View v)
+  {
+    switch (v.getId())
+    {
+      case R.id.log_in_button:
+        Intent i = new Intent(this,LogIn_Activity.class);
+        startActivity(i);
+        break;
+
+      case R.id.sign_up_button:
+        Intent j = new Intent(this,SignUp_Activity.class);
+        startActivity(j);
+        break;
+
+      default:
+        break;
+    }
   }
 
-  public void open_SignUp_Activity() {
-    Intent home_to_signup = new Intent(this, SignUp_Activity.class);
-    startActivity(home_to_signup);
-  }
 
 
 
