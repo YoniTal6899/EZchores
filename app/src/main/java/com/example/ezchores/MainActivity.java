@@ -89,6 +89,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
   }
 
+
+
   // Google sign in
   private void loginGoogle(){
     Intent i = client.getSignInIntent();
@@ -132,27 +134,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
   public void open_LogIn_Activity() {
     Intent home_to_login = new Intent(this, LogIn_Activity.class);
     startActivity(home_to_login);
-
   }
 
-  // Override the 'onClick' method, divided by button id
-  @Override
-  public void onClick(View v)
-  {
-    switch (v.getId())
-    {
-      case R.id.log_in_button:
-        Intent i = new Intent(this,LogIn_Activity.class);
-        startActivity(i);
-        break;
-
-      case R.id.sign_up_button:
-        Intent j = new Intent(this,SignUp_Activity.class);
-        startActivity(j);
-        break;
-
-      default:
-        break;
-    }
+  private void open_SignUp_Activity() {
+    Intent home_to_signup = new Intent(this, SignUp_Activity.class);
+    startActivity(home_to_signup);
   }
 }
