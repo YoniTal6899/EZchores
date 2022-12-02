@@ -39,7 +39,6 @@ public class Personal_Info_Activity extends AppCompatActivity implements View.On
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.log_out:
-                // Needs to disconnect from DB as well
                 mAuth.getInstance().signOut();
                 Intent i = new Intent(this, MainActivity.class);
                 startActivity(i);
