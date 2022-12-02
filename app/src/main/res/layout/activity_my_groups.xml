@@ -29,13 +29,15 @@
             android:id="@+id/add_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="55dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginStart="56dp"
+            android:layout_marginTop="12dp"
             android:contentDescription="@string/create_new_group"
             android:src="@drawable/add_icon"
             app:backgroundTint="@color/white"
             app:layout_constraintStart_toEndOf="@id/my_groups"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.1"
             app:maxImageSize="65dp" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -49,6 +51,8 @@
             android:src="@drawable/personal_info"
             app:backgroundTint="@color/white"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/my_groups"
+            app:layout_constraintHorizontal_bias="0"
             app:layout_constraintTop_toTopOf="parent"
             app:maxImageSize="45dp" />
 
