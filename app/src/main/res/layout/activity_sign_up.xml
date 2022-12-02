@@ -96,18 +96,6 @@
             app:layout_constraintTop_toBottomOf="@id/password"
             tools:ignore="TextContrastCheck" />
 
-        <com.google.android.gms.common.SignInButton
-            android:id="@+id/google_signin_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            app:buttonSize="wide"
-            app:colorScheme="dark"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/commit_login" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

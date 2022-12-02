@@ -16,6 +16,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -40,7 +41,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-public class LogIn_Activity extends AppCompatActivity {
+public class LogIn_Activity extends AppCompatActivity implements View.OnClickListener {
 
     // Buttons
     Button back, commit_login;
@@ -82,33 +83,36 @@ public class LogIn_Activity extends AppCompatActivity {
         // Firebase init
         mAuth = FirebaseAuth.getInstance();
 
-        // back button listener
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        // Listeners
+        back.setOnClickListener(this);
+        commit_login.setOnClickListener(this);
+        signInButton.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.back_home:
                 back_home();
-            }
-        });
-
-        //  commmit button listener
-        commit_login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+                break;
+            case R.id.commit_login:
                 loginUser();
-            }
-        });
-
-        // Google login listener
-        signInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = client.getSignInIntent();
-                startActivityForResult(i,SIGN_IN);
-            }
-        });
+                break;
+            case R.id.google_signin_button:
+                loginGoogle();
+                break;
+            default:
+                break;
+        }
     }
 
     // Google sign in
+    private void loginGoogle(){
+        Intent i = client.getSignInIntent();
+        startActivityForResult(i,SIGN_IN);
+    }
+
+    // Google sign in result handling
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -180,9 +184,5 @@ public class LogIn_Activity extends AppCompatActivity {
     public void back_home(){
         Intent backHome= new Intent(this,MainActivity.class);
         startActivity(backHome);
-    }
-    public void login(){
-        Intent Login= new Intent(this,My_Groups_Activity.class);
-        startActivity(Login);
     }
 }
