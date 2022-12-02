@@ -3,13 +3,16 @@ package com.example.ezchores;
 import java.util.ArrayList;
 
 public class Group {
-    ArrayList<User> groupList;
-    ArrayList<Task> taskList;
-    String name;
-    int groupSize = 0;
-    int taskSize = 0;
-    ArrayList<User> adminList;
 
+    // parameters
+    private ArrayList<User> groupList;
+    private ArrayList<Task> taskList;
+    private String name;
+    private int groupSize = 0;
+    private int taskSize = 0;
+    private ArrayList<User> adminList;
+
+    // constructor
     public Group(ArrayList<User> groupList, ArrayList<Task> taskList, String name , User admin) {
         this.groupList = groupList;
         this.taskList = taskList;
@@ -32,7 +35,6 @@ public class Group {
     public ArrayList<Task> getTaskList() {
         return taskList;
     }
-
 
     public void addTaskList(Task newTask) {
         this.taskList.add(newTask);

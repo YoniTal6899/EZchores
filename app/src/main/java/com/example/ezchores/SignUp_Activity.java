@@ -20,32 +20,41 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class SignUp_Activity extends AppCompatActivity {
+
+    //Buttons
     private Button back, commit_login;
     private AppCompatEditText mail_field , password_field , full_name_field;
+
+    // Firebase
     private FirebaseAuth mAuth;
 
     @SuppressLint({"WrongViewCast", "MissingInflatedId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Firebase init
         mAuth = FirebaseAuth.getInstance();
+
         setContentView(R.layout.activity_sign_up);
 
-        // Buttons
+        // Buttons init
         back = findViewById(R.id.back_home1);
         commit_login = findViewById(R.id.commit_login);
         mail_field = findViewById(R.id.Email_field);
         password_field = findViewById(R.id.password);
         full_name_field = findViewById(R.id.full_name);
 
-
-
+        // back button listener
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 back_home();
             }
         });
+
+
+        // commit button listener
         commit_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,8 +74,10 @@ public class SignUp_Activity extends AppCompatActivity {
         startActivity(Login);
     }
 
-
+    // create user function
     private void createUser(){
+
+        //get the input from the fields
         String full_name = full_name_field.getText().toString();
         String email = mail_field.getText().toString();
         String password  = password_field.getText().toString();
@@ -85,10 +96,6 @@ public class SignUp_Activity extends AppCompatActivity {
             mail_field.setError("you need to enter a valid email");
             mail_field.requestFocus();
         }else{
-            //  we hash the date before to put it into the database
-//            String email_hashed = checker.getHash(email);
-//            String password_hashed = checker.getHash(password);
-
             mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -97,16 +104,12 @@ public class SignUp_Activity extends AppCompatActivity {
                         startActivity(new Intent(SignUp_Activity.this , LogIn_Activity.class));
                     }else {
                         Toast.makeText(SignUp_Activity.this , "The error: "+
-                                task.getException().getMessage() +
-                                "occur during the registration" ,
+                                        task.getException().getMessage() +
+                                        "occur during the registration" ,
                                 Toast.LENGTH_SHORT).show();
                     }
                 }
             });
-
-
         }
-
     }
-
 }

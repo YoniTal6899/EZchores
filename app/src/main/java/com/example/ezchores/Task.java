@@ -3,10 +3,11 @@ package com.example.ezchores;
 import java.util.Date;
 
 public class Task {
-    int point;
-    boolean done;
-    Date date = null;
-    String name;
+    // parameters
+    private int point;
+    private boolean done;
+    private Date date = null;
+    private String name;
 
     public Task(int point, boolean done, Date date, String name) {
         this.point = point;
