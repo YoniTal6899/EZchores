@@ -7,15 +7,30 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class Pending_Items_Activity extends AppCompatActivity {
+public class Pending_Items_Activity extends AppCompatActivity implements View.OnClickListener {
+    //Buttons
     private Button back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pending_items);
+        //Init buttons
         back=(Button) findViewById(R.id.back_to_shoplst);
-        back.setOnClickListener(new View.OnClickListener(){@Override public void onClick(View view){TOSL();}});
+
+        //Listeners
+        back.setOnClickListener(this);
     }
 
-    public void TOSL(){Intent TSL= new Intent(this,Shopping_List_Activity.class); startActivity(TSL);}
+    // Override the 'onClick' method, divided by button id
+    @Override
+    public void onClick(View v){
+        switch (v.getId()){
+            case R.id.back_to_shoplst:
+                finish();
+                break;
+
+            default:
+                break;
+        }
+    }
 }

@@ -1,5 +1,6 @@
 package com.example.ezchores;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -26,7 +27,9 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+
   //Buttons
   private Button login, signup;
   SignInButton signInButton;
@@ -46,11 +49,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
+    mAuth = FirebaseAuth.getInstance();
     //Buttons init
     login = (Button)findViewById(R.id.log_in_button);
     signup = (Button)findViewById(R.id.sign_up_button);
-    mAuth = FirebaseAuth.getInstance();
     signInButton = findViewById(R.id.google_signin_button);
+    
+    // Firbase init
+    mAuth = FirebaseAuth.getInstance();
+    
 
     // Google sign in init
     GoogleSignInOptions options = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -125,13 +132,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
   public void open_LogIn_Activity() {
     Intent home_to_login = new Intent(this, LogIn_Activity.class);
     startActivity(home_to_login);
+
   }
 
-  public void open_SignUp_Activity() {
-    Intent home_to_signup = new Intent(this, SignUp_Activity.class);
-    startActivity(home_to_signup);
+  // Override the 'onClick' method, divided by button id
+  @Override
+  public void onClick(View v)
+  {
+    switch (v.getId())
+    {
+      case R.id.log_in_button:
+        Intent i = new Intent(this,LogIn_Activity.class);
+        startActivity(i);
+        break;
+
+      case R.id.sign_up_button:
+        Intent j = new Intent(this,SignUp_Activity.class);
+        startActivity(j);
+        break;
+
+      default:
+        break;
+    }
   }
-
-
-
 }
