@@ -13,9 +13,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class Shopping_List_Activity extends AppCompatActivity implements View.OnClickListener {
 
     // Declaration of .xml file widgets
-    private Button to_user_screen,confirm,submit_add_item;
+    private Button to_user_screen,confirm;
     EditText add_item;
-    private FloatingActionButton pending_items;
+    private FloatingActionButton pending_items, submit_add_item;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +27,7 @@ public class Shopping_List_Activity extends AppCompatActivity implements View.On
         pending_items=(FloatingActionButton)findViewById(R.id.pending_items);
         confirm=(Button)findViewById(R.id.confirm);
         add_item = (EditText) findViewById(R.id.add_item);
-        submit_add_item = (Button)findViewById(R.id.submit_add_item);
+        submit_add_item = (FloatingActionButton) findViewById(R.id.submit_add_item);
 
         //Listeners
         to_user_screen.setOnClickListener(this);
