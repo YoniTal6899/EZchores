@@ -15,7 +15,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class My_Groups_Activity extends Activity implements View.OnTouchListener  {
     FloatingActionButton add_group , personal_info;
-    private TextView gr_1;
+    private TextView gr_1,gr_2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,8 +24,10 @@ public class My_Groups_Activity extends Activity implements View.OnTouchListener
         add_group =(FloatingActionButton) findViewById(R.id.add_group);
         personal_info =(FloatingActionButton) findViewById(R.id.personal_info);
         gr_1=(TextView) findViewById(R.id.group_1);
+        gr_2=(TextView)findViewById(R.id.group_2);
 
         gr_1.setOnTouchListener(this);
+        gr_2.setOnTouchListener(this);
 
         add_group.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,8 +57,17 @@ public class My_Groups_Activity extends Activity implements View.OnTouchListener
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        Intent GR1U= new Intent(this,Group_User_Activity.class);
-        startActivity(GR1U);
+        switch (v.getId()){
+            case R.id.group_1:
+                Intent GR1U= new Intent(this,Group_User_Activity.class);
+                startActivity(GR1U);
+                break;
+
+            case R.id.group_2:
+                Intent GR2A= new Intent(this,Group_Admin_Activity.class);
+                startActivity(GR2A);
+                break;
+        }
         return true;
     }
 

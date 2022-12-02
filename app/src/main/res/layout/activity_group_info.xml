@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Group_Info_Activity"
+    android:background="@color/grey">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/group_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:text="group_name"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/to_gr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="25dp"
+            android:background="@color/black"
+            android:text="BACK"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@id/group_name"
+            app:layout_constraintEnd_toStartOf="@id/group_name" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/group_photo"
+            android:layout_width="180dp"
+            android:layout_height="180dp"
+            android:layout_marginTop="35dp"
+            android:contentDescription="@string/create_new_group"
+            android:src="@drawable/person"
+            app:backgroundTint="@color/white"
+            app:fabCustomSize="180dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/group_name"
+            app:maxImageSize="180dp" />
+
+        <TextView
+            android:id="@+id/group_name_line"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:text="Edit group name:"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/group_photo" />
+
+        <EditText
+            android:id="@+id/new_group_name_field"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:ems="10"
+            android:hint="New Name"
+            android:inputType="text"
+            android:minHeight="48dp"
+            android:textColorHint="#5D4037"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/group_name_line"
+            tools:ignore="Autofill" />
+
+        <TextView
+            android:id="@+id/members_line"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:text="Members:"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/new_group_name_field" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/members_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            app:layout_constraintTop_toBottomOf="@id/members_line">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/p1_photo"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:contentDescription="@string/create_new_group"
+                android:src="@drawable/person"
+                app:backgroundTint="@color/white"
+                app:fabCustomSize="40dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.03"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:maxImageSize="40dp" />
+
+            <TextView
+                android:id="@+id/member1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="admin1"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@id/p1_photo"
+                app:layout_constraintTop_toTopOf="@id/p1_photo" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/p1_trash"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:contentDescription="@string/create_new_group"
+                android:src="@drawable/trash"
+                app:backgroundTint="@color/white"
+                app:fabCustomSize="40dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:maxImageSize="40dp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/adm1_line"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="25dp"
+                android:background="@color/white"
+                android:text="admin"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toStartOf="@id/p1_trash"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/p2_photo"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:contentDescription="@string/create_new_group"
+                android:src="@drawable/person"
+                app:backgroundTint="@color/white"
+                app:fabCustomSize="40dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.03"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/p1_photo"
+                app:maxImageSize="40dp" />
+
+            <TextView
+                android:id="@+id/member2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="member2"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@id/p1_photo"
+                app:layout_constraintTop_toTopOf="@id/p2_photo" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/p2_trash"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:contentDescription="@string/create_new_group"
+                android:src="@drawable/trash"
+                app:backgroundTint="@color/white"
+                app:fabCustomSize="40dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/p1_trash"
+                app:maxImageSize="40dp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/mem2_line"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="25dp"
+                android:background="@color/black"
+                android:text="Make Admin"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toStartOf="@id/p2_trash"
+                app:layout_constraintTop_toBottomOf="@id/adm1_line" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/p3_photo"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:contentDescription="@string/create_new_group"
+                android:src="@drawable/person"
+                app:backgroundTint="@color/white"
+                app:fabCustomSize="40dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.03"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/p2_photo"
+                app:maxImageSize="40dp" />
+
+            <TextView
+                android:id="@+id/member3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="admin3"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@id/p3_photo"
+                app:layout_constraintTop_toTopOf="@id/p3_photo" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/p3_trash"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:contentDescription="@string/create_new_group"
+                android:src="@drawable/trash"
+                app:backgroundTint="@color/white"
+                app:fabCustomSize="40dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/p2_trash"
+                app:maxImageSize="40dp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/mem3_line"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="25dp"
+                android:background="@color/black"
+                android:text="Make Admin"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toStartOf="@id/p3_trash"
+                app:layout_constraintTop_toBottomOf="@id/mem2_line" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/p4_photo"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:contentDescription="@string/create_new_group"
+                android:src="@drawable/person"
+                app:backgroundTint="@color/white"
+                app:fabCustomSize="40dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.03"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/p3_photo"
+                app:maxImageSize="40dp" />
+
+            <TextView
+                android:id="@+id/member4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="member4"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@id/p4_photo"
+                app:layout_constraintTop_toTopOf="@id/p4_photo" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/p4_trash"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:contentDescription="@string/create_new_group"
+                android:src="@drawable/trash"
+                app:backgroundTint="@color/white"
+                app:fabCustomSize="40dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/p3_trash"
+                app:maxImageSize="40dp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/mem4_line"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="25dp"
+                android:background="@color/white"
+                android:text="Admin"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toStartOf="@id/p4_trash"
+                app:layout_constraintTop_toBottomOf="@+id/mem3_line" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <EditText
+            android:id="@+id/new_member_mail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:ems="10"
+            android:hint="@string/email"
+            android:inputType="textEmailAddress"
+            android:minHeight="48dp"
+            android:textColorHint="#5D4037"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.03"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/members_layout"
+            tools:ignore="Autofill" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/add_member"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:contentDescription="@string/create_new_group"
+            android:src="@drawable/add_icon"
+            app:backgroundTint="@color/white"
+            app:fabCustomSize="35dp"
+            app:layout_constraintStart_toEndOf="@id/new_member_mail"
+            app:layout_constraintTop_toTopOf="@id/new_member_mail"
+            app:maxImageSize="45dp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/apply_group_changes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="25dp"
+            android:background="@color/light_blue"
+            android:text="APPLY CHANGES"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/add_member"
+            android:layout_marginTop="15dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

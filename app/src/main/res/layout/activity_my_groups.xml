@@ -64,5 +64,17 @@
             android:contextClickable="true"
             android:gravity="center"/>
 
+        <TextView
+            android:id="@+id/group_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Group 2 name"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/group_1"
+            android:contextClickable="true"
+            android:gravity="center"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
