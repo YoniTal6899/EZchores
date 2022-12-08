@@ -97,12 +97,12 @@ public class Create_Group_Activity extends AppCompatActivity implements View.OnC
         String UserId=firebaseAuth.getCurrentUser().getUid();
 
         Group group=new Group(group_n,UserId);
-
+        group.setGroupSize(group.getGroupSize()+1);
         DatabaseReference ref= FirebaseDatabase.getInstance().getReference();
 
         String groupkey = ref.child("Users").child(UserId).child("Groups").push().getKey();//
 
-        ref.child("Users").child(UserId).child("Groups").child(groupkey).setValue(groupkey);//push to user -> groups->  key of new group
+        ref.child("Users").child(UserId).child("Groups").child(groupkey).setValue(group.getName());//push to user -> groups->  key of new group
 
         ref.child("Groups").child(groupkey).setValue(group);// groups-> new group key->set data
 
