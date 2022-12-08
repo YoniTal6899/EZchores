@@ -1,29 +1,48 @@
 package com.example.ezchores;
 
+
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatEditText;
-
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.identity.BeginSignInRequest;
+import com.google.android.gms.auth.api.identity.Identity;
+import com.google.android.gms.auth.api.identity.SignInClient;
+import com.google.android.gms.auth.api.identity.SignInCredential;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-//import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 
-public class LogIn_Activity extends AppCompatActivity {
+public class LogIn_Activity extends AppCompatActivity implements View.OnClickListener {
 
     // Buttons
     Button back, commit_login;
@@ -35,6 +54,7 @@ public class LogIn_Activity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
+
     @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,29 +64,31 @@ public class LogIn_Activity extends AppCompatActivity {
         // Buttons inits
         mail_field = findViewById(R.id.Email_field);
         password_field = findViewById(R.id.Password_field);
-        back=findViewById(R.id.back_home);
-        commit_login=findViewById(R.id.commit_login);
+        back = findViewById(R.id.back_home);
+        commit_login = findViewById(R.id.commit_login);
 
         // Firebase init
         mAuth = FirebaseAuth.getInstance();
 
-        // back button listener
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                back_home();
-            }
-        });
-
-        //  commmit button listener
-        commit_login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                loginUser();
-            }
-        });
+        // Listeners
+        back.setOnClickListener(this);
+        commit_login.setOnClickListener(this);
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.back_home:
+                back_home();
+                break;
+            case R.id.commit_login:
+                loginUser();
+                break;
+            default:
+                break;
+        }
+    }
+    
     // login function
     private void loginUser() {
 
@@ -108,13 +130,4 @@ public class LogIn_Activity extends AppCompatActivity {
         Intent backHome= new Intent(this,MainActivity.class);
         startActivity(backHome);
     }
-    public void login(){
-        Intent Login= new Intent(this,My_Groups_Activity.class);
-        startActivity(Login);
-    }
-
-
-
-
-
 }
