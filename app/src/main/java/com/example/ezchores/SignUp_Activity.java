@@ -51,8 +51,6 @@ public class SignUp_Activity extends AppCompatActivity implements View.OnClickLi
         //Firebase init
         mAuth = FirebaseAuth.getInstance();
 
-        UserID=mAuth.getCurrentUser().getUid();
-
         setContentView(R.layout.activity_sign_up);
 
         // Buttons & EditTexts init

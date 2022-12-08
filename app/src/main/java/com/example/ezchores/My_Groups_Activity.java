@@ -21,11 +21,6 @@ public class My_Groups_Activity extends Activity implements View.OnTouchListener
     // Buttons & TextViews
     FloatingActionButton add_group, personal_info;
     private TextView gr_1, gr_2;
-
-
-    // Buttons & TextViews
-    FloatingActionButton add_group, personal_info;
-    private TextView gr_1, gr_2;
    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
