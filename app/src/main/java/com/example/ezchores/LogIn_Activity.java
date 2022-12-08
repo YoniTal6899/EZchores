@@ -1,5 +1,6 @@
 package com.example.ezchores;
 
+
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -52,6 +53,7 @@ public class LogIn_Activity extends AppCompatActivity implements View.OnClickLis
     // Firebase
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+
 
     @SuppressLint("WrongViewCast")
     @Override
