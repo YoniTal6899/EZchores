@@ -23,4 +23,26 @@
     <string name="enter_email">Enter Email:</string>
     <string name="password1">Password:</string>
     <string name="sign_up1">SIGN UP</string>
+    <string name="server_client_id">849835775511-7prdp8jouv4orjv6d0e2oqpum8mgesu7.apps.googleusercontent.com</string>
+    <string name="my_groups">My Groups:</string>
+    <string name="create_new_group">create new group</string>
+    <string name="personal_information">Personal information</string>
+    <string name="user_name">user_name</string>
+    <string name="total_points_earned">Total points earned:</string>
+    <string name="_0">0</string>
+    <string name="create_group">Create Group</string>
+    <string name="group_name">Group Name:</string>
+    <string name="invite_members">Invite Members:</string>
+    <string name="goals">Goals:</string>
+    <string name="uncompleted_tasks">Uncompleted Tasks:</string>
+    <string name="task_1_content">Task 1 content</string>
+    <string name="coins">COINS</string>
+    <string name="back_to_groups">Back to groups</string>
+    <string name="add_item">Add item</string>
+    <string-array name="task_assignee">
+        <item>Assignee</item>
+        <item>mem1</item>
+        <item>mem2</item>
+        <item>mem3</item>
+    </string-array>
 </resources>
