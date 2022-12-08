@@ -6,19 +6,21 @@ public class Group {
 
     // parameters
     private ArrayList<User> groupList;
-    private ArrayList<Task> taskList;
+    private ArrayList<myTask> taskList;
     private String name;
     private int groupSize = 0;
     private int taskSize = 0;
-    private ArrayList<User> adminList;
+    private String admin_id;
 
     // constructor
-    public Group(ArrayList<User> groupList, ArrayList<Task> taskList, String name , User admin) {
-        this.groupList = groupList;
-        this.taskList = taskList;
+    public Group( String name , String admin_id) {
+
         this.name = name;
-        this.adminList.add(admin);
+
+        this.admin_id=admin_id;
     }
+    public Group(){};
+
 
     public ArrayList<User> getGroupList() {
         return groupList;
@@ -32,15 +34,15 @@ public class Group {
         this.groupList.remove(groupList.indexOf(user));
     }
 
-    public ArrayList<Task> getTaskList() {
+    public ArrayList<myTask> getTaskList() {
         return taskList;
     }
 
-    public void addTaskList(Task newTask) {
+    public void addTaskList(myTask newTask) {
         this.taskList.add(newTask);
     }
 
-    public void removeTask(Task task){
+    public void removeTask(myTask task){
         this.taskList.remove(taskList.indexOf(task));
     }
 
@@ -66,6 +68,14 @@ public class Group {
 
     public void setTaskSize(int taskSize) {
         this.taskSize = taskSize;
+    }
+
+    public String getAdmin_id() {
+        return admin_id;
+    }
+
+    public void setAdmin_id(String admin_id) {
+        this.admin_id = admin_id;
     }
 }
 

@@ -21,12 +21,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+
   //Buttons
   private Button login, signup;
   SignInButton signInButton;
@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
   // Firebase
   private FirebaseAuth mAuth;
-  FirebaseDatabase database = FirebaseDatabase.getInstance();
+  private DatabaseReference database ;
 
   //finals
   final private int SIGN_IN = 5555;
@@ -46,11 +46,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
+    mAuth = FirebaseAuth.getInstance();
     //Buttons init
     login = (Button)findViewById(R.id.log_in_button);
     signup = (Button)findViewById(R.id.sign_up_button);
-    mAuth = FirebaseAuth.getInstance();
     signInButton = findViewById(R.id.google_signin_button);
+    
+    // Firbase init
+
+
+    mAuth = FirebaseAuth.getInstance();
+
 
     // Google sign in init
     GoogleSignInOptions options = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -81,6 +87,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         break;
     }
   }
+
+
 
   // Google sign in
   private void loginGoogle(){
@@ -127,11 +135,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     startActivity(home_to_login);
   }
 
-  public void open_SignUp_Activity() {
+  private void open_SignUp_Activity() {
     Intent home_to_signup = new Intent(this, SignUp_Activity.class);
     startActivity(home_to_signup);
   }
-
 
 
 }

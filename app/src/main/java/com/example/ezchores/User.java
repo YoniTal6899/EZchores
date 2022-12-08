@@ -4,20 +4,39 @@ import java.util.ArrayList;
 
 public class User {
     // parameters
-   private  int id;
+   private  String id;
    private  String name;
-   private  ArrayList<Group> groupList;
-   private  ArrayList<Task> taskList;
+   private String email;
+   private String password;
+   public   ArrayList<Group> groupList;
+   public  ArrayList<myTask> taskList;
+
+
 
 
     // constructor
-    public User(String name) {
+    public User(String name,String email,String password) {
+
         this.name = name;
+        this.email=email;
+        this.password=password;
+    }
+    public String getEmail() {
+        return email;
+    }
+    public String getPassword() {
+        return password;
     }
 
-    public int getId() {return id;}
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    public String getId() {return id;}
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -37,11 +56,11 @@ public class User {
         this.groupList = groupList;
     }
 
-    public ArrayList<Task> getTaskList() {
+    public ArrayList<myTask> getTaskList() {
         return taskList;
     }
 
-    public void setTaskList(ArrayList<Task> taskList) {
-        this.taskList = taskList;
+    public void setTaskList(myTask taskList) {
+        this.taskList.add(taskList);
     }
 }
