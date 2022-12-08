@@ -6,6 +6,7 @@ public class Group {
 
     // parameters
     private ArrayList<User> groupList;
+
     private ArrayList<myTask> taskList;
     private String name;
     private int groupSize = 0;
@@ -22,6 +23,7 @@ public class Group {
     public Group(){};
 
 
+
     public ArrayList<User> getGroupList() {
         return groupList;
     }
@@ -34,6 +36,7 @@ public class Group {
         this.groupList.remove(groupList.indexOf(user));
     }
 
+
     public ArrayList<myTask> getTaskList() {
         return taskList;
     }
@@ -43,6 +46,7 @@ public class Group {
     }
 
     public void removeTask(myTask task){
+
         this.taskList.remove(taskList.indexOf(task));
     }
 
@@ -70,6 +74,7 @@ public class Group {
         this.taskSize = taskSize;
     }
 
+
     public String getAdmin_id() {
         return admin_id;
     }
@@ -77,6 +82,7 @@ public class Group {
     public void setAdmin_id(String admin_id) {
         this.admin_id = admin_id;
     }
+
 }
 
 

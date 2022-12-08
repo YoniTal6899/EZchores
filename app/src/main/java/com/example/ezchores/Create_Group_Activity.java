@@ -1,5 +1,6 @@
 package com.example.ezchores;
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -15,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+
 public class Create_Group_Activity extends AppCompatActivity implements View.OnClickListener {
 
     // Buttons & EditTexts
@@ -22,8 +24,10 @@ public class Create_Group_Activity extends AppCompatActivity implements View.OnC
     FloatingActionButton icon, add_member;
     EditText group_name, email;
 
+
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +46,7 @@ public class Create_Group_Activity extends AppCompatActivity implements View.OnC
         icon.setOnClickListener(this);
         add_member.setOnClickListener(this);
 
+
         firebaseAuth=FirebaseAuth.getInstance();
 
 
@@ -50,13 +55,19 @@ public class Create_Group_Activity extends AppCompatActivity implements View.OnC
 
 
 
+
+    
+
+
     // Override the 'onClick' method, divided by button id
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.create_group_btn:
                 // Needs to save the new group properties [icon, name]
+
                 CreateGroup();
+
                 Intent i = new Intent(this, My_Groups_Activity.class);
                 startActivity(i);
                 break;
@@ -74,6 +85,7 @@ public class Create_Group_Activity extends AppCompatActivity implements View.OnC
                 break;
         }
     }
+
     public void CreateGroup(){
 
 
@@ -98,5 +110,6 @@ public class Create_Group_Activity extends AppCompatActivity implements View.OnC
 
 
     }
+
 
 }

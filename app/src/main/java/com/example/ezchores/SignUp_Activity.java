@@ -1,5 +1,6 @@
 package com.example.ezchores;
 
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +21,15 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+
+
+
+//import com.google.android.material.textfield.TextInputEditText;
+
+
+import com.google.firebase.auth.FirebaseUser;
+
+
 public class SignUp_Activity extends AppCompatActivity implements View.OnClickListener {
 
     //Buttons & EditTexts
@@ -27,8 +38,10 @@ public class SignUp_Activity extends AppCompatActivity implements View.OnClickLi
 
     // Firebase
     private FirebaseAuth mAuth;
+
     private String UserID;
     DatabaseReference database;
+
 
     @SuppressLint({"WrongViewCast", "MissingInflatedId"})
     @Override
@@ -37,7 +50,9 @@ public class SignUp_Activity extends AppCompatActivity implements View.OnClickLi
 
         //Firebase init
         mAuth = FirebaseAuth.getInstance();
+
         UserID=mAuth.getCurrentUser().getUid();
+
         setContentView(R.layout.activity_sign_up);
 
         // Buttons & EditTexts init
@@ -61,8 +76,10 @@ public class SignUp_Activity extends AppCompatActivity implements View.OnClickLi
                 break;
 
             case R.id.commit_login:
+
                 //LOGIN();
                 createUser();
+
                 break;
 
             default:
@@ -99,11 +116,14 @@ public class SignUp_Activity extends AppCompatActivity implements View.OnClickLi
             mail_field.setError("you need to enter a valid email");
             mail_field.requestFocus();
         } else { // Valid args
+
             mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(SignUp_Activity.this, new OnCompleteListener<AuthResult>() {
+
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
                         Toast.makeText(SignUp_Activity.this, "User registered successfully", Toast.LENGTH_SHORT).show();
+
 
                         UserID=mAuth.getCurrentUser().getUid();
                         User user=new User(full_name,email,password);
@@ -111,6 +131,7 @@ public class SignUp_Activity extends AppCompatActivity implements View.OnClickLi
 
                         database= FirebaseDatabase.getInstance().getReference();
                         database.child("Users").child(UserID).setValue(user);
+
 
                         startActivity(new Intent(SignUp_Activity.this, LogIn_Activity.class));
                     } else {

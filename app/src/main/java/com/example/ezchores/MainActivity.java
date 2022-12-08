@@ -1,5 +1,8 @@
 package com.example.ezchores;
 
+
+import android.app.Activity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -21,8 +24,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
@@ -36,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
   // Firebase
   private FirebaseAuth mAuth;
-  private DatabaseReference database ;
+
 
   //finals
   final private int SIGN_IN = 5555;
@@ -55,7 +62,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     // Firbase init
 
 
+
     mAuth = FirebaseAuth.getInstance();
+
 
 
     // Google sign in init
@@ -139,6 +148,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Intent home_to_signup = new Intent(this, SignUp_Activity.class);
     startActivity(home_to_signup);
   }
-
 
 }

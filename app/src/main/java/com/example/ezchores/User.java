@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class User {
     // parameters
+
    private  String id;
    private  String name;
    private String email;
@@ -37,6 +38,7 @@ public class User {
     public String getId() {return id;}
 
     public void setId(String id) {
+
         this.id = id;
     }
 
@@ -56,11 +58,13 @@ public class User {
         this.groupList = groupList;
     }
 
+
     public ArrayList<myTask> getTaskList() {
         return taskList;
     }
 
     public void setTaskList(myTask taskList) {
         this.taskList.add(taskList);
+
     }
 }

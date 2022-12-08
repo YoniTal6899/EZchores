@@ -1,15 +1,27 @@
 package com.example.ezchores;
 
+
+import androidx.appcompat.app.AppCompatActivity;
+
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
+
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class My_Groups_Activity extends Activity implements View.OnTouchListener, View.OnClickListener {
+
+    // Buttons & TextViews
+    FloatingActionButton add_group, personal_info;
+    private TextView gr_1, gr_2;
+
 
     // Buttons & TextViews
     FloatingActionButton add_group, personal_info;
@@ -22,7 +34,6 @@ public class My_Groups_Activity extends Activity implements View.OnTouchListener
 
         // Init Buttons & TextViews
 
-
         add_group = (FloatingActionButton) findViewById(R.id.add_group);
         personal_info = (FloatingActionButton) findViewById(R.id.personal_info);
         gr_1 = (TextView) findViewById(R.id.group_1);
@@ -33,6 +44,7 @@ public class My_Groups_Activity extends Activity implements View.OnTouchListener
         gr_2.setOnTouchListener(this);
         add_group.setOnClickListener(this);
         personal_info.setOnClickListener(this);
+
 
     }
 
