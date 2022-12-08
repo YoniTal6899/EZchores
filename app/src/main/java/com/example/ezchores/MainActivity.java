@@ -38,9 +38,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
   private Button login, signup;
   SignInButton signInButton;
 
-  // Google sign in
-  private GoogleSignInClient client;
-
   // Firebase
   private FirebaseAuth mAuth;
 
@@ -57,27 +54,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //Buttons init
     login = (Button)findViewById(R.id.log_in_button);
     signup = (Button)findViewById(R.id.sign_up_button);
-    signInButton = findViewById(R.id.google_signin_button);
     
     // Firbase init
-
-
-
     mAuth = FirebaseAuth.getInstance();
-
-
-
-    // Google sign in init
-    GoogleSignInOptions options = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
-            .requestEmail()
-            .build();
-    client = GoogleSignIn.getClient(this,options);
 
     // Listeners
     login.setOnClickListener(this);
     signup.setOnClickListener(this);
-    signInButton.setOnClickListener(this);
   }
 
   @Override
@@ -89,55 +72,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
       case R.id.sign_up_button:
         open_SignUp_Activity();
         break;
-      case R.id.google_signin_button:
-        loginGoogle();
-        break;
       default:
         break;
     }
   }
-
-
-
-  // Google sign in
-  private void loginGoogle(){
-    Intent i = client.getSignInIntent();
-    startActivityForResult(i,SIGN_IN);
-  }
-
-  // Google sign in result handling
-  @Override
-  protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-    super.onActivityResult(requestCode, resultCode, data);
-    if(requestCode == SIGN_IN){
-      com.google.android.gms.tasks.Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-      try {
-        GoogleSignInAccount account = task.getResult(ApiException.class);
-
-        AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(),null);
-        mAuth.getInstance().signInWithCredential(credential)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                  @Override
-                  public void onComplete(@NonNull Task<AuthResult> task) {
-                    if(task.isSuccessful()){
-                      Toast.makeText(MainActivity.this , "User logged in successfully" , Toast.LENGTH_SHORT).show();
-                      startActivity(new Intent(MainActivity.this , My_Groups_Activity.class));
-
-                    }else{
-                      Toast.makeText(MainActivity.this , "Error logging in" , Toast.LENGTH_SHORT).show();
-                      startActivity(new Intent(MainActivity.this , MainActivity.class));
-                    }
-                  }
-                });
-
-
-      } catch (ApiException e) {
-        e.printStackTrace();
-      }
-    }
-  }
-
-
 
   public void open_LogIn_Activity() {
     Intent home_to_login = new Intent(this, LogIn_Activity.class);
