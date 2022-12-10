@@ -8,11 +8,15 @@ import android.view.View;
 import android.widget.Button;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class Personal_Info_Activity extends AppCompatActivity implements View.OnClickListener {
     // Buttons
     Button log_out, apply;
     FloatingActionButton icon;
+
+    // Firebase
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +39,7 @@ public class Personal_Info_Activity extends AppCompatActivity implements View.On
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.log_out:
-                // Needs to disconnect from DB as well
+                mAuth.getInstance().signOut();
                 Intent i = new Intent(this, MainActivity.class);
                 startActivity(i);
                 break;

@@ -1,8 +1,5 @@
 package com.example.ezchores;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatEditText;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -12,12 +9,26 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatEditText;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-//import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+
+
+
+//import com.google.android.material.textfield.TextInputEditText;
+
+
 import com.google.firebase.auth.FirebaseUser;
+
 
 public class SignUp_Activity extends AppCompatActivity implements View.OnClickListener {
 
@@ -27,6 +38,10 @@ public class SignUp_Activity extends AppCompatActivity implements View.OnClickLi
 
     // Firebase
     private FirebaseAuth mAuth;
+
+    private String UserID;
+    DatabaseReference database;
+
 
     @SuppressLint({"WrongViewCast", "MissingInflatedId"})
     @Override
@@ -59,8 +74,10 @@ public class SignUp_Activity extends AppCompatActivity implements View.OnClickLi
                 break;
 
             case R.id.commit_login:
-                LOGIN();
-                //createUser();
+
+                //LOGIN();
+                createUser();
+
                 break;
 
             default:
@@ -97,11 +114,23 @@ public class SignUp_Activity extends AppCompatActivity implements View.OnClickLi
             mail_field.setError("you need to enter a valid email");
             mail_field.requestFocus();
         } else { // Valid args
-            mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+
+            mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(SignUp_Activity.this, new OnCompleteListener<AuthResult>() {
+
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
                         Toast.makeText(SignUp_Activity.this, "User registered successfully", Toast.LENGTH_SHORT).show();
+
+
+                        UserID=mAuth.getCurrentUser().getUid();
+                        User user=new User(full_name,email,password);
+
+
+                        database= FirebaseDatabase.getInstance().getReference();
+                        database.child("Users").child(UserID).setValue(user);
+
+
                         startActivity(new Intent(SignUp_Activity.this, LogIn_Activity.class));
                     } else {
                         Toast.makeText(SignUp_Activity.this, "The error: " +
@@ -109,6 +138,7 @@ public class SignUp_Activity extends AppCompatActivity implements View.OnClickLi
                                         "occur during the registration",
                                 Toast.LENGTH_SHORT).show();
                     }
+
                 }
             });
         }
