@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
   }
 
   private void open_SignUp_Activity() {
-    Intent home_to_signup = new Intent(this, SignUp_Activity.class);
+    Intent home_to_signup = new Intent(this, Group_User_Activity.class);
     startActivity(home_to_signup);
   }
 
