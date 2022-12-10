@@ -9,6 +9,8 @@ import android.widget.CheckBox;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class CustomAdapter extends BaseAdapter {
 
     Context ctx;
@@ -18,11 +20,18 @@ public class CustomAdapter extends BaseAdapter {
     ProgressBar[] bars;
     char classificator;
 
-    public CustomAdapter(Context ctx, String[] con, String[] pts, ProgressBar[] bars, char c){
-        this.content=con;
+    public CustomAdapter(Context ctx, ArrayList<String> con, ArrayList<String> pts, ProgressBar[] bars, char c){
+        this.content=new String[con.size()];
+        for (int i = 0; i < con.size(); i++) {
+            this.content[i]=con.get(i);
+        }
         this.ctx=ctx;
         this.inflater=LayoutInflater.from(ctx);
-        this.points=pts;
+        this.points=new String[pts.size()];
+        for (int i = 0; i <pts.size() ; i++) {
+            this.points[i]=pts.get(i);
+
+        }
         this.bars=bars;
         this.classificator=c;
     }

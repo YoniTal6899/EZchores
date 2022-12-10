@@ -46,10 +46,11 @@ public class Group_User_Activity extends AppCompatActivity implements View.OnCli
         shop = (FloatingActionButton) findViewById(R.id.shopping_list);
         task_list = (ListView) findViewById(R.id.tasks_list);
         goals_list = (ListView) findViewById(R.id.goals_list);
-        task_adp = new CustomAdapter(getApplicationContext(), tasks, points, null, 't');
-        goals_adp = new CustomAdapter(getApplicationContext(), goals, null, bars, 'g');
-        task_list.setAdapter(task_adp);
-        goals_list.setAdapter(goals_adp);
+
+//        task_adp = new CustomAdapter(getApplicationContext(), tasks, points, null, 't');
+//        goals_adp = new CustomAdapter(getApplicationContext(), goals, null, bars, 'g');
+//        task_list.setAdapter(task_adp);
+//        goals_list.setAdapter(goals_adp);
 
         // Listeners
         to_gr.setOnClickListener(this);
@@ -63,6 +64,7 @@ public class Group_User_Activity extends AppCompatActivity implements View.OnCli
         switch (v.getId()) {
             case R.id.back_to_groups:
                 Intent i = new Intent(this, My_Groups_Activity.class);
+                i.putExtra("ID_name",groupId+","+groupName);
                 startActivity(i);
                 break;
 
