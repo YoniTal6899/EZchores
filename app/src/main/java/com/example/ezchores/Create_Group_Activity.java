@@ -42,14 +42,14 @@ public class Create_Group_Activity extends AppCompatActivity implements View.OnC
         // Init Buttons & EditTexts
         create_group = (Button) findViewById(R.id.create_group_btn);
         icon = (FloatingActionButton) findViewById(R.id.group_photo);
-        add_member = (FloatingActionButton) findViewById(R.id.add_friend);
+
         group_name = (EditText) findViewById(R.id.group_name);
-        email = (EditText) findViewById(R.id.Email_field);
+
 
         // Listeners
         create_group.setOnClickListener(this);
         icon.setOnClickListener(this);
-        add_member.setOnClickListener(this);
+
 
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -89,10 +89,7 @@ public class Create_Group_Activity extends AppCompatActivity implements View.OnC
                 startActivity(i);
                 break;
 
-            case R.id.add_friend:
-                // Needs to send an invitation to the email in the 'Email_field' field
-                String mail = email.getText().toString();
-                break;
+
 
             default:
                 break;
