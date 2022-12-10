@@ -25,7 +25,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public class New_Task_Acitivty extends AppCompatActivity implements View.OnClickListener {
 
     // Declaration of .xml file widgets
-    EditText name, val, comments;
+    EditText name, val;
     Button back, create, refreshUsers;
 
     String groupID,groupName;
@@ -50,7 +50,6 @@ public class New_Task_Acitivty extends AppCompatActivity implements View.OnClick
         create = (Button) findViewById(R.id.create_task);
         name = (EditText) findViewById(R.id.Task_name);
         val = (EditText) findViewById(R.id.Task_val);
-        comments = (EditText) findViewById(R.id.comments);
         refreshUsers = (Button) findViewById(R.id.refreshUsers);
 
 
@@ -117,7 +116,7 @@ public class New_Task_Acitivty extends AppCompatActivity implements View.OnClick
         autoCompleteTextView = findViewById(R.id.auto_complete_txt);
         if (listOfusers != null) {
             adapterItems = new ArrayAdapter<String>(this, R.layout.list_item, listOfusers);
-            System.out.println("Users: " + listOfusers);
+            System.out.println("Users: " + listOfusers.toString());
         } else {
             adapterItems = new ArrayAdapter<String>(this, R.layout.list_item);
             System.out.println("list is null!");
@@ -127,7 +126,6 @@ public class New_Task_Acitivty extends AppCompatActivity implements View.OnClick
 
     private void createTask() {
         String taskName = name.getText().toString();
-        String comment = comments.getText().toString();
         String value = val.getText().toString();
         String[] assign = autoCompleteTextView.getText().toString().split("\\)");
         int assignIndex;
@@ -138,7 +136,7 @@ public class New_Task_Acitivty extends AppCompatActivity implements View.OnClick
             return;
         }
         String assignID = listOfuserIDs[assignIndex];
-        if (value.equals("")||taskName.equals("")||comment.equals("")||assignID==null){
+        if (value.equals("")||taskName.equals("")||assignID==null){
             Toast.makeText(New_Task_Acitivty.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -154,7 +152,7 @@ public class New_Task_Acitivty extends AppCompatActivity implements View.OnClick
             return;
         }
 
-        myTask task = new myTask(numVal, taskName, comment, assignID);
+        myTask task = new myTask(numVal, taskName , assignID);
         String taskID = ref.child("Groups").child(groupID).child("Tasks").push().getKey();
         ref.child("Groups").child(groupID).child("Tasks").child(taskID).setValue(task);
         ref.child("Users").child(assignID).child("MyTasks").child(taskID).setValue(groupID);
