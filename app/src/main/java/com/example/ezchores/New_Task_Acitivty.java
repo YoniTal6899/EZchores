@@ -28,7 +28,7 @@ public class New_Task_Acitivty extends AppCompatActivity implements View.OnClick
     EditText name, val, comments;
     Button back, create, refreshUsers;
 
-    String groupID;
+    String groupID,groupName;
 
     //DB
     DatabaseReference ref;
@@ -42,7 +42,9 @@ public class New_Task_Acitivty extends AppCompatActivity implements View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_task_acitivty);
-        groupID = (String) getIntent().getSerializableExtra("group_id");
+        String[] groupInfo = getIntent().getSerializableExtra("ID_name").toString().split(",");
+        groupID = groupInfo[0];
+        groupName = groupInfo[1];
         // Init .xml widgets
         back = (Button) findViewById(R.id.back_to_groups);
         create = (Button) findViewById(R.id.create_task);
@@ -158,6 +160,7 @@ public class New_Task_Acitivty extends AppCompatActivity implements View.OnClick
         ref.child("Users").child(assignID).child("MyTasks").child(taskID).setValue(groupID);
         Toast.makeText(New_Task_Acitivty.this, "Task added successfully", Toast.LENGTH_SHORT).show();
         Intent CRG = new Intent(this, Group_Admin_Activity.class);
+        CRG.putExtra("ID_name",groupID+","+groupName);
         startActivity(CRG);
     }
 }
