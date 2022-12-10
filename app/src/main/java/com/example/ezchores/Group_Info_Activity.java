@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -27,20 +28,24 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
     Button back, apply;
     EditText new_name, mem_email;
     FloatingActionButton icon, add_mem;
-
+    TextView group_name;
     // DB
     DatabaseReference ref;
 
     String groupID;
     String myUserID;
-
+    String groupName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_group_info);
-        ref = FirebaseDatabase.getInstance().getReference();
-        groupID = (String) getIntent().getSerializableExtra("group_id");
 
+        setContentView(R.layout.activity_group_info);
+
+                String id_name = (String) getIntent().getSerializableExtra("ID_name");
+        groupName=id_name.split(",")[1];
+        ref = FirebaseDatabase.getInstance().getReference();
+        groupID = id_name.split(",")[0];
+        group_name=(TextView) findViewById(R.id.group_name);
         //Init widgets
         back = (Button) findViewById(R.id.to_gr);
         apply = (Button) findViewById(R.id.apply_group_changes);
@@ -53,7 +58,26 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
         apply.setOnClickListener(this);
         icon.setOnClickListener(this);
         add_mem.setOnClickListener(this);
+        group_name.setText(groupName);
         myUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+//        try {
+//            ref.child("Groups").child(groupID).child("name").addValueEventListener(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                    group_name.setText(snapshot.getValue().toString());
+//                }
+//
+//                @Override
+//                public void onCancelled(@NonNull DatabaseError error) {
+//
+//                }
+//            });
+//        }catch (Exception e){
+//            Toast.makeText(Group_Info_Activity.this, "on create Something went wrong :(", Toast.LENGTH_SHORT).show();
+//
+//        }
+
+
     }
 
 
@@ -66,9 +90,21 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
                 break;
 
             case R.id.apply_group_changes:
-                // Needs to save the new group info [name, icon,
-                Intent i = new Intent(this, Group_Admin_Activity.class);
-                startActivity(i);
+                // Needs to save the new group info [name, icon
+                String N=new_name.getText().toString();
+                if(N!=null) {
+                    updateName(N);
+                    Intent i = new Intent(this, Group_Admin_Activity.class);
+                    i.putExtra("ID_name",groupID+","+N);
+                    startActivity(i);
+                }else{
+                    Intent i = new Intent(this, Group_Admin_Activity.class);
+
+                    i.putExtra("group_Id",groupID);
+                    i.putExtra("group_name",groupName);
+                    startActivity(i);
+                    Toast.makeText(Group_Info_Activity.this, "on click Something went wrong :(", Toast.LENGTH_SHORT).show();
+                }
                 break;
 
             case R.id.add_member:
@@ -79,6 +115,29 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
                 break;
         }
 
+    }
+
+    private void updateName(String newname) {
+        group_name.setText(newname);
+        ref.child("Groups").child(groupID).child("name").setValue(newname);
+
+       ref.child("Groups").child(groupID).child("Friends").addValueEventListener(new ValueEventListener() {
+           @Override
+           public void onDataChange(@NonNull DataSnapshot snapshot) {
+               HashMap<String,Object> list = snapshot.getValue(new GenericTypeIndicator<HashMap<String, Object>>() {});
+
+               for(String friendId: list.keySet()){
+                   ref.child("Users").child(friendId).child("Groups").child(groupID).setValue(newname);
+                   Toast.makeText(Group_Info_Activity.this, "group name has changed...", Toast.LENGTH_SHORT).show();
+               }
+
+           }
+
+           @Override
+           public void onCancelled(@NonNull DatabaseError error) {
+               Toast.makeText(Group_Info_Activity.this, "something went wrong...", Toast.LENGTH_SHORT).show();
+           }
+       });
     }
 
     private void addFriend(String mail) {
@@ -93,7 +152,7 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
                         if (checkMail.equals( mail)){
                             String name = snapshot.child(userId).child("name").getValue().toString();
 
-                            String groupName = snapshot.child(myUserID).child("Groups").child(groupID).getValue().toString();
+                            groupName = snapshot.child(myUserID).child("Groups").child(groupID).getValue().toString();
                             ref.child("Groups").child(groupID).child("Friends").child(userId).setValue(name);
                             ref.child("Users").child(userId).child("Groups").child(groupID).setValue(groupName);
                             Toast.makeText(Group_Info_Activity.this, mail+" was added to the group", Toast.LENGTH_SHORT).show();
