@@ -44,7 +44,6 @@ public class My_Groups_Activity extends Activity implements View.OnClickListener
         setContentView(R.layout.activity_my_groups);
 
 
-
         add_group = (Button) findViewById(R.id.add_group);
         personal_info = (Button) findViewById(R.id.personal_info);
 
@@ -64,18 +63,18 @@ public class My_Groups_Activity extends Activity implements View.OnClickListener
 
                 HashMap<String, Object> list = snapshot.getValue(new GenericTypeIndicator<HashMap<String, Object>>() {
                 });
-                try{
-                for (String name : list.keySet()) {
-                    String key = name.toString();
-                    String value = list.get(key).toString();
-                    listGroupid.add(key);
-                    listGroupname.add(value);
+                try {
+                    for (String name : list.keySet()) {
+                        String key = name.toString();
+                        String value = list.get(key).toString();
+                        listGroupid.add(key);
+                        listGroupname.add(value);
 
-                }
-                ArrayAdapter arrayAdapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, listGroupname);
-                listview.setAdapter(arrayAdapter);}
-                catch (Exception e){
-                    System.out.println("error "+e);
+                    }
+                    ArrayAdapter arrayAdapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, listGroupname);
+                    listview.setAdapter(arrayAdapter);
+                } catch (Exception e) {
+                    System.out.println("error " + e);
                 }
 
                 listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -84,28 +83,32 @@ public class My_Groups_Activity extends Activity implements View.OnClickListener
                         Toast.makeText(My_Groups_Activity.this, "you click group name:" + listGroupname.get(position), Toast.LENGTH_SHORT).show();
                         String UserId = firebaseAuth.getCurrentUser().getUid();
 
-                        DatabaseReference refGroup = FirebaseDatabase.getInstance().getReference("Groups").child(listGroupid.get(position).toString());
+                        DatabaseReference refGroup = FirebaseDatabase.getInstance().getReference("Groups").child(listGroupid.get(position)).child("admins");
                         refGroup.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                HashMap<String, Object> admins = snapshot.getValue(new GenericTypeIndicator<HashMap<String, Object>>() {
+                                });
 
+//                                    for(String usId :admins.keySet()){
+//                                        String tempId=usId;
+//                                        String admin_name=admins.get(usId).toString();
+//
+//                                    }
+                                System.out.println("Userid: " + UserId);
+                                System.out.println("admins: " + snapshot);
+                                if (!admins.containsKey(UserId)) {
+                                    Intent groups2user = new Intent(My_Groups_Activity.this, Group_User_Activity.class);
+                                    groups2user.putExtra("group_id", listGroupid.get(position));
+                                    Toast.makeText(My_Groups_Activity.this, "user permission", Toast.LENGTH_SHORT).show();
+                                    startActivity(groups2user);
+                                } else {
 
-                                   String adminId=snapshot.child("admin_id").getValue().toString();
-                                    System.out.println(snapshot);
-                                    System.out.println("admin from data: " + adminId);
-                                    System.out.println("Userid: " + UserId);
-                                    if (!UserId.equals(adminId) ) {
-                                        Intent groups2user = new Intent(My_Groups_Activity.this, Group_User_Activity.class);
-                                        groups2user.putExtra("group_id", listGroupid.get(position));
-                                        Toast.makeText(My_Groups_Activity.this, "user permission", Toast.LENGTH_SHORT).show();
-                                        startActivity(groups2user);
-                                    } else {
-
-                                        Intent groups2admin = new Intent(My_Groups_Activity.this, Group_Admin_Activity.class);
-                                        groups2admin.putExtra("group_id", listGroupid.get(position));
-                                        Toast.makeText(My_Groups_Activity.this, "admin permission", Toast.LENGTH_SHORT).show();
-                                        startActivity(groups2admin);
-                                    }
+                                    Intent groups2admin = new Intent(My_Groups_Activity.this, Group_Admin_Activity.class);
+                                    groups2admin.putExtra("group_id", listGroupid.get(position));
+                                    Toast.makeText(My_Groups_Activity.this, "admin permission", Toast.LENGTH_SHORT).show();
+                                    startActivity(groups2admin);
+                                }
 
 
                             }
@@ -113,7 +116,7 @@ public class My_Groups_Activity extends Activity implements View.OnClickListener
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {
                                 Toast.makeText(My_Groups_Activity.this, "something went wrong try again...   ):", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent (My_Groups_Activity.this , My_Groups_Activity.class));
+                                startActivity(new Intent(My_Groups_Activity.this, My_Groups_Activity.class));
                             }
                         });
                     }

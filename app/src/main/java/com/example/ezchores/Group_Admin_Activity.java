@@ -13,12 +13,12 @@ public class Group_Admin_Activity extends AppCompatActivity implements View.OnCl
     // Declaration of .xml widgets
     Button back_to_groups;
     FloatingActionButton shop,group_info, add_goal, add_task;
-
+    String groupID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_admin);
-
+        groupID = (String) getIntent().getSerializableExtra("group_id");
         // Init buttons
         back_to_groups=(Button)findViewById(R.id.back_to_groups);
         shop=(FloatingActionButton) findViewById(R.id.shopping_list);
@@ -52,6 +52,7 @@ public class Group_Admin_Activity extends AppCompatActivity implements View.OnCl
 
             case R.id.group_info:
                 Intent k = new Intent(this,Group_Info_Activity.class);
+                k.putExtra("group_id",groupID);
                 startActivity(k);
                 break;
 
