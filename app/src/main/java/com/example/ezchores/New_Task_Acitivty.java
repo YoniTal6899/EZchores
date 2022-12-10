@@ -117,7 +117,7 @@ public class New_Task_Acitivty extends AppCompatActivity implements View.OnClick
         autoCompleteTextView = findViewById(R.id.auto_complete_txt);
         if (listOfusers != null) {
             adapterItems = new ArrayAdapter<String>(this, R.layout.list_item, listOfusers);
-            System.out.println("Users: " + listOfusers);
+            System.out.println("Users: " + listOfusers.toString());
         } else {
             adapterItems = new ArrayAdapter<String>(this, R.layout.list_item);
             System.out.println("list is null!");
