@@ -49,7 +49,7 @@ public class Create_Group_Activity extends AppCompatActivity implements View.OnC
         // Listeners
         create_group.setOnClickListener(this);
         icon.setOnClickListener(this);
-        add_member.setOnClickListener(this);
+
 
 
         firebaseAuth = FirebaseAuth.getInstance();

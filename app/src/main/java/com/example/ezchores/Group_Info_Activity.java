@@ -86,7 +86,9 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.to_gr:
-                finish();
+                Intent myGroups = new Intent(this, My_Groups_Activity.class);
+                myGroups.putExtra("ID_name",groupID+"," + groupName);
+                startActivity(myGroups);
                 break;
 
             case R.id.apply_group_changes:
@@ -95,7 +97,7 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
                 if(N!=null) {
                     updateName(N);
                     Intent i = new Intent(this, Group_Admin_Activity.class);
-                    i.putExtra("ID_name",groupID+","+N);
+                    i.putExtra("ID_name",groupID+"," + N);
                     startActivity(i);
                 }else{
                     Intent i = new Intent(this, Group_Admin_Activity.class);

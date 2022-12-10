@@ -37,6 +37,7 @@ public class My_Groups_Activity extends Activity implements View.OnClickListener
     Button add_group, personal_info;
     private FirebaseAuth firebaseAuth;
     ListView listview;
+    String groupName,groupID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
