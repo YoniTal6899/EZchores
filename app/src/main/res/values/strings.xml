@@ -39,6 +39,7 @@
     <string name="coins">COINS</string>
     <string name="back_to_groups">Back to groups</string>
     <string name="add_item">Add item</string>
+    <string name="select">Select User</string>
     <string-array name="task_assignee">
         <item>Assignee</item>
         <item>mem1</item>

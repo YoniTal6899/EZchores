@@ -83,11 +83,13 @@ public class Group_Admin_Activity extends AppCompatActivity implements View.OnCl
 
             case R.id.new_goal:
                 Intent r = new Intent(this,New_Goal_Activity.class);
+                r.putExtra("group_id",groupID);
                 startActivity(r);
                 break;
 
             case R.id.new_task:
                 Intent m = new Intent(this,New_Task_Acitivty.class);
+                m.putExtra("group_id",groupID);
                 startActivity(m);
                 break;
 
