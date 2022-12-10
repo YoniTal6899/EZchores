@@ -16,7 +16,7 @@
             android:id="@+id/group_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="35dp"
+            android:layout_marginTop="5dp"
             android:text="@string/group_name"
             android:textSize="30sp"
             android:textStyle="bold"
@@ -77,45 +77,39 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:maxImageSize="45dp" />
 
-        <ProgressBar
-            android:id="@+id/goal_1"
-            style="?android:attr/progressBarStyleHorizontal"
+        <LinearLayout
+            android:id="@+id/goals_lay"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:visibility="visible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.05"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:minHeight="120dp"
+            android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@id/goals"
-            app:trackColor="@color/white"
-            app:trackThickness="18dp" />
-        <ProgressBar
-            android:id="@+id/goal_2"
-            style="?android:attr/progressBarStyleHorizontal"
+            >
+
+            <ListView
+                android:id="@+id/goals_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tasks_lay"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:visibility="visible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.05"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/goal_1"
-            app:trackColor="@color/white"
-            app:trackThickness="18dp" />
-        <ProgressBar
-            android:id="@+id/goal_3"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:visibility="visible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.05"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/goal_2"
-            app:trackColor="@color/white"
-            app:trackThickness="18dp" />
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:minHeight="120dp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/tasks_view"
+            >
+
+            <ListView
+                android:id="@+id/tasks_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tasks_view"
@@ -128,7 +122,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.05"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/goal_3" />
+            app:layout_constraintTop_toBottomOf="@id/goals_lay" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/new_task"
@@ -144,189 +138,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:maxImageSize="45dp" />
 
-        <TextView
-            android:id="@+id/task_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:text="@string/task_1_content"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.05"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tasks_view" />
 
-        <TextView
-            android:id="@+id/val_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="15dp"
-            android:text="@string/_0"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@id/task_1"
-            app:layout_constraintTop_toBottomOf="@id/tasks_view" />
-
-        <ImageView
-            android:id="@+id/imageView1"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="19dp"
-            android:scaleType="fitXY"
-            app:layout_constraintStart_toEndOf="@id/val_1"
-            app:layout_constraintTop_toBottomOf="@id/tasks_view"
-            app:srcCompat="@drawable/coins"
-            android:contentDescription="@string/coins" />
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/p1_photo"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/person"
-            app:backgroundTint="@color/white"
-            app:fabCustomSize="40dp"
-            app:layout_constraintEnd_toStartOf="@id/member1name"
-            app:layout_constraintTop_toTopOf="@id/task_1"
-            app:maxImageSize="40dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginTop="-10dp"/>
-
-        <TextView
-            android:id="@+id/member1name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="name1"
-            android:layout_marginEnd="10dp"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/p1_photo" />
-
-        <TextView
-            android:id="@+id/task_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:text="Task 2 content"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.05"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/task_1" />
-
-        <TextView
-            android:id="@+id/val_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="15dp"
-            android:text="@string/_0"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@id/task_1"
-            app:layout_constraintTop_toBottomOf="@id/task_1" />
-
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="19dp"
-            android:scaleType="fitXY"
-            app:layout_constraintStart_toEndOf="@id/val_1"
-            app:layout_constraintTop_toBottomOf="@id/task_1"
-            app:srcCompat="@drawable/coins"
-            android:contentDescription="@string/coins" />
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/p2_photo"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/person"
-            app:backgroundTint="@color/white"
-            app:fabCustomSize="40dp"
-            app:layout_constraintEnd_toStartOf="@id/member1name"
-            app:layout_constraintTop_toTopOf="@id/task_2"
-            app:maxImageSize="40dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginTop="-10dp"/>
-
-        <TextView
-            android:id="@+id/member2name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="name2"
-            android:layout_marginEnd="10dp"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/p2_photo" />
-
-        <TextView
-            android:id="@+id/task_3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:text="Task 3 content"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.05"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/task_2" />
-
-        <TextView
-            android:id="@+id/val_3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="15dp"
-            android:text="@string/_0"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@id/task_3"
-            app:layout_constraintTop_toBottomOf="@id/task_2" />
-
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="19dp"
-            android:scaleType="fitXY"
-            app:layout_constraintStart_toEndOf="@id/val_3"
-            app:layout_constraintTop_toBottomOf="@id/task_2"
-            app:srcCompat="@drawable/coins"
-            android:contentDescription="@string/coins" />
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/p3_photo"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/person"
-            app:backgroundTint="@color/white"
-            app:fabCustomSize="40dp"
-            app:layout_constraintEnd_toStartOf="@id/member3name"
-            app:layout_constraintTop_toTopOf="@id/task_3"
-            app:maxImageSize="40dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginTop="-10dp"
-            />
-
-        <TextView
-            android:id="@+id/member3name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="name3"
-            android:layout_marginEnd="10dp"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/p3_photo" />
 
 
         <androidx.appcompat.widget.AppCompatButton
@@ -340,6 +152,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/task_1" />
+            app:layout_constraintTop_toBottomOf="@id/tasks_lay" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

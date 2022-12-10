@@ -8,44 +8,52 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
+import com.google.android.gms.auth.api.identity.GetSignInIntentRequest;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class Group_User_Activity extends AppCompatActivity implements View.OnClickListener {
     // Declaration of the .xml file
     Button to_gr;
-    ListView task_list,goals_list;
-    FloatingActionButton shop, group_info;
+    ListView task_list, goals_list;
+    FloatingActionButton shop;
     int counter = 0;
+    String groupId;
+    String groupName;
+    TextView groupn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_user);
+        String id_name = (String) getIntent().getSerializableExtra("ID_name");
+        groupName = id_name.split(",")[1];
+        groupId = id_name.split(",")[0];
+        groupn = (TextView) findViewById(R.id.group_name);
+        groupn.setText(groupName);
 
-        String[] tasks={"task1","task2","task3"};
-        String[] goals={"goal1","goal2","goal3"};
-        String[] points ={"10","20","30"};
-        ProgressBar[] bars={new ProgressBar(this),new ProgressBar(this), new ProgressBar(this)};
-        CustomAdapter task_adp,goals_adp;
+
+
+        String[] tasks = {"task1", "task2", "task3"};
+        String[] goals = {"goal1", "goal2", "goal3"};
+        String[] points = {"10", "20", "30"};
+        ProgressBar[] bars = {new ProgressBar(this), new ProgressBar(this), new ProgressBar(this)};
+        CustomAdapter task_adp, goals_adp;
 
         // Init of the .xml file
         to_gr = (Button) findViewById(R.id.back_to_groups);
         shop = (FloatingActionButton) findViewById(R.id.shopping_list);
-        group_info = (FloatingActionButton) findViewById(R.id.group_info);
-        task_list=(ListView)findViewById(R.id.tasks_list);
-        goals_list=(ListView)findViewById(R.id.goals_list);
-        task_adp= new CustomAdapter(getApplicationContext(),tasks,points,null,'t');
-        goals_adp= new CustomAdapter(getApplicationContext(),goals,null,bars,'g');
+        task_list = (ListView) findViewById(R.id.tasks_list);
+        goals_list = (ListView) findViewById(R.id.goals_list);
+        task_adp = new CustomAdapter(getApplicationContext(), tasks, points, null, 't');
+        goals_adp = new CustomAdapter(getApplicationContext(), goals, null, bars, 'g');
         task_list.setAdapter(task_adp);
         goals_list.setAdapter(goals_adp);
 
         // Listeners
         to_gr.setOnClickListener(this);
         shop.setOnClickListener(this);
-        group_info.setOnClickListener(this);
-
-        //pb_example(); // Example to fill progress bar using timer
 
     }
 
@@ -62,13 +70,8 @@ public class Group_User_Activity extends AppCompatActivity implements View.OnCli
                 Intent j = new Intent(this, Shopping_List_Activity.class);
                 startActivity(j);
                 break;
-
-            case R.id.group_info:
-                Intent k = new Intent(this, Group_Info_Activity.class);
-                startActivity(k);
         }
     }
-
 
 
 }
