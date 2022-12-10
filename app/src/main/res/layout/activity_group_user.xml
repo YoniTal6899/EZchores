@@ -10,7 +10,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/group_name"
@@ -38,18 +38,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:maxImageSize="45dp" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/group_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="45dp"
-            android:layout_marginTop="19dp"
-            android:contentDescription="@string/_0"
-            android:src="@drawable/person"
-            app:backgroundTint="@color/white"
-            app:layout_constraintStart_toEndOf="@id/group_name"
-            app:layout_constraintTop_toTopOf="parent"
-            app:maxImageSize="45dp" />
 
         <TextView
             android:id="@+id/goals"
@@ -64,92 +52,68 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/shopping_list" />
 
-        <ProgressBar
-            android:id="@+id/goal_1"
-            style="?android:attr/progressBarStyleHorizontal"
+        <LinearLayout
+            android:id="@+id/golas_lay"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:visibility="visible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.05"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:minHeight="170dp"
+            android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@id/goals"
-            app:trackColor="@color/white"
-            app:trackThickness="48dp" />
+            >
 
-        <TextView
-            android:id="@+id/tasks_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:text="@string/uncompleted_tasks"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.05"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/goal_1" />
+            <ListView
+                android:id="@+id/goals_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/task_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:text="@string/task_1_content"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.05"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tasks_view" />
+            <TextView
+                android:id="@+id/tasks_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="@string/uncompleted_tasks"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.05"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/golas_lay" />
 
-        <TextView
-            android:id="@+id/val_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="15dp"
-            android:text="@string/_0"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@id/task_1"
-            app:layout_constraintTop_toBottomOf="@id/tasks_view" />
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="19dp"
-            android:scaleType="fitXY"
-            app:layout_constraintStart_toEndOf="@id/val_1"
+        <LinearLayout
+            android:id="@+id/task_lay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:minHeight="170dp"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@id/tasks_view"
-            app:srcCompat="@drawable/coins"
-            android:contentDescription="@string/coins" />
+            app:layout_constraintBottom_toTopOf="@+id/back_to_groups">
 
-        <CheckBox
-            android:id="@+id/done_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="-70dp"
-            android:layout_marginTop="5dp"
-            android:text=""
-            app:layout_constraintStart_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tasks_view" />
+
+
+            <ListView
+                android:id="@+id/tasks_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+
+        </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/back_to_groups"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="140dp"
+            android:layout_marginTop="14dp"
             android:background="@color/black"
             android:text="@string/back_to_groups"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/task_1" />
+            app:layout_constraintTop_toBottomOf="@id/task_lay" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

@@ -1,48 +1,92 @@
 package com.example.ezchores;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
+import com.google.firebase.database.ValueEventListener;
 
-public class New_Task_Acitivty extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicReference;
+
+public class New_Task_Acitivty extends AppCompatActivity implements View.OnClickListener {
 
     // Declaration of .xml file widgets
     EditText name, val, comments;
-    Button back, create;
-    FloatingActionButton icon;
-    Spinner s;
+    Button back, create, refreshUsers;
+
+    String groupID,groupName;
+
+    //DB
+    DatabaseReference ref;
+    String[] listOfusers;
+    String[] listOfuserIDs;
+
+    AutoCompleteTextView autoCompleteTextView;
+    ArrayAdapter<String> adapterItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_task_acitivty);
-
+        String[] groupInfo = getIntent().getSerializableExtra("ID_name").toString().split(",");
+        groupID = groupInfo[0];
+        groupName = groupInfo[1];
         // Init .xml widgets
         back = (Button) findViewById(R.id.back_to_groups);
-        create = (Button) findViewById(R.id.add_goal);
-        icon = (FloatingActionButton) findViewById(R.id.task_icn);
+        create = (Button) findViewById(R.id.create_task);
         name = (EditText) findViewById(R.id.Task_name);
         val = (EditText) findViewById(R.id.Task_val);
         comments = (EditText) findViewById(R.id.comments);
-        s=(Spinner)findViewById(R.id.members_assign);
+        refreshUsers = (Button) findViewById(R.id.refreshUsers);
+
 
         // Listeners
         back.setOnClickListener(this);
         create.setOnClickListener(this);
-        icon.setOnClickListener(this);
+        refreshUsers.setOnClickListener(this);
 
-        DropDown(); // DropDown example
+        // DB
+        ref = FirebaseDatabase.getInstance().getReference();
+        ;
+        GetUsersFromDB();
+        DropDown();
+    }
 
+    private void GetUsersFromDB() {
+        ref.child("Groups").child(groupID).child("Friends").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                HashMap<String, Object> list = snapshot.getValue(new GenericTypeIndicator<HashMap<String, Object>>() {
+                });
+                int numOfUsers = list.keySet().size();
+                listOfusers = new String[numOfUsers];
+                listOfuserIDs = new String[numOfUsers];
+                int i = 0;
+                for (String userId : list.keySet()) {
+                    listOfusers[i] = i+") "+list.get(userId).toString();
+                    listOfuserIDs[i] = userId;
+                    i++;
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
     }
 
     // Override the 'onClick' method, divided by button id
@@ -54,15 +98,13 @@ public class New_Task_Acitivty extends AppCompatActivity implements View.OnClick
                 startActivity(BTGR);
                 break;
 
-            case R.id.add_goal:
+            case R.id.create_task:
                 // Needs to save into the DB the values in the EditText's [name, val, comments]
-                Intent CRG = new Intent(this, Group_Admin_Activity.class);
-                startActivity(CRG);
+                createTask();
                 break;
-
-            case R.id.task_icn:
-                // Needs to open logo options
-                break;
+            case R.id.refreshUsers:
+                GetUsersFromDB();
+                DropDown();
 
             default:
                 break;
@@ -70,20 +112,55 @@ public class New_Task_Acitivty extends AppCompatActivity implements View.OnClick
 
     }
 
-    private void DropDown(){
-        ArrayAdapter<CharSequence> adapter= ArrayAdapter.createFromResource(this,R.array.task_assignee, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        s.setAdapter(adapter);
-        s.setOnItemSelectedListener(this);
+
+    private void DropDown() {
+        autoCompleteTextView = findViewById(R.id.auto_complete_txt);
+        if (listOfusers != null) {
+            adapterItems = new ArrayAdapter<String>(this, R.layout.list_item, listOfusers);
+            System.out.println("Users: " + listOfusers);
+        } else {
+            adapterItems = new ArrayAdapter<String>(this, R.layout.list_item);
+            System.out.println("list is null!");
+        }
+        autoCompleteTextView.setAdapter(adapterItems);
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        String text=adapterView.getItemAtPosition(i).toString();
-        Toast.makeText(adapterView.getContext(),text,Toast.LENGTH_SHORT).show();
-    }
+    private void createTask() {
+        String taskName = name.getText().toString();
+        String comment = comments.getText().toString();
+        String value = val.getText().toString();
+        String[] assign = autoCompleteTextView.getText().toString().split("\\)");
+        int assignIndex;
+        try {
+            assignIndex = Integer.parseInt(assign[0]);
+        } catch (Exception e){
+            Toast.makeText(New_Task_Acitivty.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        String assignID = listOfuserIDs[assignIndex];
+        if (value.equals("")||taskName.equals("")||comment.equals("")||assignID==null){
+            Toast.makeText(New_Task_Acitivty.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        int numVal = 0;
+        try {
+            numVal = Integer.parseInt(value);
+            if (numVal < 0) {
+                Toast.makeText(New_Task_Acitivty.this, "Value should be a whole, non-negative number", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        } catch (Exception e) {
+            Toast.makeText(New_Task_Acitivty.this, "Value should be a whole, non-negative number", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
+        myTask task = new myTask(numVal, taskName, comment, assignID);
+        String taskID = ref.child("Groups").child(groupID).child("Tasks").push().getKey();
+        ref.child("Groups").child(groupID).child("Tasks").child(taskID).setValue(task);
+        ref.child("Users").child(assignID).child("MyTasks").child(taskID).setValue(groupID);
+        Toast.makeText(New_Task_Acitivty.this, "Task added successfully", Toast.LENGTH_SHORT).show();
+        Intent CRG = new Intent(this, Group_Admin_Activity.class);
+        CRG.putExtra("ID_name",groupID+","+groupName);
+        startActivity(CRG);
     }
 }

@@ -9,13 +9,11 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
-
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,37 +21,31 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class My_Groups_Activity extends Activity implements View.OnClickListener  {
+public class My_Groups_Activity extends Activity implements View.OnClickListener {
 
     // Buttons & TextViews
     Button add_group, personal_info;
-    private TextView gr_1, gr_2;
-  private FirebaseAuth firebaseAuth;
+    private FirebaseAuth firebaseAuth;
+    ListView listview;
+    String groupName,groupID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_groups);
 
-        // Init Buttons & TextViews
 
         add_group = (Button) findViewById(R.id.add_group);
         personal_info = (Button) findViewById(R.id.personal_info);
-//        gr_1 = (TextView) findViewById(R.id.group_1);
-//        gr_2 = (TextView) findViewById(R.id.group_2);
 
-        // Listeners
-//        gr_1.setOnTouchListener(this);
-//        gr_2.setOnTouchListener(this);
         add_group.setOnClickListener((View.OnClickListener) this);
         personal_info.setOnClickListener((View.OnClickListener) this);
         firebaseAuth = FirebaseAuth.getInstance();
-        ListView listview = findViewById(R.id.listview);
+        listview = findViewById(R.id.listview);
         String UserId = firebaseAuth.getCurrentUser().getUid();
 
         List<String> listGroupid = new ArrayList<>();
@@ -66,70 +58,75 @@ public class My_Groups_Activity extends Activity implements View.OnClickListener
 
                 HashMap<String, Object> list = snapshot.getValue(new GenericTypeIndicator<HashMap<String, Object>>() {
                 });
-                for (String name : list.keySet()) {
-                    String key = name.toString();
-                    String value = list.get(key).toString();
+                try {
+                    for (String name : list.keySet()) {
+                        String key = name.toString();
+                        String value = list.get(key).toString();
+                        listGroupid.add(key);
+                        listGroupname.add(value);
 
-                    listGroupid.add(value);
-
+                    }
+                    ArrayAdapter arrayAdapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, listGroupname);
+                    listview.setAdapter(arrayAdapter);
+                } catch (Exception e) {
+                    System.out.println("error " + e);
                 }
-                ArrayAdapter arrayAdapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, listGroupid);
-                listview.setAdapter(arrayAdapter);
+
+                listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+                        Toast.makeText(My_Groups_Activity.this, "you click group name:" + listGroupname.get(position), Toast.LENGTH_SHORT).show();
+                        String UserId = firebaseAuth.getCurrentUser().getUid();
+
+                        DatabaseReference refGroup = FirebaseDatabase.getInstance().getReference("Groups").child(listGroupid.get(position)).child("admins");
+                        refGroup.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                HashMap<String, Object> admins = snapshot.getValue(new GenericTypeIndicator<HashMap<String, Object>>() {
+                                });
+
+//                                    for(String usId :admins.keySet()){
+//                                        String tempId=usId;
+//                                        String admin_name=admins.get(usId).toString();
+//
+//                                    }
+                                System.out.println("Userid: " + UserId);
+                                System.out.println("admins: " + snapshot);
+                                if (!admins.containsKey(UserId)) {
+                                    Intent groups2user = new Intent(My_Groups_Activity.this, Group_User_Activity.class);
+                                    groups2user.putExtra("ID_name", listGroupid.get(position)+","+listGroupname.get(position));
+                                    Toast.makeText(My_Groups_Activity.this, "user permission", Toast.LENGTH_SHORT).show();
+                                    startActivity(groups2user);
+                                } else {
+
+                                    Intent groups2admin = new Intent(My_Groups_Activity.this, Group_Admin_Activity.class);
+                                    groups2admin.putExtra("ID_name", listGroupid.get(position)+","+listGroupname.get(position));
+                                    Toast.makeText(My_Groups_Activity.this, "admin permission", Toast.LENGTH_SHORT).show();
+                                    startActivity(groups2admin);
+                                }
+
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                Toast.makeText(My_Groups_Activity.this, "something went wrong try again...   ):", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(My_Groups_Activity.this, My_Groups_Activity.class));
+                            }
+                        });
+                    }
+                });
             }
+
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
-//        DatabaseReference refgroup = FirebaseDatabase.getInstance().getReference("Groups");
-//        refgroup.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                HashMap<String, Object> list = snapshot.getValue(new GenericTypeIndicator<HashMap<String, Object>>() {
-//                });
-//                for (String name : list.keySet()) {
-//                    String key = name.toString();
-//                    if (listGroupid.contains(key)) {
-//                        listGroupname.add(snapshot.child(key).child("name").getValue().toString());
-//                    }
-//
-//                }
-//                ArrayAdapter arrayAdapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, listGroupname);
-//                listview.setAdapter(arrayAdapter);
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-
-//
-
-        // Override the 'onClick' method, divided by button id
-
-
-        // Override the 'onTouch' method, divided by TextView id
-//    @Override
-//    public boolean onTouch(View v, MotionEvent event) {
-////        switch (v.getId()) {
-////            case R.id.group_1:
-////                Intent GR1U = new Intent(this, Group_User_Activity.class);
-////                startActivity(GR1U);
-////                break;
-////
-////            case R.id.group_2:
-////                Intent GR2A = new Intent(this, Group_Admin_Activity.class);
-////                startActivity(GR2A);
-////                break;
-////        }
-//        return true;
-//    }
-
 
     }
+
 
     @Override
     public void onClick(View view) {
@@ -147,5 +144,6 @@ public class My_Groups_Activity extends Activity implements View.OnClickListener
             default:
                 break;
         }
+
     }
 }

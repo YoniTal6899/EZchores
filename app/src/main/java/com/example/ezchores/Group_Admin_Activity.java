@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -13,14 +16,33 @@ public class Group_Admin_Activity extends AppCompatActivity implements View.OnCl
     // Declaration of .xml widgets
     Button back_to_groups;
     FloatingActionButton shop,group_info, add_goal, add_task;
+    String groupID;
+    String groupName;
+    TextView groupn;
+    ListView task,goals;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_admin);
-
+        String id_name=(String) getIntent().getSerializableExtra("ID_name");
+        groupName=id_name.split(",")[1];
+        groupn=(TextView)findViewById(R.id.group_name);
+        groupn.setText(groupName);
+        groupID=id_name.split(",")[0];
+        ProgressBar[] bars={new ProgressBar(this),new ProgressBar(this), new ProgressBar(this)};
+        String[] goals_names={"goal1","goal2","goal3"};
+        String[] points ={"10","20","30"};
+        String[] tasks_names={"task1","task2","task3"};
+        CustomAdapter goals_adp,task_adp;
         // Init buttons
         back_to_groups=(Button)findViewById(R.id.back_to_groups);
+        goals=(ListView)findViewById(R.id.goals_list);
+        task=(ListView)findViewById(R.id.tasks_list);
+        goals_adp= new CustomAdapter(getApplicationContext(),goals_names,null,bars,'g');
+        task_adp=new CustomAdapter(getApplicationContext(),tasks_names,points,null,'t');
+        goals.setAdapter(goals_adp);
+        task.setAdapter(task_adp);
         shop=(FloatingActionButton) findViewById(R.id.shopping_list);
         group_info=(FloatingActionButton)findViewById(R.id.group_info);
         add_goal=(FloatingActionButton)findViewById(R.id.new_goal);
@@ -32,12 +54,15 @@ public class Group_Admin_Activity extends AppCompatActivity implements View.OnCl
         group_info.setOnClickListener(this);
         add_task.setOnClickListener(this);
         add_goal.setOnClickListener(this);
+
+
     }
 
     // Override the 'onClick' method, divided by button id
     @Override
     public void onClick(View v)
     {
+        String id_name=groupID+","+groupName;
         switch (v.getId())
         {
             case R.id.back_to_groups:
@@ -47,21 +72,25 @@ public class Group_Admin_Activity extends AppCompatActivity implements View.OnCl
 
             case R.id.shopping_list:
                 Intent j = new Intent(this,Shopping_List_Activity.class);
+                j.putExtra("ID_name",id_name);
                 startActivity(j);
                 break;
 
             case R.id.group_info:
                 Intent k = new Intent(this,Group_Info_Activity.class);
+                k.putExtra("ID_name",id_name);
                 startActivity(k);
                 break;
 
             case R.id.new_goal:
                 Intent r = new Intent(this,New_Goal_Activity.class);
+                r.putExtra("ID_name",id_name);
                 startActivity(r);
                 break;
 
             case R.id.new_task:
                 Intent m = new Intent(this,New_Task_Acitivty.class);
+                m.putExtra("ID_name",id_name);
                 startActivity(m);
                 break;
 
