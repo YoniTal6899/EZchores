@@ -62,6 +62,7 @@ public class Group_Admin_Activity extends AppCompatActivity implements View.OnCl
     @Override
     public void onClick(View v)
     {
+        String id_name=groupID+","+groupName;
         switch (v.getId())
         {
             case R.id.back_to_groups:
@@ -71,25 +72,25 @@ public class Group_Admin_Activity extends AppCompatActivity implements View.OnCl
 
             case R.id.shopping_list:
                 Intent j = new Intent(this,Shopping_List_Activity.class);
+                j.putExtra("ID_name",id_name);
                 startActivity(j);
                 break;
 
             case R.id.group_info:
                 Intent k = new Intent(this,Group_Info_Activity.class);
-                String id_name=groupID+","+groupName;
                 k.putExtra("ID_name",id_name);
                 startActivity(k);
                 break;
 
             case R.id.new_goal:
                 Intent r = new Intent(this,New_Goal_Activity.class);
-                r.putExtra("group_id",groupID);
+                r.putExtra("ID_name",id_name);
                 startActivity(r);
                 break;
 
             case R.id.new_task:
                 Intent m = new Intent(this,New_Task_Acitivty.class);
-                m.putExtra("group_id",groupID);
+                m.putExtra("ID_name",id_name);
                 startActivity(m);
                 break;
 
