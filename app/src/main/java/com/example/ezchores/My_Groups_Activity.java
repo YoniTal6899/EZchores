@@ -31,7 +31,8 @@ public class My_Groups_Activity extends Activity implements View.OnClickListener
     Button add_group, personal_info;
     private FirebaseAuth firebaseAuth;
     ListView listview;
-    String groupName,groupID;
+    String UserId,userName,current_points,mail;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,11 +47,31 @@ public class My_Groups_Activity extends Activity implements View.OnClickListener
         personal_info.setOnClickListener((View.OnClickListener) this);
         firebaseAuth = FirebaseAuth.getInstance();
         listview = findViewById(R.id.listview);
-        String UserId = firebaseAuth.getCurrentUser().getUid();
+        UserId = firebaseAuth.getCurrentUser().getUid();
+
+
+
 
         List<String> listGroupid = new ArrayList<>();
         List<String> listGroupname = new ArrayList<>();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+        ref.child("Users").child(UserId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                userName = snapshot.child("name").getValue().toString();
+                current_points = snapshot.child("curr_points").getValue().toString();
+                mail = snapshot.child("email").getValue().toString();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
         DatabaseReference refUSer = FirebaseDatabase.getInstance().getReference("Users").child(UserId).child("Groups");
         refUSer.addValueEventListener(new ValueEventListener() {
             @Override
@@ -84,12 +105,6 @@ public class My_Groups_Activity extends Activity implements View.OnClickListener
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 HashMap<String, Object> admins = snapshot.getValue(new GenericTypeIndicator<HashMap<String, Object>>() {
                                 });
-
-//                                    for(String usId :admins.keySet()){
-//                                        String tempId=usId;
-//                                        String admin_name=admins.get(usId).toString();
-//
-//                                    }
                                 System.out.println("Userid: " + UserId);
                                 System.out.println("admins: " + snapshot);
                                 if (!admins.containsKey(UserId)) {
@@ -137,7 +152,8 @@ public class My_Groups_Activity extends Activity implements View.OnClickListener
                 break;
 
             case R.id.personal_info:
-                Intent j = new Intent(this, Personal_Info_Activity.class);
+                Intent j = new Intent(this, Personal_Info_Activity.class);;
+                j.putExtra("Uid_name_email_currpoints",UserId+","+userName+","+mail+","+current_points);
                 startActivity(j);
                 break;
 
