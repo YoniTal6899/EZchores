@@ -112,5 +112,6 @@ public class Create_Group_Activity extends AppCompatActivity implements View.OnC
 
         ref.child("Groups").child(groupkey).setValue(group);// groups-> new group key->set data
         ref.child("Groups").child(groupkey).child("admins").child(UserId).setValue(username);
+        ref.child("Groups").child(groupkey).child("Friends").child(UserId).setValue(username);
     }
 }

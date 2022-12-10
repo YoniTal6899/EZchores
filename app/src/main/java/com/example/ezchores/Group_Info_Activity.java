@@ -172,7 +172,7 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(Group_Info_Activity.this, "Member doesn't exist :(", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Group_Info_Activity.this, "Something went wrong :(", Toast.LENGTH_SHORT).show();
 
             }
         });
