@@ -25,7 +25,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.auth.User;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -64,6 +64,7 @@ public class My_Groups_Activity extends Activity implements View.OnClickListener
 
                 HashMap<String, Object> list = snapshot.getValue(new GenericTypeIndicator<HashMap<String, Object>>() {
                 });
+                try{
                 for (String name : list.keySet()) {
                     String key = name.toString();
                     String value = list.get(key).toString();
@@ -72,7 +73,10 @@ public class My_Groups_Activity extends Activity implements View.OnClickListener
 
                 }
                 ArrayAdapter arrayAdapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, listGroupname);
-                listview.setAdapter(arrayAdapter);
+                listview.setAdapter(arrayAdapter);}
+                catch (Exception e){
+                    System.out.println("error "+e);
+                }
 
                 listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
