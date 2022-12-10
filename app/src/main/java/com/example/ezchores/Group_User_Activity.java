@@ -11,9 +11,6 @@ import android.widget.ProgressBar;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 public class Group_User_Activity extends AppCompatActivity implements View.OnClickListener {
     // Declaration of the .xml file
     Button to_gr;
