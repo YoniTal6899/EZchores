@@ -96,6 +96,7 @@ public class New_Goal_Activity extends AppCompatActivity implements View.OnClick
         switch (v.getId()) {
             case R.id.back_to_groups:
                 Intent i = new Intent(this, Group_Admin_Activity.class);
+                i.putExtra("ID_name",groupID+","+groupName);
                 startActivity(i);
                 break;
 

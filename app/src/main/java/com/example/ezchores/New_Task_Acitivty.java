@@ -93,7 +93,8 @@ public class New_Task_Acitivty extends AppCompatActivity implements View.OnClick
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.back_to_groups:
-                Intent BTGR = new Intent(this, My_Groups_Activity.class);
+                Intent BTGR = new Intent(this, Group_Admin_Activity.class);
+                BTGR.putExtra("ID_name",groupID+","+groupName);
                 startActivity(BTGR);
                 break;
 
