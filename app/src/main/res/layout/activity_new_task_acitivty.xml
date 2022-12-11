@@ -99,21 +99,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textField" />
 
-        <EditText
-            android:id="@+id/comments"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:ems="10"
-            android:hint="Comments"
-            android:inputType="text"
-            android:minHeight="48dp"
-            android:textColorHint="#5D4037"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.303"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/refreshUsers"
-            tools:ignore="Autofill" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/create_task"
@@ -126,7 +111,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/comments" />
+            app:layout_constraintTop_toBottomOf="@id/refreshUsers" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

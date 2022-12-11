@@ -7,8 +7,7 @@ public class myTask {
     private int point;
     private String name,comment,assignID;
 
-    public myTask(int point, String name,String comment,String assignID) {
-        this.comment = comment;
+    public myTask(int point, String name ,String assignID) {
         this.point = point;
         this.name = name;
         this.assignID = assignID;

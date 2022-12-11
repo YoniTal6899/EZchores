@@ -60,24 +60,6 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
         add_mem.setOnClickListener(this);
         group_name.setText(groupName);
         myUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-//        try {
-//            ref.child("Groups").child(groupID).child("name").addValueEventListener(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                    group_name.setText(snapshot.getValue().toString());
-//                }
-//
-//                @Override
-//                public void onCancelled(@NonNull DatabaseError error) {
-//
-//                }
-//            });
-//        }catch (Exception e){
-//            Toast.makeText(Group_Info_Activity.this, "on create Something went wrong :(", Toast.LENGTH_SHORT).show();
-//
-//        }
-
-
     }
 
 
@@ -86,7 +68,7 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.to_gr:
-                Intent myGroups = new Intent(this, My_Groups_Activity.class);
+                Intent myGroups = new Intent(this, Group_Admin_Activity.class);
                 myGroups.putExtra("ID_name",groupID+"," + groupName);
                 startActivity(myGroups);
                 break;
@@ -112,6 +94,9 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
             case R.id.add_member:
                 String new_mem_email= mem_email.getText().toString();
                 addFriend(new_mem_email);
+                Intent i = new Intent(this, Group_Info_Activity.class);
+                i.putExtra("ID_name",groupID+"," + groupName);
+                startActivity(i);
                 break;
             default:
                 break;
@@ -173,7 +158,6 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(Group_Info_Activity.this, "Something went wrong :(", Toast.LENGTH_SHORT).show();
-
             }
         });
 

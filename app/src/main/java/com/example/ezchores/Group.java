@@ -13,10 +13,7 @@ public class Group {
 
     // constructor
     public Group( String name ) {
-
         this.name = name;
-
-        //this.admin_id=admin_id;
     }
     public Group(){};
 
