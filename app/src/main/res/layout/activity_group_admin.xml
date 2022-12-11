@@ -25,18 +25,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/shopping_list"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="19dp"
-            android:contentDescription="@string/_0"
-            android:src="@drawable/shopping_cart"
-            app:backgroundTint="@color/white"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:maxImageSize="45dp" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/group_info"
@@ -62,7 +50,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.05"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/shopping_list" />
+            app:layout_constraintTop_toBottomOf="@id/group_name" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/new_goal"
