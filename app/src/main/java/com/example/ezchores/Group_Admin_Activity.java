@@ -26,11 +26,12 @@ import java.util.HashMap;
 public class Group_Admin_Activity extends AppCompatActivity implements View.OnClickListener {
     // Declaration of .xml widgets
     Button back_to_groups;
-    CustomAdapter goals_adp, task_adp;
+
     FloatingActionButton shop, group_info, add_goal, add_task;
     String groupID;
     String groupName;
     TextView groupn;
+    CustomAdapter goals_adp, task_adp;
     ListView task, goals;
     DatabaseReference ref;
     ArrayList<String> points = new ArrayList<>();
