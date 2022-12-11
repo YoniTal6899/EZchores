@@ -42,6 +42,10 @@ public class Group_Admin_Activity extends AppCompatActivity implements View.OnCl
     ArrayList<String> taskId = new ArrayList<>();
     int curr_userPoints;
 
+    ArrayList<String> goals_names = new ArrayList<>();
+    ArrayList<ProgressBar> bars = new ArrayList<>();
+    ArrayList<Integer> goal_prog= new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,15 +55,24 @@ public class Group_Admin_Activity extends AppCompatActivity implements View.OnCl
         groupn = (TextView) findViewById(R.id.group_name);
         groupn.setText(groupName);
         groupID = id_name.split(",")[0];
-        ProgressBar[] bars = {new ProgressBar(this), new ProgressBar(this), new ProgressBar(this)};
-        String[] goals_names = {"goal1", "goal2", "goal3"};
+
         userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        shop = (FloatingActionButton) findViewById(R.id.shopping_list);
+        group_info = (FloatingActionButton) findViewById(R.id.group_info);
+        add_goal = (FloatingActionButton) findViewById(R.id.new_goal);
+        add_task = (FloatingActionButton) findViewById(R.id.new_task);
 
         // Init buttons
-        back_to_groups = (Button) findViewById(R.id.back_to_groups);
-        goals = (ListView) findViewById(R.id.goals_list);
-        task = (ListView) findViewById(R.id.tasks_list);
         ref = FirebaseDatabase.getInstance().getReference();
+        back_to_groups = (Button) findViewById(R.id.back_to_groups);
+        // Listeners
+        back_to_groups.setOnClickListener(this);
+        shop.setOnClickListener(this);
+        group_info.setOnClickListener(this);
+        add_task.setOnClickListener(this);
+        add_goal.setOnClickListener(this);
+        task = (ListView) findViewById(R.id.tasks_list);
+        goals=(ListView)findViewById(R.id.goals_list);
         ref.child("Groups").child(groupID).child("Tasks").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -72,7 +85,7 @@ public class Group_Admin_Activity extends AppCompatActivity implements View.OnCl
                         points.add(snapshot.child(id).child("point").getValue().toString());
 
                     }
-                    task_adp = new CustomAdapter(getApplicationContext(), tasks_names, points, null, 't');
+                    task_adp = new CustomAdapter(getApplicationContext(), tasks_names, points, null, 't',null);
                     task.setAdapter(task_adp);
                     task.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
@@ -104,7 +117,9 @@ public class Group_Admin_Activity extends AppCompatActivity implements View.OnCl
                     });
 
                 } catch (Exception e) {
-                    Toast.makeText(Group_Admin_Activity.this, "No tasks", Toast.LENGTH_SHORT).show();
+                
+                    e.printStackTrace();
+                    Toast.makeText(Group_Admin_Activity.this, "No Tasks...", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -113,20 +128,43 @@ public class Group_Admin_Activity extends AppCompatActivity implements View.OnCl
 
             }
         });
+
+        ref.child("Groups").child(groupID).child("Goals").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                HashMap<String, Object> goal_list = snapshot.getValue(new GenericTypeIndicator<HashMap<String, Object>>() {
+                });
+                try {
+                    for (String id : goal_list.keySet()) {
+                        double val= (Double.parseDouble( snapshot.child(id).child("value").getValue().toString()));
+                        double curr= (Double.parseDouble(snapshot.child(id).child("currentPoints").getValue().toString()));
+                        goals_names.add(snapshot.child(id).child("name").getValue().toString());
+                        double percent= (curr/val);
+                        percent=percent*100;
+                        bars.add(new ProgressBar(getApplicationContext()));
+                        goal_prog.add((int)percent);
+
+                    }
+                    goals_adp = new CustomAdapter(getApplicationContext(), goals_names, null, bars, 'g',goal_prog);
+                    goals.setAdapter(goals_adp);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(Group_Admin_Activity.this, "No Goals...", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         //goals_adp= new CustomAdapter(getApplicationContext(),goals_names,null,bars,'g');
         //goals.setAdapter(goals_adp);
 
-        shop = (FloatingActionButton) findViewById(R.id.shopping_list);
-        group_info = (FloatingActionButton) findViewById(R.id.group_info);
-        add_goal = (FloatingActionButton) findViewById(R.id.new_goal);
-        add_task = (FloatingActionButton) findViewById(R.id.new_task);
 
-        // Listeners
-        back_to_groups.setOnClickListener(this);
-        shop.setOnClickListener(this);
-        group_info.setOnClickListener(this);
-        add_task.setOnClickListener(this);
-        add_goal.setOnClickListener(this);
 
 
     }
