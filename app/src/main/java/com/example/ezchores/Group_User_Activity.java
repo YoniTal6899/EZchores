@@ -102,7 +102,7 @@ public class Group_User_Activity extends AppCompatActivity implements View.OnCli
                     }
                 }
 
-                    task_adp = new CustomAdapter(getApplicationContext(), tasks_names, points, null, 't');
+                    task_adp = new CustomAdapter(getApplicationContext(), tasks_names, points, null, 't',null);
                     task.setAdapter(task_adp);
 
             }catch (Exception e){
