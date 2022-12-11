@@ -56,46 +56,46 @@
             app:layout_constraintTop_toBottomOf="@id/group_photo"
             tools:ignore="Autofill" />
 
-        <TextView
-            android:id="@+id/invite_members"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="35dp"
-            android:text="@string/invite_members"
-            android:textSize="25sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/group_name" />
+<!--        <TextView-->
+<!--            android:id="@+id/invite_members"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="35dp"-->
+<!--            android:text="@string/invite_members"-->
+<!--            android:textSize="25sp"-->
+<!--            android:textStyle="bold"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.1"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/group_name" />-->
 
-        <EditText
-            android:id="@+id/Email_field"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:ems="10"
-            android:hint="@string/email"
-            android:inputType="textEmailAddress"
-            android:minHeight="48dp"
-            android:textColorHint="#5D4037"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/invite_members"
-            tools:ignore="Autofill" />
+<!--        <EditText-->
+<!--            android:id="@+id/Email_field"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:ems="10"-->
+<!--            android:hint="@string/email"-->
+<!--            android:inputType="textEmailAddress"-->
+<!--            android:minHeight="48dp"-->
+<!--            android:textColorHint="#5D4037"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.1"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/invite_members"-->
+<!--            tools:ignore="Autofill" />-->
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/add_friend"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/_0"
-            android:src="@drawable/add_icon"
-            app:backgroundTint="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/Email_field"
-            app:layout_constraintTop_toBottomOf="@id/invite_members"
-            app:maxImageSize="65dp" />
+<!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--            android:id="@+id/add_friend"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:contentDescription="@string/_0"-->
+<!--            android:src="@drawable/add_icon"-->
+<!--            app:backgroundTint="@color/white"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toEndOf="@id/Email_field"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/invite_members"-->
+<!--            app:maxImageSize="65dp" />-->
 
         <Button
             android:id="@+id/create_group_btn"
@@ -107,7 +107,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/Email_field"
+            app:layout_constraintTop_toBottomOf="@id/group_name"
             tools:ignore="TextContrastCheck" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

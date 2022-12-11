@@ -9,16 +9,11 @@ public class Group {
 
     private ArrayList<myTask> taskList;
     private String name;
-    private int groupSize = 0;
-    private int taskSize = 0;
     private String admin_id;
 
     // constructor
-    public Group( String name , String admin_id) {
-
+    public Group( String name ) {
         this.name = name;
-
-        this.admin_id=admin_id;
     }
     public Group(){};
 
@@ -56,22 +51,6 @@ public class Group {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public int getGroupSize() {
-        return groupSize;
-    }
-
-    public void setGroupSize(int groupSize) {
-        this.groupSize = groupSize;
-    }
-
-    public int getTaskSize() {
-        return taskSize;
-    }
-
-    public void setTaskSize(int taskSize) {
-        this.taskSize = taskSize;
     }
 
 

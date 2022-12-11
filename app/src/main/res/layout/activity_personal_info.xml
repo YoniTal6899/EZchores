@@ -20,69 +20,48 @@
             android:text="@string/user_name"
             android:textColor="@color/black"
             android:textSize="30sp"
+            android:minHeight="100dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/person_photo"
-            android:layout_width="180dp"
-            android:layout_height="180dp"
-            android:layout_marginTop="35dp"
-            android:contentDescription="@string/create_new_group"
-            android:src="@drawable/person"
-            app:backgroundTint="@color/white"
-            app:fabCustomSize="180dp"
-            app:layout_constraintEnd_toEndOf="@id/user_name"
-            app:layout_constraintStart_toStartOf="@id/user_name"
-            app:layout_constraintTop_toBottomOf="@+id/user_name"
-            app:maxImageSize="180dp" />
 
-        <EditText
+        <TextView
             android:id="@+id/new_mail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="24dp"
             android:ems="10"
-            android:hint="@string/email"
             android:inputType="textEmailAddress"
-            android:minHeight="48dp"
+            android:minHeight="200dp"
+            android:minWidth="340dp"
+            android:text="@string/email"
             android:textColorHint="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_bias="0.085"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/person_photo"
-            tools:ignore="Autofill" />
+            app:layout_constraintTop_toBottomOf="@+id/user_name"
+            tools:ignore="Autofill"
+            android:textStyle="bold"
+            android:textSize="15sp"
 
-        <EditText
-            android:id="@+id/new_pass"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:ems="10"
-            android:hint="@string/password"
-            android:inputType="textPassword"
-            android:minHeight="48dp"
-            android:textColorHint="@color/black"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/new_mail"
-            tools:ignore="Autofill" />
+            />
 
         <TextView
             android:id="@+id/total_points_line"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="35dp"
             android:text="@string/total_points_earned"
             android:textSize="25sp"
             android:textStyle="bold"
+            android:minHeight="48dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.1"
+            app:layout_constraintHorizontal_bias="0.085"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/new_pass" />
+            app:layout_constraintTop_toBottomOf="@+id/new_mail"
+            tools:layout_editor_absoluteY="238dp" />
+
 
         <EditText
             android:id="@+id/total_points_num"
@@ -104,32 +83,19 @@
             tools:ignore="Deprecated" />
 
         <Button
-            android:id="@+id/apply_changes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="-10dp"
-            android:text="Apply changes"
-            android:textColor="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/total_points_num"
-            tools:ignore="TextContrastCheck" />
-
-        <Button
             android:id="@+id/log_out"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="-40dp"
-            android:layout_marginTop="-10dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
             android:text="Log Out"
             app:backgroundTint="@color/red"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.6"
-            app:layout_constraintStart_toEndOf="@+id/apply_changes"
-            app:layout_constraintTop_toBottomOf="@id/total_points_num"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintTop_toBottomOf="@+id/total_points_num"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             tools:ignore="TextContrastCheck" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

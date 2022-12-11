@@ -11,6 +11,7 @@ public class User {
    private String password;
    public   ArrayList<Group> groupList;
    public  ArrayList<myTask> taskList;
+   private  int curr_points;
 
 
 
@@ -21,12 +22,22 @@ public class User {
         this.name = name;
         this.email=email;
         this.password=password;
+        this.curr_points = 0;
+
     }
     public String getEmail() {
         return email;
     }
     public String getPassword() {
         return password;
+    }
+
+    public int getCurr_points() {
+        return curr_points;
+    }
+
+    public void setCurr_points(int curr_points) {
+        this.curr_points = curr_points;
     }
 
     public void setPassword(String password) {

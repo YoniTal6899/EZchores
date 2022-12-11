@@ -5,17 +5,26 @@ import java.util.Date;
 public class myTask {
     // parameters
     private int point;
-    private boolean done;
-    private Date date = null;
-    private String name;
+    private String name,comment,assignID;
 
-    public myTask(int point, boolean done, Date date, String name) {
+    public myTask(int point, String name ,String assignID) {
         this.point = point;
-        this.done = done;
-        this.date = date;
         this.name = name;
+        this.assignID = assignID;
     }
     public myTask(){};
+
+    public String getAssignID() {
+        return assignID;
+    }
+
+    public void setAssignID(String assignID) {
+        this.assignID = assignID;
+    }
+
+    public String getComment() {return comment;}
+
+    public void setComment(String comment) {this.comment = comment;}
 
     public int getPoint() {
         return point;
@@ -23,22 +32,6 @@ public class myTask {
 
     public void setPoint(int point) {
         this.point = point;
-    }
-
-    public boolean isDone() {
-        return done;
-    }
-
-    public void setDone(boolean done) {
-        this.done = done;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
     }
 
     public String getName() {
