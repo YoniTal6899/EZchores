@@ -226,7 +226,7 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
 
     private void updateUI(){
         Intent intent = new Intent(this,Group_Info_Activity.class);
-        intent.putExtra("ID_name", groupID+","+group_name);
+        intent.putExtra("ID_name", groupID+","+groupName);
         startActivity(intent);
     }
 
