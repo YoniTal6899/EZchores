@@ -29,7 +29,6 @@ public class Group_User_Activity extends AppCompatActivity implements View.OnCli
     // Declaration of the .xml file
     Button to_gr;
     ListView task_list, goals_list;
-    FloatingActionButton shop;
     int counter = 0;
     String groupId;
     String groupName;
@@ -60,13 +59,11 @@ public class Group_User_Activity extends AppCompatActivity implements View.OnCli
 
         // Init of the .xml file
         to_gr = (Button) findViewById(R.id.back_to_groups);
-        shop = (FloatingActionButton) findViewById(R.id.shopping_list);
         task_list = (ListView) findViewById(R.id.tasks_list);
         goals_list = (ListView) findViewById(R.id.goals_list);
         task = (ListView) findViewById(R.id.tasks_list);
         // Listeners
         to_gr.setOnClickListener(this);
-        shop.setOnClickListener(this);
         ref = FirebaseDatabase.getInstance().getReference();
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         ref.child("Users").child(userId).addValueEventListener(new ValueEventListener() {
@@ -214,10 +211,7 @@ public class Group_User_Activity extends AppCompatActivity implements View.OnCli
                     i.putExtra("ID_name", groupId + "," + groupName);
                     startActivity(i);
                     break;
-
-                case R.id.shopping_list:
-                    Intent j = new Intent(this, Shopping_List_Activity.class);
-                    startActivity(j);
+                default:
                     break;
             }
         }}
