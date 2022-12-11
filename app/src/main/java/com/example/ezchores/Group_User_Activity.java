@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -39,7 +40,7 @@ public class Group_User_Activity extends AppCompatActivity implements View.OnCli
     ArrayList<String> points = new ArrayList<>();
     ArrayList<String> tasks_names = new ArrayList<>();
     String userId;
-    ArrayList<String > taskId=new ArrayList<>();
+    ArrayList<String> taskId = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +62,7 @@ public class Group_User_Activity extends AppCompatActivity implements View.OnCli
         to_gr.setOnClickListener(this);
         shop.setOnClickListener(this);
         ref = FirebaseDatabase.getInstance().getReference();
-        userId= FirebaseAuth.getInstance().getCurrentUser().getUid();
+        userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         ref.child("Users").child(userId).child("MyTasks").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -71,12 +72,11 @@ public class Group_User_Activity extends AppCompatActivity implements View.OnCli
 
 
                     for (String id : listgro.keySet()) {
-                       String tempgroupId= snapshot.child(id).getValue().toString();
-                       if (groupId.equals(tempgroupId)){
-                           taskId.add(id);
-                       }}
-
-
+                        String tempgroupId = snapshot.child(id).getValue().toString();
+                        if (groupId.equals(tempgroupId)) {
+                            taskId.add(id);
+                        }
+                    }
 
 
                 } catch (Exception e) {
@@ -94,31 +94,41 @@ public class Group_User_Activity extends AppCompatActivity implements View.OnCli
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 HashMap<String, Object> listtask = snapshot.getValue(new GenericTypeIndicator<HashMap<String, Object>>() {
                 });
-                try{
-                for(String tempid:listtask.keySet() ){
-                    if(taskId.contains(tempid)){
-                        tasks_names.add(snapshot.child(tempid).child("name").getValue().toString());
-                        points.add(snapshot.child(tempid).child("point").getValue().toString());
+                try {
+                    for (String tempid : listtask.keySet()) {
+                        if (taskId.contains(tempid)) {
+                            tasks_names.add(snapshot.child(tempid).child("name").getValue().toString());
+                            points.add(snapshot.child(tempid).child("point").getValue().toString());
+                        }
                     }
-                }
 
                     task_adp = new CustomAdapter(getApplicationContext(), tasks_names, points, null, 't',null);
                     task.setAdapter(task_adp);
+                    task.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                            String taskID = taskId.get(i);
+                            ref.child("Users").child(userId).child("MyTasks").child(taskID).removeValue();
+                            ref.child("Groups").child(groupId).child("Tasks").child(taskID).removeValue();
+                            Toast.makeText(Group_User_Activity.this, "Successfully completed task:" + tasks_names.get(i), Toast.LENGTH_SHORT).show();
+                            Intent user2user = new Intent(Group_User_Activity.this, Group_User_Activity.class);
+                            user2user.putExtra("ID_name", groupId+","+groupName);
+                            startActivity(user2user);
+                        }
+                    });
 
-            }catch (Exception e){
-                    Toast.makeText(Group_User_Activity.this, "nothing to do..", Toast.LENGTH_SHORT).show();
-                }}
+                } catch (Exception e) {
+                    Toast.makeText(Group_User_Activity.this, "No tasks", Toast.LENGTH_SHORT).show();
+                }
+            }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
-                }
+            }
 
 
         });
-
-
-
 
 
     }
@@ -129,7 +139,7 @@ public class Group_User_Activity extends AppCompatActivity implements View.OnCli
         switch (v.getId()) {
             case R.id.back_to_groups:
                 Intent i = new Intent(this, My_Groups_Activity.class);
-                i.putExtra("ID_name",groupId+","+groupName);
+                i.putExtra("ID_name", groupId + "," + groupName);
                 startActivity(i);
                 break;
 
