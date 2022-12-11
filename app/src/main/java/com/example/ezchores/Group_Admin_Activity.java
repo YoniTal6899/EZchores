@@ -73,6 +73,15 @@ public class Group_Admin_Activity extends AppCompatActivity implements View.OnCl
         add_goal.setOnClickListener(this);
         task = (ListView) findViewById(R.id.tasks_list);
         goals=(ListView)findViewById(R.id.goals_list);
+        ref.child("Users").child(userID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                curr_userPoints = Integer.parseInt(snapshot.child("curr_points").getValue().toString());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        });
         ref.child("Groups").child(groupID).child("Tasks").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -93,19 +102,10 @@ public class Group_Admin_Activity extends AppCompatActivity implements View.OnCl
                             String taskID = taskId.get(i);
                             ref.child("Users").child(userID).child("MyTasks").child(taskID).removeValue();
                             ref.child("Groups").child(groupID).child("Tasks").child(taskID).removeValue();
-                            ref.child("Users").child(userID).addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    curr_userPoints = Integer.parseInt(snapshot.child("curr_points").getValue().toString());
-                                }
 
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {}
-                            });
 
                             // Update points
-                            ref.child("Groups").child(groupID).child("Goals").child("-NIyf6z6Vdch8-Ww6HIS").child("currentPoints").setValue(20);
-                            ref.child("Users").child(userID).child("curr_points").setValue(curr_userPoints+Integer.parseInt(points.get(i)));
+                            ref.child("Users").child(userID).child("curr_points").setValue((curr_userPoints+Integer.parseInt(points.get(i))));
 
 
                             Toast.makeText(Group_Admin_Activity.this, "Successfully completed task:" + tasks_names.get(i), Toast.LENGTH_SHORT).show();

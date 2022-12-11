@@ -43,8 +43,10 @@ public class Group_User_Activity extends AppCompatActivity implements View.OnCli
     ArrayList<ProgressBar> bars = new ArrayList<>();
     String userId;
     ArrayList<String> taskId = new ArrayList<>();
+    int curr_userPoints;
     ArrayList<String> goalID= new ArrayList<>();
     ArrayList<Integer> goal_prog= new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +69,16 @@ public class Group_User_Activity extends AppCompatActivity implements View.OnCli
         shop.setOnClickListener(this);
         ref = FirebaseDatabase.getInstance().getReference();
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        ref.child("Users").child(userId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                curr_userPoints = Integer.parseInt(snapshot.child("curr_points").getValue().toString());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        });
+
 
 
         ref.child("Users").child(userId).child("MyTasks").addValueEventListener(new ValueEventListener() {
@@ -135,6 +147,11 @@ public class Group_User_Activity extends AppCompatActivity implements View.OnCli
                             String taskID = taskId.get(i);
                             ref.child("Users").child(userId).child("MyTasks").child(taskID).removeValue();
                             ref.child("Groups").child(groupId).child("Tasks").child(taskID).removeValue();
+
+                            // Update points
+                            ref.child("Users").child(userId).child("curr_points").setValue((curr_userPoints+Integer.parseInt(points.get(i))));
+
+
                             Toast.makeText(Group_User_Activity.this, "Successfully completed task:" + tasks_names.get(i), Toast.LENGTH_SHORT).show();
                             Intent user2user = new Intent(Group_User_Activity.this, Group_User_Activity.class);
                             user2user.putExtra("ID_name", groupId + "," + groupName);
