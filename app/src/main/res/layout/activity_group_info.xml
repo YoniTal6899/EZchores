@@ -1,127 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="match_parent"
     tools:context=".Group_Info_Activity"
-    android:background="@color/grey">
+    android:background="#f1faee">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toTopOf="@+id/new_group_name_field"
-        app:layout_constraintTop_toTopOf="@+id/new_group_name_field">
+        android:layout_height="wrap_content"
+        android:background="@drawable/titles_bar"
+        android:minHeight="50dp"
+        android:text="@string/group_name"
+        android:textColor="#f1faee"
+        android:textAlignment="center"
+        android:padding="30dp"
+        android:textSize="30dp"
+        />
 
-        <TextView
-            android:id="@+id/group_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="35dp"
-            android:text="group_name"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/to_gr"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:background="@color/black"
-            android:text="BACK"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="@id/group_name"
-            app:layout_constraintEnd_toStartOf="@id/group_name" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/group_photo"
-            android:layout_width="130dp"
-            android:layout_height="130dp"
-            android:layout_marginTop="35dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="15dp"
             android:contentDescription="@string/create_new_group"
             android:src="@drawable/person"
             app:backgroundTint="@color/white"
             app:fabCustomSize="180dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/group_name"
+            android:layout_gravity="center"
             app:maxImageSize="180dp" />
 
         <TextView
             android:id="@+id/group_name_line"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="35dp"
+            android:layout_marginTop="15dp"
             android:text="Edit group name:"
             android:textSize="20sp"
+            android:textColor="#1d3557"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/group_photo" />
+            android:layout_gravity="center" />
 
         <EditText
             android:id="@+id/new_group_name_field"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="15dp"
             android:ems="10"
+            android:layout_gravity="center"
             android:hint="New Name"
             android:inputType="text"
-            android:minHeight="48dp"
+            android:minHeight="45dp"
             android:textColorHint="#5D4037"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.079"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/group_name_line"
             tools:ignore="Autofill" />
 
         <TextView
             android:id="@+id/members_line"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="15dp"
             android:text="Click to remove a member:"
             android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/new_group_name_field" />
+            android:layout_gravity="center"
+            android:textColor="#1d3557"
+            android:textStyle="bold" />
 
 
         <ListView
-
             android:id="@+id/view_memberAsList"
             android:layout_width="match_parent"
             android:layout_height="120dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/listview_rounded_border"
             android:layout_alignParentBottom="true"
             app:layout_constraintTop_toBottomOf="@+id/members_line"
             android:scrollbars="vertical"
+            android:elevation="5dp"
             tools:layout_editor_absoluteX="0dp">
         </ListView>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
 
         <EditText
             android:id="@+id/new_member_mail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="63dp"
             android:ems="10"
             android:hint="@string/email"
             android:inputType="textEmailAddress"
             android:minHeight="48dp"
             android:textColorHint="#5D4037"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.393"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view_memberAsList"
             tools:ignore="Autofill,MissingConstraints" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -138,19 +116,36 @@
             app:layout_constraintTop_toTopOf="@id/new_member_mail"
             app:maxImageSize="45dp" />
 
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/to_gr"
+            android:layout_width="150dp"
+            android:layout_margin="10dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_button"
+            android:text="BACK"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@id/group_name"
+            app:layout_constraintEnd_toStartOf="@id/group_name" />
+
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/apply_group_changes"
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
+            android:layout_margin="10dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="25dp"
-            android:background="@color/light_blue"
+            android:background="@drawable/valid_button"
             android:text="APPLY CHANGES"
-            android:textColor="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/add_member" />
+            android:textColor="@color/white" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+
+
+    </LinearLayout>
+</LinearLayout>

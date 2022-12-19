@@ -1,108 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey"
+    android:background="#f1faee"
+    android:orientation="vertical"
     android:textAlignment="center"
     tools:context=".Group_User_Activity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TextView
-            android:id="@+id/group_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="35dp"
-            android:text="@string/group_name"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-
+        android:layout_height="wrap_content"
+        android:background="@drawable/titles_bar"
+        android:minHeight="50dp"
+        android:text="@string/group_name"
+        android:textColor="#f1faee"
+        android:textAlignment="center"
+        android:padding="30dp"
+        android:textSize="30dp"
+        />
 
         <TextView
             android:id="@+id/goals"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:text="@string/goals"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.05"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/group_name" />
-
-        <LinearLayout
-            android:id="@+id/golas_lay"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
-            android:minHeight="170dp"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@id/goals"
-            >
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textAlignment="center"
+            android:text="@string/goals"
+            android:textColor="#1d3557"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
 
             <ListView
                 android:id="@+id/goals_list"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                />
-        </LinearLayout>
+                android:layout_width="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_height="200dp"
+                android:scrollbars="vertical"
+                android:background="@drawable/listview_rounded_border" />
 
             <TextView
                 android:id="@+id/tasks_view"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
+                android:textAlignment="center"
+                android:textColor="#1d3557"
+                android:layout_marginTop="10dp"
                 android:text="@string/uncompleted_tasks"
                 android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.05"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/golas_lay" />
-
-        <LinearLayout
-            android:id="@+id/task_lay"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:minHeight="170dp"
-            android:layout_alignParentBottom="true"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@id/tasks_view"
-            app:layout_constraintBottom_toTopOf="@+id/back_to_groups">
+                android:textStyle="bold"/>
 
 
+    <ListView
+        android:id="@+id/tasks_list"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_margin="10dp"
+        android:scrollbars="vertical"
+        android:background="@drawable/listview_rounded_border" />
 
-            <ListView
-                android:id="@+id/tasks_list"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                />
-
-        </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/back_to_groups"
-            android:layout_width="wrap_content"
+            android:layout_width="160dp"
+            android:gravity="center"
+            android:layout_gravity="center"
             android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
-            android:background="@color/black"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/round_button"
             android:text="@string/back_to_groups"
-            android:textColor="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/task_lay" />
+            android:textColor="@color/white" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+</LinearLayout>

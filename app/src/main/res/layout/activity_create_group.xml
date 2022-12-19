@@ -1,114 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey"
+    android:background="#f1faee"
+    android:orientation="vertical"
     tools:context=".Create_Group_Activity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/create_group"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="35dp"
-            android:text="@string/create_group"
-            android:textSize="35sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/titles_bar"
+        android:minHeight="50dp"
+        android:text="Add Group"
+        android:textColor="#f1faee"
+        android:textAlignment="center"
+        android:padding="30dp"
+        android:textSize="30dp"
+        />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/group_photo"
-            android:layout_width="180dp"
-            android:layout_height="180dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="45dp"
             android:contentDescription="@string/my_groups"
             android:src="@drawable/group_photo"
             app:backgroundTint="@color/white"
             app:fabCustomSize="180dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/create_group"
             app:maxImageSize="180dp" />
 
         <EditText
             android:id="@+id/group_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="65dp"
+            android:layout_gravity="center"
             android:ems="10"
             android:hint="@string/group_name"
             android:inputType="text"
-            android:minHeight="48dp"
-            android:textColorHint="@color/black"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/group_photo"
+            android:textColorHint="#1d3557"
             tools:ignore="Autofill" />
 
-<!--        <TextView-->
-<!--            android:id="@+id/invite_members"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="35dp"-->
-<!--            android:text="@string/invite_members"-->
-<!--            android:textSize="25sp"-->
-<!--            android:textStyle="bold"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintHorizontal_bias="0.1"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/group_name" />-->
 
-<!--        <EditText-->
-<!--            android:id="@+id/Email_field"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="10dp"-->
-<!--            android:ems="10"-->
-<!--            android:hint="@string/email"-->
-<!--            android:inputType="textEmailAddress"-->
-<!--            android:minHeight="48dp"-->
-<!--            android:textColorHint="#5D4037"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintHorizontal_bias="0.1"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/invite_members"-->
-<!--            tools:ignore="Autofill" />-->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/create_group_btn"
+        android:layout_gravity="center"
+        android:background="@drawable/valid_button"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="120dp"
+        android:text="Add Group"
+        android:textColor="#f1faee"
+        tools:ignore="TextContrastCheck" />
 
-<!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-<!--            android:id="@+id/add_friend"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:contentDescription="@string/_0"-->
-<!--            android:src="@drawable/add_icon"-->
-<!--            app:backgroundTint="@color/white"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toEndOf="@id/Email_field"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/invite_members"-->
-<!--            app:maxImageSize="65dp" />-->
-
-        <Button
-            android:id="@+id/create_group_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:text="@string/create_group"
-            android:textColor="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/group_name"
-            tools:ignore="TextContrastCheck" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+</LinearLayout>
