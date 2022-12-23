@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f1faee"
+    android:background="@color/bg"
     android:orientation="vertical"
     android:textAlignment="center"
     tools:context=".Group_User_Activity">
@@ -16,9 +16,9 @@
         android:background="@drawable/titles_bar"
         android:minHeight="50dp"
         android:text="@string/group_name"
-        android:textColor="#f1faee"
+        android:textColor="@color/bg"
         android:textAlignment="center"
-        android:padding="30dp"
+        android:padding="20dp"
         android:textSize="30dp"
         />
 
@@ -29,7 +29,7 @@
             android:layout_marginTop="10dp"
             android:textAlignment="center"
             android:text="@string/goals"
-            android:textColor="#1d3557"
+            android:textColor="@color/button"
             android:textSize="30sp"
             android:textStyle="bold" />
 
@@ -47,7 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
-                android:textColor="#1d3557"
+                android:textColor="@color/button"
                 android:layout_marginTop="10dp"
                 android:text="@string/uncompleted_tasks"
                 android:textSize="30sp"

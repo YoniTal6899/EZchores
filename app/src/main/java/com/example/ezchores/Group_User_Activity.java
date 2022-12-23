@@ -3,6 +3,7 @@ package com.example.ezchores;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -47,6 +48,7 @@ public class Group_User_Activity extends AppCompatActivity implements View.OnCli
     ArrayList<Integer> goal_prog= new ArrayList<>();
 
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

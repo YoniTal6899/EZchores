@@ -10,17 +10,6 @@
     tools:context=".SignUp_Activity">
 
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/back_home1"
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="300dp"
-        android:layout_height="wrap_content"
-        android:text="BACK"
-        android:background="@drawable/round_button"
-        android:textColor="#f1faee"
-        app:layout_constraintBottom_toBottomOf="@id/welcome_back"/>
 
     <TextView
         android:id="@+id/welcome_back"
@@ -76,16 +65,36 @@
             app:layout_constraintTop_toBottomOf="@id/Email_field"
             tools:ignore="Autofill" />
 
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:gravity="center">
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/back_home1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text="BACK"
+        android:background="@drawable/round_button"
+        android:textColor="@color/bg"
+        app:layout_constraintBottom_toBottomOf="@id/welcome_back"/>
+
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/commit_login"
             android:layout_width="wrap_content"
-            android:layout_marginLeft="150dp"
             android:layout_height="wrap_content"
+            android:layout_margin="20dp"
             android:background="@drawable/valid_button"
-            android:layout_marginTop="50dp"
             android:text="@string/sign_up1"
-            android:textColor="@color/white"
+            android:textColor="@color/bg"
             tools:ignore="TextContrastCheck" />
+
+    </LinearLayout>
 
 
 
