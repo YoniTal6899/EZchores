@@ -57,6 +57,9 @@ public class Group_User_Activity extends AppCompatActivity implements View.OnCli
         groupName = id_name.split(",")[1];
         groupId = id_name.split(",")[0];
         groupn = (TextView) findViewById(R.id.group_name);
+        if (groupn == null){
+            System.out.println("the findByView function didn't succeed");
+        }
         groupn.setText(groupName);
 
         // Init of the .xml file

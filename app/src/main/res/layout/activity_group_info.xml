@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:layout_height="match_parent"
     tools:context=".Group_Info_Activity"
-    android:background="@color/bg">
+    android:background="@drawable/blob_scene2">
 
 
     <TextView

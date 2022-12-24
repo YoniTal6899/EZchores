@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg"
+    android:background="@drawable/blob_scene2"
     android:orientation="vertical"
     tools:context=".Personal_Info_Activity">
 
@@ -64,16 +64,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:autofillHints="points"
-            android:editable="true"
             android:inputType="number"
             android:text="@string/_0"
             android:textSize="150sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/total_points_line"
-            tools:ignore="Deprecated" />
+            />
 
     </LinearLayout>
 

@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg"
+    android:background="@drawable/blob_scene2"
     android:orientation="vertical"
     tools:context=".Create_Group_Activity">
 
@@ -30,7 +30,7 @@
             android:layout_marginTop="45dp"
             android:contentDescription="@string/my_groups"
             android:src="@drawable/group_photo"
-            app:backgroundTint="@color/white"
+            app:backgroundTint="@color/bg"
             app:fabCustomSize="180dp"
             app:maxImageSize="180dp" />
 

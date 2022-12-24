@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg"
+    android:background="@drawable/blob_scene2"
     android:orientation="vertical"
     android:textAlignment="center"
     tools:context=".Group_User_Activity">
 
 
     <TextView
+        android:id="@+id/group_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/titles_bar"
