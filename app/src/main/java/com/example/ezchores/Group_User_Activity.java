@@ -3,6 +3,7 @@ package com.example.ezchores;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -47,6 +48,7 @@ public class Group_User_Activity extends AppCompatActivity implements View.OnCli
     ArrayList<Integer> goal_prog= new ArrayList<>();
 
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +57,9 @@ public class Group_User_Activity extends AppCompatActivity implements View.OnCli
         groupName = id_name.split(",")[1];
         groupId = id_name.split(",")[0];
         groupn = (TextView) findViewById(R.id.group_name);
+        if (groupn == null){
+            System.out.println("the findByView function didn't succeed");
+        }
         groupn.setText(groupName);
 
         // Init of the .xml file

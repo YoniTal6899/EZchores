@@ -2,12 +2,14 @@ package com.example.ezchores;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -27,9 +29,10 @@ import java.util.HashMap;
 
 public class Group_Admin_Activity extends AppCompatActivity implements View.OnClickListener {
     // Declaration of .xml widgets
-    Button back_to_groups;
+    AppCompatButton back_to_groups;
+    AppCompatButton group_info;
 
-    FloatingActionButton  group_info, add_goal, add_task;
+    ImageView   add_goal, add_task;
     String groupID;
     String groupName;
     String userID;
@@ -57,13 +60,13 @@ public class Group_Admin_Activity extends AppCompatActivity implements View.OnCl
         groupID = id_name.split(",")[0];
 
         userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        group_info = (FloatingActionButton) findViewById(R.id.group_info);
-        add_goal = (FloatingActionButton) findViewById(R.id.new_goal);
-        add_task = (FloatingActionButton) findViewById(R.id.new_task);
+        group_info = (AppCompatButton) findViewById(R.id.group_info);
+        add_goal = (ImageView) findViewById(R.id.new_goal);
+        add_task = (ImageView) findViewById(R.id.new_task);
 
         // Init buttons
         ref = FirebaseDatabase.getInstance().getReference();
-        back_to_groups = (Button) findViewById(R.id.back_to_groups);
+        back_to_groups = (AppCompatButton) findViewById(R.id.back_to_groups);
         // Listeners
         back_to_groups.setOnClickListener(this);
         group_info.setOnClickListener(this);
