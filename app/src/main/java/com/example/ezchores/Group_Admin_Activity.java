@@ -2,6 +2,7 @@ package com.example.ezchores;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,7 +29,8 @@ import java.util.HashMap;
 
 public class Group_Admin_Activity extends AppCompatActivity implements View.OnClickListener {
     // Declaration of .xml widgets
-    Button back_to_groups;
+    AppCompatButton back_to_groups;
+    AppCompatButton group_info;
 
     ImageView   add_goal, add_task;
     String groupID;
@@ -58,16 +60,16 @@ public class Group_Admin_Activity extends AppCompatActivity implements View.OnCl
         groupID = id_name.split(",")[0];
 
         userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-//        group_info = (FloatingActionButton) findViewById(R.id.group_info);
+        group_info = (AppCompatButton) findViewById(R.id.group_info);
         add_goal = (ImageView) findViewById(R.id.new_goal);
         add_task = (ImageView) findViewById(R.id.new_task);
 
         // Init buttons
         ref = FirebaseDatabase.getInstance().getReference();
-        back_to_groups = (Button) findViewById(R.id.back_to_groups);
+        back_to_groups = (AppCompatButton) findViewById(R.id.back_to_groups);
         // Listeners
         back_to_groups.setOnClickListener(this);
-//        group_info.setOnClickListener(this);
+        group_info.setOnClickListener(this);
         add_task.setOnClickListener(this);
         add_goal.setOnClickListener(this);
         task = (ListView) findViewById(R.id.tasks_list);
@@ -178,11 +180,11 @@ public class Group_Admin_Activity extends AppCompatActivity implements View.OnCl
                 startActivity(i);
                 break;
 
-//            case R.id.group_info:
-//                Intent k = new Intent(this, Group_Info_Activity.class);
-//                k.putExtra("ID_name", id_name);
-//                startActivity(k);
-//                break;
+            case R.id.group_info:
+                Intent k = new Intent(this, Group_Info_Activity.class);
+                k.putExtra("ID_name", id_name);
+                startActivity(k);
+                break;
 
             case R.id.new_goal:
                 Intent r = new Intent(this, New_Goal_Activity.class);
