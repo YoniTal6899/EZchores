@@ -2,6 +2,7 @@ package com.example.ezchores;
 
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatButton;
 
 
 import android.app.Activity;
@@ -29,7 +30,7 @@ import java.util.List;
 public class My_Groups_Activity extends Activity implements View.OnClickListener {
 
     // Buttons & TextViews
-    Button add_group, personal_info;
+    AppCompatButton add_group, personal_info;
     private FirebaseAuth firebaseAuth;
     ListView listview;
     String UserId,userName,current_points,mail;
@@ -41,8 +42,8 @@ public class My_Groups_Activity extends Activity implements View.OnClickListener
         setContentView(R.layout.activity_my_groups);
 
 
-        add_group = (Button) findViewById(R.id.add_group);
-        personal_info = (Button) findViewById(R.id.personal_info);
+        add_group = (AppCompatButton) findViewById(R.id.add_group);
+        personal_info = (AppCompatButton) findViewById(R.id.personal_info);
 
         add_group.setOnClickListener((View.OnClickListener) this);
         personal_info.setOnClickListener((View.OnClickListener) this);

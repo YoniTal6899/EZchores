@@ -2,6 +2,7 @@ package com.example.ezchores;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -28,7 +29,7 @@ import java.util.HashMap;
 
 public class Group_User_Activity extends AppCompatActivity implements View.OnClickListener {
     // Declaration of the .xml file
-    Button to_gr;
+    AppCompatButton to_gr;
     ListView task_list, goals_list;
     int counter = 0;
     String groupId;
@@ -63,7 +64,7 @@ public class Group_User_Activity extends AppCompatActivity implements View.OnCli
         groupn.setText(groupName);
 
         // Init of the .xml file
-        to_gr = (Button) findViewById(R.id.back_to_groups);
+        to_gr = (AppCompatButton) findViewById(R.id.back_to_groups);
         task_list = (ListView) findViewById(R.id.tasks_list);
         goals_list = (ListView) findViewById(R.id.goals_list);
         task = (ListView) findViewById(R.id.tasks_list);

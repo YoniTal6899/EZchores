@@ -1,6 +1,7 @@
 package com.example.ezchores;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,7 +15,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class Personal_Info_Activity extends AppCompatActivity implements View.OnClickListener, View.OnTouchListener {
     // Buttons
-    Button log_out, apply;
+    AppCompatButton log_out, apply;
     // Firebase
     private FirebaseAuth mAuth;
     TextView user_name, new_mail, total_points_num;
@@ -26,7 +27,7 @@ public class Personal_Info_Activity extends AppCompatActivity implements View.On
         setContentView(R.layout.activity_personal_info);
 
         // Init buttons
-        log_out = (Button) findViewById(R.id.log_out);
+        log_out = (AppCompatButton) findViewById(R.id.log_out);
 
         // Listeners
         log_out.setOnClickListener(this);

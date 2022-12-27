@@ -2,6 +2,7 @@ package com.example.ezchores;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -31,7 +32,8 @@ import java.util.HashMap;
 public class Group_Info_Activity extends AppCompatActivity implements View.OnClickListener {
 
     // Declaration of .xml file widgets
-    Button back, apply , trash;
+    AppCompatButton back, apply;
+    Button trash;
     EditText new_name, mem_email;
     FloatingActionButton icon, add_mem;
     TextView group_name;
@@ -58,9 +60,9 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
         group_name=(TextView) findViewById(R.id.group_name);
         //Init widgets
 
-        back = (Button) findViewById(R.id.to_gr);
+        back = (AppCompatButton) findViewById(R.id.to_gr);
         trash = (Button) findViewById(R.id.trash_icon);
-        apply = (Button) findViewById(R.id.apply_group_changes);
+        apply = (AppCompatButton) findViewById(R.id.apply_group_changes);
         new_name = (EditText) findViewById(R.id.new_group_name_field);
         mem_email = (EditText) findViewById(R.id.new_member_mail);
         icon = (FloatingActionButton) findViewById(R.id.group_photo);
