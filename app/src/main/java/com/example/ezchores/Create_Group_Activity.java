@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,7 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 public class Create_Group_Activity extends AppCompatActivity implements View.OnClickListener {
 
     // Buttons & EditTexts
-    Button create_group;
+    AppCompatButton create_group;
     FloatingActionButton icon, add_member;
     EditText group_name, email;
     String username, groupkey,UserId;
@@ -40,7 +41,7 @@ public class Create_Group_Activity extends AppCompatActivity implements View.OnC
 
 
         // Init Buttons & EditTexts
-        create_group = (Button) findViewById(R.id.create_group_btn);
+        create_group = (AppCompatButton) findViewById(R.id.create_group_btn);
         icon = (FloatingActionButton) findViewById(R.id.group_photo);
 
         group_name = (EditText) findViewById(R.id.group_name);
