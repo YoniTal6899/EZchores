@@ -22,17 +22,18 @@
         android:textSize="30dp"
         />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/group_photo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="45dp"
-            android:contentDescription="@string/my_groups"
-            android:src="@drawable/group_photo"
-            app:backgroundTint="@color/bg"
-            app:fabCustomSize="180dp"
-            app:maxImageSize="180dp" />
+    <ImageView
+        android:id="@+id/group_photo"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="45dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/my_groups"
+        android:backgroundTint="@color/bg"
+        android:scaleType="fitCenter"
+        android:src="@drawable/group_photo"
+        app:backgroundTint="@color/bg" />
 
         <EditText
             android:id="@+id/group_name"
