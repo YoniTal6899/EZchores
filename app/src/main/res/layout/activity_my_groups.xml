@@ -20,6 +20,12 @@
         android:textSize="30dp"
         />
 
+
+
+
+
+
+    <!--
     <ImageView
         android:id="@+id/group_photo"
         android:layout_width="100dp"
@@ -34,7 +40,7 @@
         app:backgroundTint="@color/bg"
         />
 
-
+-->
 
     <ListView
         android:id="@+id/listview"

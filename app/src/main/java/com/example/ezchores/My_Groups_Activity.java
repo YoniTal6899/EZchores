@@ -7,6 +7,8 @@ import androidx.appcompat.widget.AppCompatButton;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import android.view.View;
@@ -14,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,6 +27,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
+import android.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 
@@ -31,6 +35,7 @@ public class My_Groups_Activity extends Activity implements View.OnClickListener
 
     // Buttons & TextViews
     AppCompatButton add_group, personal_info;
+    ImageView group_photo;
     private FirebaseAuth firebaseAuth;
     ListView listview;
     String UserId,userName,current_points,mail;
@@ -126,6 +131,7 @@ public class My_Groups_Activity extends Activity implements View.OnClickListener
 
 
                             }
+
 
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {
