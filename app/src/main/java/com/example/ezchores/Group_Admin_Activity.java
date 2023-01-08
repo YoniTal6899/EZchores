@@ -118,7 +118,7 @@ public class Group_Admin_Activity extends AppCompatActivity implements View.OnCl
                     });
 
                 } catch (Exception e) {
-                
+
                     e.printStackTrace();
                     Toast.makeText(Group_Admin_Activity.this, "No Tasks...", Toast.LENGTH_SHORT).show();
                 }

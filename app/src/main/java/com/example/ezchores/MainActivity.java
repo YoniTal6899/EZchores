@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
+
 import com.google.firebase.auth.FirebaseAuth;
 
 
@@ -13,7 +15,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
   //Buttons
-  private Button login, signup;
+  private AppCompatButton login, signup;
 
   // Firebase
   private FirebaseAuth mAuth;
@@ -25,8 +27,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     mAuth = FirebaseAuth.getInstance();
     //Buttons init
-    login = (Button)findViewById(R.id.log_in_button);
-    signup = (Button)findViewById(R.id.sign_up_button);
+    login = (AppCompatButton) findViewById(R.id.log_in_button);
+    signup = (AppCompatButton) findViewById(R.id.sign_up_button);
     
     // Firbase init
     mAuth = FirebaseAuth.getInstance();

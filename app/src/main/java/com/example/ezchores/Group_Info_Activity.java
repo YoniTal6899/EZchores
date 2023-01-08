@@ -1,8 +1,19 @@
 package com.example.ezchores;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
+import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.provider.MediaStore;
+import android.util.Base64;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,10 +23,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -25,13 +38,16 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Group_Info_Activity extends AppCompatActivity implements View.OnClickListener {
 
     // Declaration of .xml file widgets
-    Button back, apply , trash;
+    AppCompatButton back, apply;
+    ImageView group_photo;
+    Button trash;
     EditText new_name, mem_email;
     FloatingActionButton icon, add_mem;
     TextView group_name;
@@ -40,6 +56,11 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
     ArrayAdapter FriendsDisplayArr;
     // DB
     DatabaseReference ref;
+
+
+    // handle change of pic initialisation
+    private static final int REQUEST_TAKE_PHOTO = 1;
+    private static final int REQUEST_SELECT_PICTURE = 2;
 
     String groupID;
     String myUserID;
@@ -58,18 +79,17 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
         group_name=(TextView) findViewById(R.id.group_name);
         //Init widgets
 
-        back = (Button) findViewById(R.id.to_gr);
+        back = (AppCompatButton) findViewById(R.id.to_gr);
         trash = (Button) findViewById(R.id.trash_icon);
-        apply = (Button) findViewById(R.id.apply_group_changes);
+        apply = (AppCompatButton) findViewById(R.id.apply_group_changes);
         new_name = (EditText) findViewById(R.id.new_group_name_field);
         mem_email = (EditText) findViewById(R.id.new_member_mail);
-        icon = (FloatingActionButton) findViewById(R.id.group_photo);
+        group_photo = (ImageView) findViewById(R.id.group_photo);
         add_mem= (FloatingActionButton) findViewById(R.id.add_member);
         memberList = (ListView) findViewById(R.id.view_memberAsList);
         //Listeners
         back.setOnClickListener(this);
         apply.setOnClickListener(this);
-        icon.setOnClickListener(this);
         add_mem.setOnClickListener(this);
         group_name.setText(groupName);
         myUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -102,6 +122,13 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
                .getReference("Groups")
                .child(groupID)
                .child("Friends");
+
+       DatabaseReference refImage = FirebaseDatabase
+               .getInstance()
+               .getReference()
+               .child("Groups")
+               .child(groupID)
+               .child("image");
 
        refFriends.addListenerForSingleValueEvent(new ValueEventListener() {
            @Override
@@ -151,6 +178,48 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
            @Override
            public void onCancelled(@NonNull DatabaseError error) {
 
+           }
+       });
+       refImage.addValueEventListener(new ValueEventListener() {
+           @Override
+           public void onDataChange(@NonNull DataSnapshot snapshot) {
+               String imageString = snapshot.getValue(String.class);
+               if (imageString == null){
+                   System.out.println("imageString is null");
+
+               }else {
+                   byte[] data = Base64.decode(imageString, Base64.DEFAULT);
+                   Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+                   group_photo.setImageBitmap(bitmap);
+               }
+           }
+
+           @Override
+           public void onCancelled(@NonNull DatabaseError error) {
+               System.out.println( error);
+           }
+       });
+
+       group_photo.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               AlertDialog.Builder builder = new AlertDialog.Builder(Group_Info_Activity.this);
+
+               builder.setTitle("Add a Photo")
+                       .setItems(new CharSequence[]{"Use the Camera", "Import from Gallery"}, new DialogInterface.OnClickListener() {
+                           @Override
+                           public void onClick(DialogInterface dialog, int choice) {
+                               switch (choice) {
+                                   case 0:
+                                       takePicture();
+                                       break;
+                                   case 1:
+                                       selectPicture();
+                                       break;
+                               }
+                           }
+                       });
+               builder.create().show();
            }
        });
 
@@ -230,7 +299,69 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
         startActivity(intent);
     }
 
-    private void addFriend(String mail) {
+    private void takePicture() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        try {
+            startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+        } catch (ActivityNotFoundException e) {
+            System.out.println(e);
+        }
+    }
+
+        private void selectPicture() {
+            Intent selectPicture = new Intent();
+            selectPicture.setType("image/*");
+            selectPicture.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(Intent.createChooser(selectPicture, "Select Picture"), REQUEST_SELECT_PICTURE);
+        }
+
+    private Bitmap getImageFromImageView() {
+        // Get the drawable of the image view
+        Drawable drawable = group_photo.getDrawable();
+        // Convert the drawable to a bitmap
+        Bitmap bitmap = ((BitmapDrawable)drawable).getBitmap();
+        return bitmap;
+    }
+
+    private void storeImage(String UserId, Bitmap image) {
+        DatabaseReference GroupKey = ref.child("Groups").child(groupID);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray();
+        String ImageString = Base64.encodeToString(data, Base64.DEFAULT);
+        GroupKey.child("image").setValue(ImageString).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Toast.makeText(Group_Info_Activity.this, "Image Stored", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
+        @Override
+        protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+            super.onActivityResult(requestCode, resultCode, data);
+            if (resultCode == RESULT_OK) {
+                if (requestCode == REQUEST_TAKE_PHOTO) {
+                    Bundle extras = data.getExtras();
+                    Bitmap bitmap = (Bitmap) extras.get("data");
+                    group_photo.setImageBitmap(bitmap);
+                    storeImage(groupID, getImageFromImageView());
+
+                }
+                else if (resultCode == REQUEST_SELECT_PICTURE){
+                    Uri selectedImage = data.getData();
+                    if (selectedImage != null){
+                        group_photo.setImageURI(selectedImage);
+                    }
+                }
+            }
+        }
+
+
+
+
+        private void addFriend(String mail) {
         ref.child("Users").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

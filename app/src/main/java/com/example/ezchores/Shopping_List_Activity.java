@@ -1,6 +1,7 @@
 package com.example.ezchores;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +14,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class Shopping_List_Activity extends AppCompatActivity implements View.OnClickListener {
 
     // Declaration of .xml file widgets
-    private Button to_user_screen,confirm;
+    private AppCompatButton to_user_screen,confirm;
     EditText add_item;
     private FloatingActionButton pending_items, submit_add_item;
 
@@ -25,7 +26,7 @@ public class Shopping_List_Activity extends AppCompatActivity implements View.On
         //Init widgets
         to_user_screen=findViewById(R.id.back_to_user_screen);
         pending_items=(FloatingActionButton)findViewById(R.id.pending_items);
-        confirm=(Button)findViewById(R.id.confirm);
+        confirm=(AppCompatButton) findViewById(R.id.confirm);
         add_item = (EditText) findViewById(R.id.add_item);
         submit_add_item = (FloatingActionButton) findViewById(R.id.submit_add_item);
 
