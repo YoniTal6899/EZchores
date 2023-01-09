@@ -5,9 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -87,6 +89,12 @@ public class CustomAdapter extends BaseAdapter {
                 ProgressBar prog = (ProgressBar) view.findViewById(R.id.prog1);
                 goal_name.setText(this.content[pos]);
                 prog.setProgress(this.goal_prog[pos]);
+                return view;
+            case 'm':
+                view = inflater.inflate(R.layout.activity_member_list_view, null);
+                TextView member_name = (TextView) view.findViewById(R.id.participant_name);
+                FloatingActionButton trash_Icon = (FloatingActionButton) view.findViewById(R.id.trash_icon);
+                member_name.setText(this.content[pos]);
                 return view;
             default:
                 break;

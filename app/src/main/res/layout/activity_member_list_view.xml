@@ -1,0 +1,21 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <!-- Add the name by setting the android:text attribute of a TextView -->
+    <TextView
+        android:id="@+id/participant_name"
+        android:layout_width="353dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:text="Participant Name" />
+
+    <!-- Add the trash icon by setting the android:src attribute of an ImageView -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/trash_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@android:drawable/ic_menu_delete" />
+
+</LinearLayout>

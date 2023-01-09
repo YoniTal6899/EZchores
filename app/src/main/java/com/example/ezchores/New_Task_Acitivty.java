@@ -2,6 +2,7 @@ package com.example.ezchores;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -26,7 +28,8 @@ public class New_Task_Acitivty extends AppCompatActivity implements View.OnClick
 
     // Declaration of .xml file widgets
     EditText name, val;
-    Button back, create, refreshUsers;
+    AppCompatButton back, create;
+    ImageView refreshUsers;
 
     String groupID,groupName;
 
@@ -46,11 +49,11 @@ public class New_Task_Acitivty extends AppCompatActivity implements View.OnClick
         groupID = groupInfo[0];
         groupName = groupInfo[1];
         // Init .xml widgets
-        back = (Button) findViewById(R.id.back_to_groups);
-        create = (Button) findViewById(R.id.create_task);
+        back = (AppCompatButton) findViewById(R.id.back_to_groups);
+        create = (AppCompatButton) findViewById(R.id.create_task);
         name = (EditText) findViewById(R.id.Task_name);
         val = (EditText) findViewById(R.id.Task_val);
-        refreshUsers = (Button) findViewById(R.id.refreshUsers);
+        refreshUsers = (ImageView) findViewById(R.id.refreshUsers);
 
 
         // Listeners

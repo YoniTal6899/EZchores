@@ -2,7 +2,9 @@ package com.example.ezchores;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -27,9 +29,8 @@ import java.util.HashMap;
 
 public class Group_User_Activity extends AppCompatActivity implements View.OnClickListener {
     // Declaration of the .xml file
-    Button to_gr;
+    AppCompatButton to_gr;
     ListView task_list, goals_list;
-    FloatingActionButton shop;
     int counter = 0;
     String groupId;
     String groupName;
@@ -43,9 +44,12 @@ public class Group_User_Activity extends AppCompatActivity implements View.OnCli
     ArrayList<ProgressBar> bars = new ArrayList<>();
     String userId;
     ArrayList<String> taskId = new ArrayList<>();
+    int curr_userPoints;
     ArrayList<String> goalID= new ArrayList<>();
     ArrayList<Integer> goal_prog= new ArrayList<>();
 
+
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,19 +58,30 @@ public class Group_User_Activity extends AppCompatActivity implements View.OnCli
         groupName = id_name.split(",")[1];
         groupId = id_name.split(",")[0];
         groupn = (TextView) findViewById(R.id.group_name);
+        if (groupn == null){
+            System.out.println("the findByView function didn't succeed");
+        }
         groupn.setText(groupName);
 
         // Init of the .xml file
-        to_gr = (Button) findViewById(R.id.back_to_groups);
-        shop = (FloatingActionButton) findViewById(R.id.shopping_list);
+        to_gr = (AppCompatButton) findViewById(R.id.back_to_groups);
         task_list = (ListView) findViewById(R.id.tasks_list);
         goals_list = (ListView) findViewById(R.id.goals_list);
         task = (ListView) findViewById(R.id.tasks_list);
         // Listeners
         to_gr.setOnClickListener(this);
-        shop.setOnClickListener(this);
         ref = FirebaseDatabase.getInstance().getReference();
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        ref.child("Users").child(userId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                curr_userPoints = Integer.parseInt(snapshot.child("curr_points").getValue().toString());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        });
+
 
 
         ref.child("Users").child(userId).child("MyTasks").addValueEventListener(new ValueEventListener() {
@@ -135,6 +150,11 @@ public class Group_User_Activity extends AppCompatActivity implements View.OnCli
                             String taskID = taskId.get(i);
                             ref.child("Users").child(userId).child("MyTasks").child(taskID).removeValue();
                             ref.child("Groups").child(groupId).child("Tasks").child(taskID).removeValue();
+
+                            // Update points
+                            ref.child("Users").child(userId).child("curr_points").setValue((curr_userPoints+Integer.parseInt(points.get(i))));
+
+
                             Toast.makeText(Group_User_Activity.this, "Successfully completed task:" + tasks_names.get(i), Toast.LENGTH_SHORT).show();
                             Intent user2user = new Intent(Group_User_Activity.this, Group_User_Activity.class);
                             user2user.putExtra("ID_name", groupId + "," + groupName);
@@ -197,10 +217,7 @@ public class Group_User_Activity extends AppCompatActivity implements View.OnCli
                     i.putExtra("ID_name", groupId + "," + groupName);
                     startActivity(i);
                     break;
-
-                case R.id.shopping_list:
-                    Intent j = new Intent(this, Shopping_List_Activity.class);
-                    startActivity(j);
+                default:
                     break;
             }
         }}

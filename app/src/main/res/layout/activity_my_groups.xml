@@ -2,110 +2,90 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey"
+    android:background="@drawable/blob_scene2"
     tools:context=".My_Groups_Activity">
 
-    <!--    <androidx.constraintlayout.widget.ConstraintLayout-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="match_parent">-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/titles_bar"
+        android:minHeight="50dp"
+        android:text="My Groups"
+        android:textColor="#f1faee"
+        android:textAlignment="center"
+        android:padding="20dp"
+        android:textSize="30dp"
+        />
 
-    <!--        <TextView-->
-    <!--            android:id="@+id/my_groups"-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_marginTop="24dp"-->
-    <!--            android:text="@string/my_groups"-->
-    <!--            android:textColor="@color/black"-->
-    <!--            android:textSize="30sp"-->
-    <!--            app:layout_constraintEnd_toEndOf="parent"-->
-    <!--            app:layout_constraintHorizontal_bias="0.5"-->
-    <!--            app:layout_constraintStart_toStartOf="parent"-->
-    <!--            app:layout_constraintTop_toTopOf="parent" />-->
 
-    <!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-    <!--        android:id="@+id/add_group"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginStart="56dp"-->
-    <!--        android:layout_marginLeft="100dp"-->
-    <!--        android:layout_marginTop="12dp"-->
-    <!--        android:contentDescription="@string/create_new_group"-->
-    <!--        android:src="@drawable/add_icon"-->
-    <!--        app:backgroundTint="@color/white"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintHorizontal_bias="0.1"-->
-    <!--        app:layout_constraintStart_toEndOf="@id/my_groups"-->
-    <!--        app:layout_constraintTop_toTopOf="parent"-->
-    <!--        app:maxImageSize="65dp" />-->
 
-    <!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-    <!--            android:id="@+id/personal_info"-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_marginStart="25dp"-->
-    <!--            android:layout_marginTop="15dp"-->
-    <!--        android:layout_marginLeft="450dp"-->
-    <!--            android:contentDescription="@string/personal_information"-->
-    <!--            android:scaleType="center"-->
-    <!--            android:src="@drawable/personal_info"-->
-    <!--            app:backgroundTint="@color/white"-->
-    <!--            app:layout_constraintStart_toStartOf="parent"-->
-    <!--            app:layout_constraintEnd_toEndOf="@+id/my_groups"-->
-    <!--            app:layout_constraintHorizontal_bias="0"-->
-    <!--            app:layout_constraintTop_toTopOf="parent"-->
-    <!--            app:maxImageSize="45dp" />-->
+
+
+
+    <!--
+    <ImageView
+        android:id="@+id/group_photo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="85dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/my_groups"
+        android:layout_centerHorizontal="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/group_photo"
+        app:backgroundTint="@color/bg"
+        />
+
+-->
+
+    <ListView
+        android:id="@+id/listview"
+        android:background="@drawable/listview_rounded_border"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="400dp"
+        android:layout_marginTop="200dp">
+    </ListView>
 
 
 
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_above="@+id/listview"
         android:orientation="horizontal"
-        android:id ="@+id/linearLayout"
-        android:layout_alignBottom="@+id/listview">
+        android:id ="@+id/linearLayout">
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/personal_info"
+            android:background="@drawable/round_button"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="-5dp"
-            android:layout_weight="1"
+            android:layout_height="70dp"
+            android:layout_marginBottom="20dp"
+            android:minWidth="170dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="10dp"
+            android:textColor="#f1faee"
             android:text="INFO" />
 
 
-        <Button
-
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/add_group"
+            android:background="@drawable/round_button"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="-5dp"
-            android:layout_weight="1"
-
+            android:layout_marginBottom="20dp"
+            android:layout_height="70dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="10dp"
+            android:minWidth="200dp"
+            android:textColor="#f1faee"
             android:text="ADD GROUP" />
     </LinearLayout>
-
-    <ListView
-        android:id="@+id/listview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="50dp" />
-
-    <!--        android:layout_marginLeft="450dp"-->
-    <!--        android:layout_gravity="center"-->
-    <!--        android:layout_marginTop="100dp"-->
-    <!--        android:layout_marginBottom="44dp"-->
-    <!--        android:textSize="30sp"-->
-
-    <!--        android:textStyle="bold" />-->
-    <!--            app:layout_constraintEnd_toEndOf="parent"-->
-    <!--            tools:ignore="?`MissingConstraints" />-->
-    <!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
-
-
 </RelativeLayout>

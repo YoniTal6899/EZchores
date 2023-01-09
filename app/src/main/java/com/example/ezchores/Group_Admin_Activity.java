@@ -2,12 +2,14 @@ package com.example.ezchores;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -27,9 +29,10 @@ import java.util.HashMap;
 
 public class Group_Admin_Activity extends AppCompatActivity implements View.OnClickListener {
     // Declaration of .xml widgets
-    Button back_to_groups;
+    AppCompatButton back_to_groups;
+    AppCompatButton group_info;
 
-    FloatingActionButton shop, group_info, add_goal, add_task;
+    ImageView   add_goal, add_task;
     String groupID;
     String groupName;
     String userID;
@@ -57,22 +60,29 @@ public class Group_Admin_Activity extends AppCompatActivity implements View.OnCl
         groupID = id_name.split(",")[0];
 
         userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        shop = (FloatingActionButton) findViewById(R.id.shopping_list);
-        group_info = (FloatingActionButton) findViewById(R.id.group_info);
-        add_goal = (FloatingActionButton) findViewById(R.id.new_goal);
-        add_task = (FloatingActionButton) findViewById(R.id.new_task);
+        group_info = (AppCompatButton) findViewById(R.id.group_info);
+        add_goal = (ImageView) findViewById(R.id.new_goal);
+        add_task = (ImageView) findViewById(R.id.new_task);
 
         // Init buttons
         ref = FirebaseDatabase.getInstance().getReference();
-        back_to_groups = (Button) findViewById(R.id.back_to_groups);
+        back_to_groups = (AppCompatButton) findViewById(R.id.back_to_groups);
         // Listeners
         back_to_groups.setOnClickListener(this);
-        shop.setOnClickListener(this);
         group_info.setOnClickListener(this);
         add_task.setOnClickListener(this);
         add_goal.setOnClickListener(this);
         task = (ListView) findViewById(R.id.tasks_list);
         goals=(ListView)findViewById(R.id.goals_list);
+        ref.child("Users").child(userID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                curr_userPoints = Integer.parseInt(snapshot.child("curr_points").getValue().toString());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        });
         ref.child("Groups").child(groupID).child("Tasks").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -93,19 +103,10 @@ public class Group_Admin_Activity extends AppCompatActivity implements View.OnCl
                             String taskID = taskId.get(i);
                             ref.child("Users").child(userID).child("MyTasks").child(taskID).removeValue();
                             ref.child("Groups").child(groupID).child("Tasks").child(taskID).removeValue();
-                            ref.child("Users").child(userID).addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    curr_userPoints = Integer.parseInt(snapshot.child("curr_points").getValue().toString());
-                                }
 
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {}
-                            });
 
                             // Update points
-                            ref.child("Groups").child(groupID).child("Goals").child("-NIyf6z6Vdch8-Ww6HIS").child("currentPoints").setValue(20);
-                            ref.child("Users").child(userID).child("curr_points").setValue(curr_userPoints+Integer.parseInt(points.get(i)));
+                            ref.child("Users").child(userID).child("curr_points").setValue((curr_userPoints+Integer.parseInt(points.get(i))));
 
 
                             Toast.makeText(Group_Admin_Activity.this, "Successfully completed task:" + tasks_names.get(i), Toast.LENGTH_SHORT).show();
@@ -117,7 +118,7 @@ public class Group_Admin_Activity extends AppCompatActivity implements View.OnCl
                     });
 
                 } catch (Exception e) {
-                
+
                     e.printStackTrace();
                     Toast.makeText(Group_Admin_Activity.this, "No Tasks...", Toast.LENGTH_SHORT).show();
                 }
@@ -177,12 +178,6 @@ public class Group_Admin_Activity extends AppCompatActivity implements View.OnCl
             case R.id.back_to_groups:
                 Intent i = new Intent(this, My_Groups_Activity.class);
                 startActivity(i);
-                break;
-
-            case R.id.shopping_list:
-                Intent j = new Intent(this, Shopping_List_Activity.class);
-                j.putExtra("ID_name", id_name);
-                startActivity(j);
                 break;
 
             case R.id.group_info:
