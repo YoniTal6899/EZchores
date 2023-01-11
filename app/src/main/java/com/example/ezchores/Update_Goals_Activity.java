@@ -2,6 +2,7 @@ package com.example.ezchores;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,7 +31,8 @@ public class Update_Goals_Activity extends AppCompatActivity implements View.OnC
     String currpoints;
     // Declaration of .xml file widgets
     EditText name, val;
-    Button back, create, refreshUsers;
+    AppCompatButton back, create;
+    ImageView refreshUsers;
     TextView available_points_Text;
 
     String groupID, groupName, UserID, sendToIntent;
@@ -57,10 +60,10 @@ public class Update_Goals_Activity extends AppCompatActivity implements View.OnC
         available_points = Integer.parseInt(Uid_name_email_currpoints[3]);
 
         // Init .xml widgets
-        back = (Button) findViewById(R.id.back_to_groups);
-        create = (Button) findViewById(R.id.update_goal);
+        back = (AppCompatButton) findViewById(R.id.back_to_groups);
+        create = (AppCompatButton) findViewById(R.id.update_goal);
         val = (EditText) findViewById(R.id.Val);
-        refreshUsers = (Button) findViewById(R.id.refreshUsers);
+        refreshUsers = (ImageView) findViewById(R.id.refreshUsers);
         available_points_Text = (TextView) findViewById(R.id.available_points);
         available_points_Text.setText("Available points: " + available_points);
 

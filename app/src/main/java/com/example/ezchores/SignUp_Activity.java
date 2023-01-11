@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatEditText;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -33,7 +34,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class SignUp_Activity extends AppCompatActivity implements View.OnClickListener {
 
     //Buttons & EditTexts
-    private Button back, commit_login;
+    private AppCompatButton back, commit_login;
     private AppCompatEditText mail_field, password_field, full_name_field;
 
     // Firebase

@@ -21,11 +21,35 @@
         />
 
 
+
+
+
+
+    <!--
+    <ImageView
+        android:id="@+id/group_photo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="85dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/my_groups"
+        android:layout_centerHorizontal="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/group_photo"
+        app:backgroundTint="@color/bg"
+        />
+
+-->
+
     <ListView
         android:id="@+id/listview"
+        android:background="@drawable/listview_rounded_border"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="150dp">
+        android:layout_height="400dp"
+        android:layout_marginTop="200dp">
     </ListView>
 
 

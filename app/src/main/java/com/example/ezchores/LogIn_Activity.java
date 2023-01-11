@@ -2,6 +2,7 @@ package com.example.ezchores;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatEditText;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,7 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class LogIn_Activity extends AppCompatActivity implements View.OnClickListener {
 
     // Buttons
-    Button back, commit_login;
+    AppCompatButton back, commit_login;
 
     //fields
     private AppCompatEditText mail_field , password_field ;

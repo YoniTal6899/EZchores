@@ -22,17 +22,32 @@
         android:textSize="30dp"
         />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:strokeWidth="5dp"
+        app:strokeColor="@color/button"
+        android:layout_centerHorizontal="true"
+        app:cardCornerRadius="90dp"
+        android:layout_marginTop="40dp"
+        android:layout_gravity="center"
+        android:elevation="10dp">
+
+        <ImageView
             android:id="@+id/group_photo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="180dp"
+            android:layout_height="180dp"
             android:layout_gravity="center"
-            android:layout_marginTop="45dp"
-            android:contentDescription="@string/my_groups"
             android:src="@drawable/group_photo"
-            app:backgroundTint="@color/bg"
-            app:fabCustomSize="180dp"
-            app:maxImageSize="180dp" />
+            android:background="@color/bg"
+            android:scaleType="centerCrop"
+            />
+    </com.google.android.material.card.MaterialCardView>
+
+
+
+
 
         <EditText
             android:id="@+id/group_name"
