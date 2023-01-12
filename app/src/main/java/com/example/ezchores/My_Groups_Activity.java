@@ -94,6 +94,7 @@ public class My_Groups_Activity extends Activity implements View.OnClickListener
                         String value = list.get(key).toString();
                         listGroupid.add(key);
                         listGroupname.add(value);
+                        System.out.println(value);
 
                     }
                     ArrayAdapter arrayAdapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, listGroupname);

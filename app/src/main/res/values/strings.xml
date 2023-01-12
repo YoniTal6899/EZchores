@@ -42,6 +42,7 @@
     <string name="select">Select User</string>
     <string name="add_a_goal">add a goal</string>
     <string name="add_new_task">Add New Task</string>
+    <string name="name">Name</string>
     <string-array name="task_assignee">
         <item>Assignee</item>
         <item>mem1</item>

@@ -18,10 +18,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Adapter;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -47,24 +43,28 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
     // Declaration of .xml file widgets
     AppCompatButton back, apply;
     ImageView group_photo;
-    Button trash;
     EditText new_name, mem_email;
-    FloatingActionButton icon, add_mem;
+    FloatingActionButton  add_mem;
     TextView group_name;
     ListView memberList;
-    CustomAdapter FriendsDisplay;
-    ArrayAdapter FriendsDisplayArr;
-    // DB
-    DatabaseReference ref;
+    CustomAdapter FriendsDisplayArr;
 
+    // DB
+    private DatabaseReference ref;
 
     // handle change of pic initialisation
     private static final int REQUEST_TAKE_PHOTO = 1;
     private static final int REQUEST_SELECT_PICTURE = 2;
 
-    String groupID;
-    String myUserID;
-    String groupName;
+    // parameters
+    private String groupID, myUserID,groupName;
+    private ArrayList<String> FriendsName = new ArrayList<>();
+    private ArrayList<String> KeyList = new ArrayList<>();
+    private ArrayList<Integer> checkboxStates = new ArrayList<>();
+
+
+
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,10 +77,10 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
         ref = FirebaseDatabase.getInstance().getReference();
         groupID = id_name.split(",")[0];
         group_name=(TextView) findViewById(R.id.group_name);
+//        checkBox = (CheckBox) findViewById(R.id.);
         //Init widgets
 
         back = (AppCompatButton) findViewById(R.id.to_gr);
-        trash = (Button) findViewById(R.id.trash_icon);
         apply = (AppCompatButton) findViewById(R.id.apply_group_changes);
         new_name = (EditText) findViewById(R.id.new_group_name_field);
         mem_email = (EditText) findViewById(R.id.new_member_mail);
@@ -112,27 +112,28 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
 //        }
 
        // Display the friends in the group
-        ArrayList<String> FriendsName = new ArrayList<>();
-        ArrayList<String> KeyList = new ArrayList<>();
+
 
 
         // init the DataBase reference
-       DatabaseReference refFriends = FirebaseDatabase
-               .getInstance()
-               .getReference("Groups")
-               .child(groupID)
-               .child("Friends");
+// DB references
+        DatabaseReference refFriends = FirebaseDatabase
+                .getInstance()
+                .getReference("Groups")
+                .child(groupID)
+                .child("Friends");
 
-       DatabaseReference refImage = FirebaseDatabase
-               .getInstance()
-               .getReference()
-               .child("Groups")
-               .child(groupID)
-               .child("image");
+        DatabaseReference refImage = FirebaseDatabase
+                .getInstance()
+                .getReference()
+                .child("Groups")
+                .child(groupID)
+                .child("image");
 
        refFriends.addListenerForSingleValueEvent(new ValueEventListener() {
            @Override
            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
                HashMap<String , Object> friendMap = snapshot
                        .getValue(new GenericTypeIndicator<HashMap<String, Object>>() {
                });
@@ -142,34 +143,33 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
                        String name = friendMap.get(UID).toString();
                        System.out.println("TEST ->" + name );
                        FriendsName.add(name);
+                       checkboxStates.add(0);
                        KeyList.add(UID);
 
                    }
-                   FriendsDisplayArr = new ArrayAdapter(
+
+                   System.out.println("------------before adapter");
+                   FriendsDisplayArr = new CustomAdapter(
                            getApplicationContext(),
-                           android.R.layout.simple_list_item_1,
-                           FriendsName);
+                           FriendsName,
+                           null,
+                           null,
+                           'u',
+                           checkboxStates
+                   );
 
-
-                  FriendsDisplay = new CustomAdapter(
-                          getApplicationContext(),
-                          FriendsName,
-                          null,
-                          null,
-                          'm',
-                          null);
 
                    memberList.setAdapter(FriendsDisplayArr);
-                   memberList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                       @Override
-                       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                           int itemPosition = memberList.getPositionForView(view);
-                           System.out.println("We want to delete :"+FriendsName.get(itemPosition)+"at place "+ itemPosition);
-                           refFriends.child(KeyList.get(itemPosition)).removeValue();
-                           updateUI();
-
-                       }
-                   });
+//                   memberList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                       @Override
+//                       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                           int itemPosition = memberList.getPositionForView(view);
+//                           System.out.println("We want to delete :"+FriendsName.get(itemPosition)+"at place "+ itemPosition);
+//                           refFriends.child(KeyList.get(itemPosition)).removeValue();
+//                           updateUI();
+//
+//                       }
+//                   });
                } catch (Exception e) {
                    System.out.println("error :"+ e );
                }
@@ -223,9 +223,7 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
            }
        });
 
-
     }
-
 
     // Override the 'onClick' method, divided by button id
     @Override
@@ -240,18 +238,60 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
             case R.id.apply_group_changes:
                 // Needs to save the new group info [name, icon
                 String N=new_name.getText().toString();
-                if(N!=null) {
+                Intent i = new Intent(this, Group_Admin_Activity.class);
+                if(!N.equals("")) {
                     updateName(N);
-                    Intent i = new Intent(this, Group_Admin_Activity.class);
                     i.putExtra("ID_name",groupID+"," + N);
-                    startActivity(i);
                 }else{
-                    Intent i = new Intent(this, Group_Admin_Activity.class);
-
-                    i.putExtra("group_Id",groupID);
-                    i.putExtra("group_name",groupName);
-                    startActivity(i);
+                    i.putExtra("ID_name",groupID+"," + groupName);
+//                    i.putExtra("group_name",groupName);
                     Toast.makeText(Group_Info_Activity.this, "on click Something went wrong :(", Toast.LENGTH_SHORT).show();
+                }
+                // there was adding into the remove list
+                if (!isFilledZero(FriendsDisplayArr.getCheckBox())) {
+                    System.out.println(FriendsDisplayArr.getCheckBox().toString());
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            // Code for creating and showing the AlertDialog
+                            AlertDialog.Builder builder = new AlertDialog.Builder(Group_Info_Activity.this);
+                            builder.setTitle("Remove ");
+                            builder.setMessage("you have selected users to delete from the group , are you sure to remove them ?");
+                            builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    DatabaseReference refFriends = FirebaseDatabase
+                                            .getInstance()
+                                            .getReference("Groups")
+                                            .child(groupID)
+                                            .child("Friends");
+                                    for (int j = 0; j < FriendsDisplayArr.getCheckBox().length ; j++) {
+                                        if (FriendsDisplayArr.getCheckBox()[j] == 1){
+                                            System.out.println("the user in place "+j+"was removed ");
+//                                            if (isContextUSer){
+//                                                Toast.makeText(Group_Info_Activity.this,"You try to last administrator, this cannot be done",Toast.LENGTH_SHORT ).show();
+//                                            }
+
+                                            refFriends.child(KeyList.get(j)).removeValue();
+                                        }
+                                    }
+                                    updateUI();
+                                    startActivity(i);
+                                }
+                            });
+                            builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    System.out.println("The user choose to not remove the specified users");
+                                    startActivity(i);
+                                }
+                            });
+                            AlertDialog alertDialog = builder.create();
+                            alertDialog.show();
+                        }
+                    });
+
                 }
                 break;
 
@@ -259,8 +299,6 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
                 String new_mem_email= mem_email.getText().toString();
                 addFriend(new_mem_email);
                 break;
-
-                case R.id.trash_icon:
 
             default:
                 break;
@@ -271,7 +309,6 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
     private void updateName(String newname) {
         group_name.setText(newname);
         ref.child("Groups").child(groupID).child("name").setValue(newname);
-
         ref.child("Groups").child(groupID).child("Friends").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -298,6 +335,10 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
         intent.putExtra("ID_name", groupID+","+groupName);
         startActivity(intent);
     }
+
+//    private boolean isContextUSer(int pos){
+//
+//    }
 
     private void takePicture() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -356,6 +397,13 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
                     }
                 }
             }
+        }
+
+        private boolean isFilledZero(int[] arr) {
+            for (int i = 0; i <arr.length ; i++) {
+                if (arr[i] == 1) {return false;}
+            }
+            return true;
         }
 
 

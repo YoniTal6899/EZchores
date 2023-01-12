@@ -87,13 +87,19 @@ public class Update_Goals_Activity extends AppCompatActivity implements View.OnC
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 HashMap<String, Object> list = snapshot.getValue(new GenericTypeIndicator<HashMap<String, Object>>() {
                 });
+                if (list == null){
+                    Toast.makeText(Update_Goals_Activity.this,
+                            "You'r goal list is empty",
+                            Toast.LENGTH_SHORT
+                            ).show();
+                }else {
+                    for (String goalId : list.keySet()) {
+                        if (!listOfGoalIDs.contains(goalId)) {
+                            listOfGoalsGroupIds.add(list.get(goalId).toString());
+                            listOfGoalIDs.add(goalId);
+                        }
 
-                for (String goalId : list.keySet()) {
-                    if (!listOfGoalIDs.contains(goalId)){
-                        listOfGoalsGroupIds.add(list.get(goalId).toString());
-                        listOfGoalIDs.add(goalId);
                     }
-
                 }
             }
 

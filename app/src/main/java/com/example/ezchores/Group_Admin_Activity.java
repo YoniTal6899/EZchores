@@ -54,6 +54,7 @@ public class Group_Admin_Activity extends AppCompatActivity implements View.OnCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_admin);
         String id_name = (String) getIntent().getSerializableExtra("ID_name");
+        System.out.println("from GAA ID_name are :"+id_name);
         groupName = id_name.split(",")[1];
         groupn = (TextView) findViewById(R.id.group_name);
         groupn.setText(groupName);
