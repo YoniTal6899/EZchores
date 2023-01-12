@@ -11,6 +11,7 @@ import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
 
+
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationManagerCompat;
 
@@ -47,10 +48,6 @@ public class PushNotificationService extends FirebaseMessagingService {
         super.onMessageReceived(message);
         String title= message.getNotification().getTitle();
         String body= message.getNotification().getBody();
-        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-        System.out.println("new message!!!!!!!!!!!!!!!!!:{\n\ttitle: "+ title+"\nbody: "+body+"\n}");
-        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-        ShowToast(body);
         if (Build.VERSION.SDK_INT >= 26) {
             getSystemService(NotificationManager.class).createNotificationChannel(this.channel);
             Notification.Builder notification= new Notification.Builder(this,CHANNEL_ID)
@@ -71,5 +68,6 @@ public class PushNotificationService extends FirebaseMessagingService {
                 Toast.makeText(PushNotificationService.this.getApplicationContext(),body,Toast.LENGTH_LONG).show();
             }
         });
+
     }
 }
