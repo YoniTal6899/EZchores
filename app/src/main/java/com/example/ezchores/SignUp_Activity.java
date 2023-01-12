@@ -129,6 +129,7 @@ public class SignUp_Activity extends AppCompatActivity implements View.OnClickLi
 
                         UserID=mAuth.getCurrentUser().getUid();
                         User user=new User(full_name,email,password,regTK,0);
+
                         database= FirebaseDatabase.getInstance().getReference();
                         database.child("Users").child(UserID).setValue(user);
                         database.child("Users").child(UserID).child("regTK").setValue(regTK);
