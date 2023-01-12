@@ -19,8 +19,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
 import java.util.HashMap;
+
 
 
 public class LogIn_Activity extends AppCompatActivity implements View.OnClickListener {
@@ -43,10 +43,7 @@ public class LogIn_Activity extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
-        regTK = (String) getIntent().getSerializableExtra("Registration Token");
-        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-        System.out.println("TOKEN IN LOGIN"+regTK);
-        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        regTK= (String)getIntent().getSerializableExtra("Registration Token");
 
         // Buttons inits
         mail_field = findViewById(R.id.Email_field);
@@ -109,6 +106,7 @@ public class LogIn_Activity extends AppCompatActivity implements View.OnClickLis
                         startActivity(i);
                     } else {
                         Toast.makeText(LogIn_Activity.this,
+
                                 task.getException().getMessage(),
                                 Toast.LENGTH_SHORT).show();
                     }
