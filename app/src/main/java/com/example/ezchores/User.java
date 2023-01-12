@@ -1,29 +1,31 @@
 package com.example.ezchores;
 
+import androidx.annotation.NonNull;
+
 import java.util.ArrayList;
 
 public class User {
     // parameters
 
-   private  String id;
-   private  String name;
-   private String email;
-   private String password;
-   public   ArrayList<Group> groupList;
-   public  ArrayList<myTask> taskList;
-   private  int curr_points;
+   public String id;
+   public String name;
+   public String email;
+   public String password;
+   public ArrayList<Group> groupList;
+   public ArrayList<myTask> taskList;
+   public int curr_points;
+   public String regTK;
 
 
 
 
     // constructor
-    public User(String name,String email,String password) {
-
+    public User(String name,String email,String password,String reg_tk) {
+        this.regTK=reg_tk;
         this.name = name;
         this.email=email;
         this.password=password;
         this.curr_points = 0;
-
     }
     public String getEmail() {
         return email;
@@ -77,5 +79,11 @@ public class User {
     public void setTaskList(myTask taskList) {
         this.taskList.add(taskList);
 
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+       return ("Full Name: "+this.name+", Mail: "+this.email+", Password : "+this.password+", Reg Token: "+this.regTK);
     }
 }

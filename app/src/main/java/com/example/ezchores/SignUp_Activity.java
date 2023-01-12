@@ -42,12 +42,14 @@ public class SignUp_Activity extends AppCompatActivity implements View.OnClickLi
 
     private String UserID;
     DatabaseReference database;
+    String regTK;
 
 
     @SuppressLint({"WrongViewCast", "MissingInflatedId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        regTK= (String)getIntent().getSerializableExtra("Registration Token");
 
         //Firebase init
         mAuth = FirebaseAuth.getInstance();
@@ -125,7 +127,10 @@ public class SignUp_Activity extends AppCompatActivity implements View.OnClickLi
 
 
                         UserID=mAuth.getCurrentUser().getUid();
-                        User user=new User(full_name,email,password);
+                        User user=new User(full_name,email,password,regTK);
+                        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+                        System.out.println(user.toString());
+                        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 
 
                         database= FirebaseDatabase.getInstance().getReference();
