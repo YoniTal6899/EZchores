@@ -6,14 +6,21 @@ public class myGoal {
     // parameters
     private int value,currentPoints;
     private String name,assignID;
+    private boolean isComplete;
 
-    public myGoal(int point, String name,String assignID) {
+    public myGoal(int point, String name,String assignID,boolean comp) {
         this.value = point;
         this.name = name;
         this.assignID = assignID;
         this.currentPoints = 0;
+        this.isComplete=comp;
     }
     public myGoal(){};
+
+    public boolean getIsComplete(){return this.isComplete;}
+
+    public void setIsComplete(boolean b){this.isComplete=b;}
+
     public String getAssignID() {
         return assignID;
     }

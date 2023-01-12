@@ -156,10 +156,11 @@ public class New_Task_Acitivty extends AppCompatActivity implements View.OnClick
             return;
         }
 
-        myTask task = new myTask(numVal, taskName , assignID);
+        myTask task = new myTask(numVal, taskName , assignID,false);
         String taskID = ref.child("Groups").child(groupID).child("Tasks").push().getKey();
         ref.child("Groups").child(groupID).child("Tasks").child(taskID).setValue(task);
-        ref.child("Users").child(assignID).child("MyTasks").child(taskID).setValue(groupID);
+        ref.child("Users").child(assignID).child("MyTasks").child(taskID).child("groupID").setValue(groupID);
+        ref.child("Users").child(assignID).child("MyTasks").child(taskID).child("isComplete").setValue(false);
         Toast.makeText(New_Task_Acitivty.this, "Task added successfully", Toast.LENGTH_SHORT).show();
         Intent CRG = new Intent(this, Group_Admin_Activity.class);
         CRG.putExtra("ID_name",groupID+","+groupName);

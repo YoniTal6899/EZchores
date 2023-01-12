@@ -148,8 +148,8 @@ public class Group_User_Activity extends AppCompatActivity implements View.OnCli
                         @Override
                         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                             String taskID = taskId.get(i);
-                            ref.child("Users").child(userId).child("MyTasks").child(taskID).removeValue();
-                            ref.child("Groups").child(groupId).child("Tasks").child(taskID).removeValue();
+                            ref.child("Users").child(userId).child("MyTasks").child(taskID).child("isComplete").setValue(true);
+                            ref.child("Groups").child(groupId).child("Tasks").child(taskID).child("isComplete").setValue(true);
 
                             // Update points
                             ref.child("Users").child(userId).child("curr_points").setValue((curr_userPoints+Integer.parseInt(points.get(i))));
