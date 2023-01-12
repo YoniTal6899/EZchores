@@ -21,7 +21,6 @@ public class PushNotificationService extends FirebaseMessagingService {
     final String CHANNEL_ID= "Notification Channel";
     NotificationChannel channel;
     String regToken=null;
-    MainActivity main_activity;
 
     public PushNotificationService(){
         if (Build.VERSION.SDK_INT >= 26) {
@@ -38,10 +37,6 @@ public class PushNotificationService extends FirebaseMessagingService {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("token",token);
         editor.apply();
-        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-        System.out.println("this.token changed to:"+ this.regToken);
-        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-        Map<String, Object> tokendata= new HashMap<>();
     }
 
     @Override
@@ -49,6 +44,9 @@ public class PushNotificationService extends FirebaseMessagingService {
         super.onMessageReceived(message);
         String title= message.getNotification().getTitle();
         String body= message.getNotification().getBody();
+        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println("new message!!!!!!!!!!!!!!!!!:{\n\ttitle: "+ title+"\n\tbody: "+body);
+        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
         if (Build.VERSION.SDK_INT >= 26) {
             getSystemService(NotificationManager.class).createNotificationChannel(this.channel);
             Notification.Builder notification= new Notification.Builder(this,CHANNEL_ID)

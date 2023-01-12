@@ -15,6 +15,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 
 public class LogIn_Activity extends AppCompatActivity implements View.OnClickListener {
@@ -28,6 +30,9 @@ public class LogIn_Activity extends AppCompatActivity implements View.OnClickLis
     // Firebase
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    String regTK;
+    DatabaseReference database;
+    String UserID;
 
 
     @SuppressLint("WrongViewCast")
@@ -35,6 +40,7 @@ public class LogIn_Activity extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
+        regTK= (String)getIntent().getSerializableExtra("Registration Token");
 
         // Buttons inits
         mail_field = findViewById(R.id.Email_field);
@@ -90,6 +96,7 @@ public class LogIn_Activity extends AppCompatActivity implements View.OnClickLis
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()){
                         Toast.makeText(LogIn_Activity.this , "User logged in successfully" , Toast.LENGTH_SHORT).show();
+                        update_regTK();
                         startActivity(new Intent(LogIn_Activity.this , My_Groups_Activity.class));
                     }else {
                         Toast.makeText(LogIn_Activity.this ,
@@ -99,6 +106,12 @@ public class LogIn_Activity extends AppCompatActivity implements View.OnClickLis
                 }
             });
         }
+    }
+
+    public void update_regTK(){
+        UserID=mAuth.getCurrentUser().getUid();
+        database= FirebaseDatabase.getInstance().getReference();
+        database.child("Users").child(UserID).child("regTK").setValue(regTK);
     }
 
     public void back_home(){
