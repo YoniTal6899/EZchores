@@ -6,7 +6,10 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
 import android.preference.PreferenceManager;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationManagerCompat;
@@ -45,8 +48,9 @@ public class PushNotificationService extends FirebaseMessagingService {
         String title= message.getNotification().getTitle();
         String body= message.getNotification().getBody();
         System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-        System.out.println("new message!!!!!!!!!!!!!!!!!:{\n\ttitle: "+ title+"\n\tbody: "+body);
+        System.out.println("new message!!!!!!!!!!!!!!!!!:{\n\ttitle: "+ title+"\nbody: "+body+"\n}");
         System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        ShowToast(body);
         if (Build.VERSION.SDK_INT >= 26) {
             getSystemService(NotificationManager.class).createNotificationChannel(this.channel);
             Notification.Builder notification= new Notification.Builder(this,CHANNEL_ID)
@@ -55,8 +59,17 @@ public class PushNotificationService extends FirebaseMessagingService {
                     .setSmallIcon(R.drawable.ezchores_logo).setAutoCancel(true);
             NotificationManagerCompat.from(this).notify(1,notification.build());
         }
+    }
 
-
-
+    private void ShowToast(String body){
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+                System.out.println("TOASTINGGGGGGGGGG}");
+                System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+                Toast.makeText(PushNotificationService.this.getApplicationContext(),body,Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }
