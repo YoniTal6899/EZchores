@@ -38,7 +38,10 @@ public class My_Groups_Activity extends Activity implements View.OnClickListener
     ImageView group_photo;
     private FirebaseAuth firebaseAuth;
     ListView listview;
-    String UserId,userName,current_points,mail;
+    String UserId,userName,mail,password,regTK;
+    int current_points;
+    User user;
+    HashMap<String,Object> args;
 
 
     @Override
@@ -55,10 +58,7 @@ public class My_Groups_Activity extends Activity implements View.OnClickListener
         firebaseAuth = FirebaseAuth.getInstance();
         listview = findViewById(R.id.listview);
         UserId = firebaseAuth.getCurrentUser().getUid();
-
-
-
-
+        regTK=(String)getIntent().getSerializableExtra("Registration Token");
         List<String> listGroupid = new ArrayList<>();
         List<String> listGroupname = new ArrayList<>();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
@@ -66,9 +66,15 @@ public class My_Groups_Activity extends Activity implements View.OnClickListener
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 userName = snapshot.child("name").getValue().toString();
-                current_points = snapshot.child("curr_points").getValue().toString();
+                try {current_points = Integer.parseInt(snapshot.child("curr_points").getValue().toString());}
+                catch (Exception e){current_points=0;}
                 mail = snapshot.child("email").getValue().toString();
-
+                password=snapshot.child("password").getValue().toString();
+                user= new User(userName,mail,password,regTK,current_points);
+                args=user.getArgs();
+                System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+                System.out.println("new user created:"+args.toString());
+                System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
             }
 
             @Override
@@ -77,15 +83,10 @@ public class My_Groups_Activity extends Activity implements View.OnClickListener
             }
         });
 
-
-
-
-
         DatabaseReference refUSer = FirebaseDatabase.getInstance().getReference("Users").child(UserId).child("Groups");
         refUSer.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
                 HashMap<String, Object> list = snapshot.getValue(new GenericTypeIndicator<HashMap<String, Object>>() {
                 });
                 try {

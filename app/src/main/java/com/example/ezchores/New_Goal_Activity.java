@@ -159,10 +159,11 @@ public class New_Goal_Activity extends AppCompatActivity implements View.OnClick
             return;
         }
 
-        myGoal goal = new myGoal(numVal, taskName, assignID);
+        myGoal goal = new myGoal(numVal, taskName, assignID,false);
         String goalID = ref.child("Groups").child(groupID).child("Goals").push().getKey();
         ref.child("Groups").child(groupID).child("Goals").child(goalID).setValue(goal);
-        ref.child("Users").child(assignID).child("MyGoals").child(goalID).setValue(groupID);
+        ref.child("Users").child(assignID).child("MyGoals").child(goalID).child("groupID").setValue(groupID);
+        ref.child("Users").child(assignID).child("MyGoals").child(goalID).child("isComplete").setValue(false);
         Toast.makeText(New_Goal_Activity.this, "Goal added successfully", Toast.LENGTH_SHORT).show();
         Intent CRG = new Intent(this, Group_Admin_Activity.class);
         CRG.putExtra("ID_name",groupID+","+groupName);

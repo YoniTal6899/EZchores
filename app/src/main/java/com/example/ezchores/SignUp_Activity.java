@@ -30,6 +30,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.HashMap;
+
 
 public class SignUp_Activity extends AppCompatActivity implements View.OnClickListener {
 
@@ -43,7 +45,6 @@ public class SignUp_Activity extends AppCompatActivity implements View.OnClickLi
     private String UserID;
     DatabaseReference database;
     String regTK;
-
 
     @SuppressLint({"WrongViewCast", "MissingInflatedId"})
     @Override
@@ -127,7 +128,7 @@ public class SignUp_Activity extends AppCompatActivity implements View.OnClickLi
 
 
                         UserID=mAuth.getCurrentUser().getUid();
-                        User user=new User(full_name,email,password,regTK);
+                        User user=new User(full_name,email,password,regTK,0);
                         database= FirebaseDatabase.getInstance().getReference();
                         database.child("Users").child(UserID).setValue(user);
                         database.child("Users").child(UserID).child("regTK").setValue(regTK);
