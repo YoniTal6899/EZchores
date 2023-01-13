@@ -9,12 +9,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -23,42 +28,37 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.functions.FirebaseFunctions;
+import com.google.firebase.functions.HttpsCallableResult;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Group_User_Activity extends AppCompatActivity implements View.OnClickListener {
     // Declaration of the .xml file
     AppCompatButton to_gr;
     ListView task_list, goals_list;
-    int counter = 0;
-    String groupId;
-    String groupName;
+    String groupName,GroupID,args,userId;
     TextView groupn;
     CustomAdapter goals_adp, task_adp;
-    ListView task, goals;
     DatabaseReference ref;
     ArrayList<String> points = new ArrayList<>();
     ArrayList<String> tasks_names = new ArrayList<>();
     ArrayList<String> goals_names = new ArrayList<>();
     ArrayList<ProgressBar> bars = new ArrayList<>();
-    String userId;
     ArrayList<String> taskId = new ArrayList<>();
     int curr_userPoints;
-    ArrayList<String> goalID= new ArrayList<>();
-    ArrayList<Integer> goal_prog= new ArrayList<>();
-
+    ArrayList<Integer> goal_prog = new ArrayList<>();
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_user);
-        String id_name = (String) getIntent().getSerializableExtra("ID_name");
-        groupName = id_name.split(",")[1];
-        groupId = id_name.split(",")[0];
         groupn = (TextView) findViewById(R.id.group_name);
-        if (groupn == null){
+        if (groupn == null) {
             System.out.println("the findByView function didn't succeed");
         }
         groupn.setText(groupName);
@@ -67,157 +67,126 @@ public class Group_User_Activity extends AppCompatActivity implements View.OnCli
         to_gr = (AppCompatButton) findViewById(R.id.back_to_groups);
         task_list = (ListView) findViewById(R.id.tasks_list);
         goals_list = (ListView) findViewById(R.id.goals_list);
-        task = (ListView) findViewById(R.id.tasks_list);
         // Listeners
         to_gr.setOnClickListener(this);
-        ref = FirebaseDatabase.getInstance().getReference();
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        ref.child("Users").child(userId).addValueEventListener(new ValueEventListener() {
+        args = (String) getIntent().getSerializableExtra("ARGS");
+        curr_userPoints = Integer.parseInt(args.split(",")[1]);
+        GroupID = args.split(",")[0];
+        ref = FirebaseDatabase.getInstance().getReference();
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("groupId", GroupID);
+        data.put("userId", userId);
+        FirebaseFunctions.getInstance().getHttpsCallable("getUserTasksInGroup").call(data).addOnCompleteListener(new OnCompleteListener<HttpsCallableResult>() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                curr_userPoints = Integer.parseInt(snapshot.child("curr_points").getValue().toString());
-            }
+            public void onComplete(@NonNull Task<HttpsCallableResult> task) {
+                if (task.isSuccessful()) {
+                    if (task.isComplete()) {
+                        String userTasks = (String) task.getResult().getData();
+                        HashMap<String, JsonNode> data = jsonListToHashMap(userTasks,'t');
+                        System.out.println("*******************************************************");
+                        System.out.println(data.toString());
+                        System.out.println("*******************************************************");
+                        try {
+                            for (String TaskID : data.keySet()) {
+                                String TaskName = data.get(TaskID).get("taskName").asText();
+                                String TaskPoints = data.get(TaskID).get("taskPoints").asText();
+                                tasks_names.add(TaskName);
+                                points.add(TaskPoints);
+                                taskId.add(TaskID);
+                            }
+                            task_adp = new CustomAdapter(getApplicationContext(), tasks_names, points, null, 't', null);
+                            task_list.setAdapter(task_adp);
+                            task_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                    String taskID = taskId.get(i);
+                                    ref.child("Users").child(userId).child("MyTasks").child(taskID).child("isComplete").setValue(true);
+                                    ref.child("Groups").child(GroupID).child("Tasks").child(taskID).child("isComplete").setValue(true);
+                                    // Update points
+                                    int new_points = (curr_userPoints + Integer.parseInt(points.get(i)));
+                                    ref.child("Users").child(userId).child("curr_points").setValue(new_points);
+                                    Toast.makeText(Group_User_Activity.this, "Successfully completed task:" + tasks_names.get(i), Toast.LENGTH_SHORT).show();
+                                    Intent user2user = new Intent(Group_User_Activity.this, Group_User_Activity.class);
+                                    user2user.putExtra("ARGS", GroupID + "," + new_points);
+                                    startActivity(user2user);
+                                }
+                            });
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {}
-        });
-
-
-
-        ref.child("Users").child(userId).child("MyTasks").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                HashMap<String, Object> tasklist = snapshot.getValue(new GenericTypeIndicator<HashMap<String, Object>>() {
-                });
-                try {
-                    for (String id : tasklist.keySet()) {
-                        String tempgroupId = snapshot.child(id).getValue().toString();
-                        if (groupId.equals(tempgroupId)) {
-                            taskId.add(id);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Toast.makeText(Group_User_Activity.this, "No tasks", Toast.LENGTH_SHORT).show();
                         }
                     }
-                } catch (Exception e) {
-                    Toast.makeText(Group_User_Activity.this, "No tasks found for you :)", Toast.LENGTH_SHORT).show();
                 }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-
-
-        ref.child("Users").child(userId).child("MyGoals").addValueEventListener(new ValueEventListener() {
+        FirebaseFunctions.getInstance().getHttpsCallable("getUserGoalsInGroup").call(data).addOnCompleteListener(new OnCompleteListener<HttpsCallableResult>() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                HashMap<String, Object> g_id_list = snapshot.getValue(new GenericTypeIndicator<HashMap<String, Object>>() {
-                });
-                try {
-                    for (String id : g_id_list.keySet()) {
-                        String tempgroupId = snapshot.child(id).getValue().toString();
-                        if (groupId.equals(tempgroupId)) {
-                            goalID.add(id);
+            public void onComplete(@NonNull Task<HttpsCallableResult> task) {
+                if (task.isSuccessful()) {
+                    if (task.isComplete()) {
+                        String userGoals = (String) task.getResult().getData();
+                        HashMap<String, JsonNode> data = jsonListToHashMap(userGoals,'g');
+                        System.out.println("*******************************************************");
+                        System.out.println(data.toString());
+                        System.out.println("*******************************************************");
+                        try {
+                            for (String GoalID : data.keySet()) {
+                                String GoalName = data.get(GoalID).get("goalName").asText();
+                                double value = Double.parseDouble(data.get(GoalID).get("goalVal").toString());
+                                double curr = Double.parseDouble(data.get(GoalID).get("currPoints").toString());
+                                double percent= (curr/value);
+                                percent=percent*100;
+                                goals_names.add(GoalName);
+                                bars.add(new ProgressBar(getApplicationContext()));
+                                goal_prog.add((int)percent);
+                            }
+                            goals_adp = new CustomAdapter(getApplicationContext(), goals_names, null, bars, 'g',goal_prog);
+                            goals_list.setAdapter(goals_adp);
+
+                        }
+                        catch (Exception e) {
+                            e.printStackTrace();
+                            Toast.makeText(Group_User_Activity.this, "No tasks", Toast.LENGTH_SHORT).show();
                         }
                     }
-                } catch (Exception e) {
-                    Toast.makeText(Group_User_Activity.this, "No goals found for you :(", Toast.LENGTH_SHORT).show();
                 }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
-
-        ref.child("Groups").child(groupId).child("Tasks").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                HashMap<String, Object> listtask = snapshot.getValue(new GenericTypeIndicator<HashMap<String, Object>>() {
-                });
-                try {
-                    for (String tempid : listtask.keySet()) {
-                        if (taskId.contains(tempid)) {
-                            tasks_names.add(snapshot.child(tempid).child("name").getValue().toString());
-                            points.add(snapshot.child(tempid).child("point").getValue().toString());
-                        }
-                    }
-
-                    task_adp = new CustomAdapter(getApplicationContext(), tasks_names, points, null, 't', null);
-                    task.setAdapter(task_adp);
-                    task.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                            String taskID = taskId.get(i);
-                            ref.child("Users").child(userId).child("MyTasks").child(taskID).child("isComplete").setValue(true);
-                            ref.child("Groups").child(groupId).child("Tasks").child(taskID).child("isComplete").setValue(true);
-
-                            // Update points
-                            ref.child("Users").child(userId).child("curr_points").setValue((curr_userPoints+Integer.parseInt(points.get(i))));
-
-
-                            Toast.makeText(Group_User_Activity.this, "Successfully completed task:" + tasks_names.get(i), Toast.LENGTH_SHORT).show();
-                            Intent user2user = new Intent(Group_User_Activity.this, Group_User_Activity.class);
-                            user2user.putExtra("ID_name", groupId + "," + groupName);
-                            startActivity(user2user);
-                        }
-                    });
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Toast.makeText(Group_User_Activity.this, "No tasks", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
-
-        ref.child("Groups").child(groupId).child("Goals").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                HashMap<String, Object> g_id_list = snapshot.getValue(new GenericTypeIndicator<HashMap<String, Object>>() {
-                });
-                try {
-                    for (String id : g_id_list.keySet()) {
-                        String userID = snapshot.child(id).child("assignID").getValue().toString();
-                        if (userId.equals(userID)) {
-                            goals_names.add(snapshot.child(id).child("name").getValue().toString());
-                            double curr= Double.parseDouble(snapshot.child(id).child("currentPoints").getValue().toString());
-                            double tot= Double.parseDouble(snapshot.child(id).child("value").getValue().toString());
-                            double percent= (curr/tot);
-                            percent=percent*100;
-                            bars.add(new ProgressBar(getApplicationContext()));
-                            goal_prog.add((int)percent);
-                        }
-                    }
-                    goals_adp = new CustomAdapter(getApplicationContext(), goals_names, null, bars, 'g',goal_prog);
-                    goals_list.setAdapter(goals_adp);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Toast.makeText(Group_User_Activity.this, "No goals", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
     }
 
-
-        // Override the 'onClick' method, divided by button id
-        @Override
-        public void onClick (View v){
-            switch (v.getId()) {
-                case R.id.back_to_groups:
-                    Intent i = new Intent(this, My_Groups_Activity.class);
-                    i.putExtra("ID_name", groupId + "," + groupName);
-                    startActivity(i);
-                    break;
-                default:
-                    break;
+    // Help function which takes a String representing Json file, and transform it to hashmap<String,JsonNode>
+    public static HashMap<String, JsonNode> jsonListToHashMap(String jsonList,char classification) {
+        HashMap<String, JsonNode> map = new HashMap<>();
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            JsonNode jsonNode = objectMapper.readTree(jsonList);
+            for (JsonNode node : jsonNode) {
+                String key="";
+                if(classification=='t'){key = node.get("taskId").asText();}
+                else {key = node.get("goalId").asText();}
+                map.put(key, node);
             }
-        }}
+        } catch (IOException e) {
+            e.printStackTrace();
+            return map;
+        }
+        return map;
+    }
+
+    // Override the 'onClick' method, divided by button id
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.back_to_groups:
+                Intent i = new Intent(this, My_Groups_Activity.class);
+                i.putExtra("ID_name", GroupID + "," + groupName);
+                startActivity(i);
+                break;
+            default:
+                break;
+        }
+    }
+}

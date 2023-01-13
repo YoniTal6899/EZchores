@@ -27,13 +27,10 @@ public class LogIn_Activity extends AppCompatActivity implements View.OnClickLis
 
     // Buttons
     AppCompatButton back, commit_login;
-
     //fields
     private AppCompatEditText mail_field, password_field;
-
     // Firebase
     private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
     String regTK;
     DatabaseReference database;
     String UserID;
@@ -44,20 +41,16 @@ public class LogIn_Activity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
         regTK= (String)getIntent().getSerializableExtra("Registration Token");
-
         // Buttons inits
         mail_field = findViewById(R.id.Email_field);
         password_field = findViewById(R.id.Password_field);
         back = findViewById(R.id.back_home);
         commit_login = findViewById(R.id.commit_login);
-
         // Firebase init
         mAuth = FirebaseAuth.getInstance();
-
         // Listeners
         back.setOnClickListener(this);
         commit_login.setOnClickListener(this);
-
     }
 
     @Override
@@ -102,11 +95,9 @@ public class LogIn_Activity extends AppCompatActivity implements View.OnClickLis
                         Toast.makeText(LogIn_Activity.this, "User logged in successfully", Toast.LENGTH_SHORT).show();
                         update_regTK();
                         Intent i = new Intent(LogIn_Activity.this,My_Groups_Activity.class);
-                        i.putExtra("Registration Token",regTK);
                         startActivity(i);
                     } else {
                         Toast.makeText(LogIn_Activity.this,
-
                                 task.getException().getMessage(),
                                 Toast.LENGTH_SHORT).show();
                     }

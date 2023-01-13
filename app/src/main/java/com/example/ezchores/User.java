@@ -86,18 +86,6 @@ public class User implements Serializable {
         this.taskList.add(taskList);
 
     }
-    public HashMap<String, Object> getArgs(){
-        HashMap<String,Object> args= new HashMap<>();
-        args.put("regTK",this.regTK);
-        args.put("name",this.name);
-        args.put("email",this.email);
-        args.put("task-list",this.taskList);
-        args.put("group-list",this.groupList);
-        args.put("goal-list",this.goalList);
-        args.put("curr-points",this.curr_points);
-        return args;
-    }
-
     @NonNull
     @Override
     public String toString() {
