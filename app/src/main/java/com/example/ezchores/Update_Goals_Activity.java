@@ -226,6 +226,8 @@ public class Update_Goals_Activity extends AppCompatActivity implements View.OnC
         remaing_points = (remaing_points - numVal);
         available_points = available_points - numVal;
         if (remaing_points == 0) {
+            int updated_currPoints = (listOfGoalcurrPoints.get(numIndex)+numVal);
+            ref.child("Groups").child(listOfGoalsGroupIds.get(numIndex)).child("Goals").child(listOfGoalIDs.get(numIndex)).child("currentPoints").setValue(updated_currPoints);
             ref.child("Groups").child(listOfGoalsGroupIds.get(numIndex)).child("Goals").child(listOfGoalIDs.get(numIndex)).child("isComplete").setValue(true);
             ref.child("Users").child(UserID).child("MyGoals").child(listOfGoalIDs.get(numIndex)).child("isComplete").setValue(true);
             Toast.makeText(Update_Goals_Activity.this, "Goal " + listOfGoalNames.get(numIndex) + " completed successfully! :)", Toast.LENGTH_SHORT).show();
