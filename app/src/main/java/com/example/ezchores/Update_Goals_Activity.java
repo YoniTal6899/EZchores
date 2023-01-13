@@ -94,21 +94,14 @@ public class Update_Goals_Activity extends AppCompatActivity implements View.OnC
                 HashMap<String, Object> list = snapshot.getValue(new GenericTypeIndicator<HashMap<String, Object>>() {
                 });
 
-                System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-                System.out.println();
-                System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-
+                
                 if(list!=null) {
                     for (String goalId : list.keySet()) {
                         if (!listOfGoalIDs.contains(goalId)) {
                             listOfGoalsGroupIds.add(ExtractGroupID(list.get(goalId).toString()));
-                            listOfGoalIDs.add(goalId);
-                            System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-                            System.out.println("To the listOfGoalsGroupIds " + list.get(goalId).toString());
-                            System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-                            System.out.println("To the listOfGoalIDs " + goalId);
-                            System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+                            listOfGoalIDs.add(goalId);                       
                         }
+
 
                     }
                 }
