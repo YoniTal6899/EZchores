@@ -94,28 +94,7 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
         group_name.setText(groupName);
         myUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-//        try {
-//            ref.child("Groups").child(groupID).child("name").addValueEventListener(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                    group_name.setText(snapshot.getValue().toString());
-//                }
-//
-//                @Override
-//                public void onCancelled(@NonNull DatabaseError error) {
-//
-//                }
-//            });
-//        }catch (Exception e){
-//            Toast.makeText(Group_Info_Activity.this, "on create Something went wrong :(", Toast.LENGTH_SHORT).show();
-//
-//        }
 
-       // Display the friends in the group
-
-
-
-        // init the DataBase reference
 // DB references
         DatabaseReference refFriends = FirebaseDatabase
                 .getInstance()
@@ -130,98 +109,87 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
                 .child(groupID)
                 .child("image");
 
-       refFriends.addListenerForSingleValueEvent(new ValueEventListener() {
-           @Override
-           public void onDataChange(@NonNull DataSnapshot snapshot) {
+        refFriends.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-               HashMap<String , Object> friendMap = snapshot
-                       .getValue(new GenericTypeIndicator<HashMap<String, Object>>() {
-               });
-               try {
-                   for (String UID : friendMap.keySet()){
-                       String key = UID.toString();
-                       String name = friendMap.get(UID).toString();
-                       System.out.println("TEST ->" + name );
-                       FriendsName.add(name);
-                       checkboxStates.add(0);
-                       KeyList.add(UID);
+                HashMap<String , Object> friendMap = snapshot
+                        .getValue(new GenericTypeIndicator<HashMap<String, Object>>() {
+                        });
+                try {
+                    for (String UID : friendMap.keySet()){
+                        String key = UID.toString();
+                        String name = friendMap.get(UID).toString();
+                        System.out.println("TEST ->" + name );
+                        FriendsName.add(name);
+                        checkboxStates.add(0);
+                        KeyList.add(UID);
 
-                   }
-
-                   System.out.println("------------before adapter");
-                   FriendsDisplayArr = new CustomAdapter(
-                           getApplicationContext(),
-                           FriendsName,
-                           null,
-                           null,
-                           'u',
-                           checkboxStates
-                   );
+                    }
+                    FriendsDisplayArr = new CustomAdapter(
+                            getApplicationContext(),
+                            FriendsName,
+                            null,
+                            null,
+                            'u',
+                            checkboxStates
+                    );
 
 
-                   memberList.setAdapter(FriendsDisplayArr);
-//                   memberList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                       @Override
-//                       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                           int itemPosition = memberList.getPositionForView(view);
-//                           System.out.println("We want to delete :"+FriendsName.get(itemPosition)+"at place "+ itemPosition);
-//                           refFriends.child(KeyList.get(itemPosition)).removeValue();
-//                           updateUI();
+                    memberList.setAdapter(FriendsDisplayArr);
 //
-//                       }
-//                   });
-               } catch (Exception e) {
-                   System.out.println("error :"+ e );
-               }
-           }
+                } catch (Exception e) {
+                    System.out.println("error :"+ e );
+                }
+            }
 
-           @Override
-           public void onCancelled(@NonNull DatabaseError error) {
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-           }
-       });
-       refImage.addValueEventListener(new ValueEventListener() {
-           @Override
-           public void onDataChange(@NonNull DataSnapshot snapshot) {
-               String imageString = snapshot.getValue(String.class);
-               if (imageString == null){
-                   System.out.println("imageString is null");
+            }
+        });
+        refImage.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String imageString = snapshot.getValue(String.class);
+                if (imageString == null){
+                    System.out.println("imageString is null");
 
-               }else {
-                   byte[] data = Base64.decode(imageString, Base64.DEFAULT);
-                   Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
-                   group_photo.setImageBitmap(bitmap);
-               }
-           }
+                }else {
+                    byte[] data = Base64.decode(imageString, Base64.DEFAULT);
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+                    group_photo.setImageBitmap(bitmap);
+                }
+            }
 
-           @Override
-           public void onCancelled(@NonNull DatabaseError error) {
-               System.out.println( error);
-           }
-       });
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                System.out.println( error);
+            }
+        });
 
-       group_photo.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-               AlertDialog.Builder builder = new AlertDialog.Builder(Group_Info_Activity.this);
+        group_photo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(Group_Info_Activity.this);
 
-               builder.setTitle("Add a Photo")
-                       .setItems(new CharSequence[]{"Use the Camera", "Import from Gallery"}, new DialogInterface.OnClickListener() {
-                           @Override
-                           public void onClick(DialogInterface dialog, int choice) {
-                               switch (choice) {
-                                   case 0:
-                                       takePicture();
-                                       break;
-                                   case 1:
-                                       selectPicture();
-                                       break;
-                               }
-                           }
-                       });
-               builder.create().show();
-           }
-       });
+                builder.setTitle("Add a Photo")
+                        .setItems(new CharSequence[]{"Use the Camera", "Import from Gallery"}, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int choice) {
+                                switch (choice) {
+                                    case 0:
+                                        takePicture();
+                                        break;
+                                    case 1:
+                                        selectPicture();
+                                        break;
+                                }
+                            }
+                        });
+                builder.create().show();
+            }
+        });
 
     }
 
@@ -249,17 +217,17 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
                 }
                 // there was adding into the remove list
                 if (!isFilledZero(FriendsDisplayArr.getCheckBox())) {
-                    System.out.println(FriendsDisplayArr.getCheckBox().toString());
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             // Code for creating and showing the AlertDialog
                             AlertDialog.Builder builder = new AlertDialog.Builder(Group_Info_Activity.this);
-                            builder.setTitle("Remove ");
+                            builder.setTitle("Remove");
                             builder.setMessage("you have selected users to delete from the group , are you sure to remove them ?");
                             builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
+
                                     DatabaseReference refFriends = FirebaseDatabase
                                             .getInstance()
                                             .getReference("Groups")
@@ -267,12 +235,13 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
                                             .child("Friends");
                                     for (int j = 0; j < FriendsDisplayArr.getCheckBox().length ; j++) {
                                         if (FriendsDisplayArr.getCheckBox()[j] == 1){
-                                            System.out.println("the user in place "+j+"was removed ");
-//                                            if (isContextUSer){
-//                                                Toast.makeText(Group_Info_Activity.this,"You try to last administrator, this cannot be done",Toast.LENGTH_SHORT ).show();
-//                                            }
-
-                                            refFriends.child(KeyList.get(j)).removeValue();
+                                            // if we want to remove the current user (admin)
+                                            if (myUserID.equals(KeyList.get(j))){
+                                                Toast.makeText(Group_Info_Activity.this,"You try to remove an administrator, this cannot be done",Toast.LENGTH_SHORT ).show();
+                                            }else {
+                                                refFriends.child(KeyList.get(j)).removeValue();
+                                                System.out.println("the user in place " + j + "was removed ");
+                                            }
                                         }
                                     }
                                     updateUI();
@@ -291,7 +260,6 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
                             alertDialog.show();
                         }
                     });
-
                 }
                 break;
 
@@ -328,7 +296,7 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
         });
     }
 
-   // Update the ListView with the changed data
+    // Update the ListView with the changed data
 
     private void updateUI(){
         Intent intent = new Intent(this,Group_Info_Activity.class);
@@ -336,9 +304,6 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
         startActivity(intent);
     }
 
-//    private boolean isContextUSer(int pos){
-//
-//    }
 
     private void takePicture() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -349,19 +314,18 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
         }
     }
 
-        private void selectPicture() {
-            Intent selectPicture = new Intent();
-            selectPicture.setType("image/*");
-            selectPicture.setAction(Intent.ACTION_GET_CONTENT);
-            startActivityForResult(Intent.createChooser(selectPicture, "Select Picture"), REQUEST_SELECT_PICTURE);
-        }
+    private void selectPicture() {
+        Intent selectPicture = new Intent();
+        selectPicture.setType("image/*");
+        selectPicture.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(selectPicture, "Select Picture"), REQUEST_SELECT_PICTURE);
+    }
 
     private Bitmap getImageFromImageView() {
         // Get the drawable of the image view
         Drawable drawable = group_photo.getDrawable();
         // Convert the drawable to a bitmap
-        Bitmap bitmap = ((BitmapDrawable)drawable).getBitmap();
-        return bitmap;
+        return ((BitmapDrawable)drawable).getBitmap();
     }
 
     private void storeImage(String UserId, Bitmap image) {
@@ -370,46 +334,47 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
         image.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] data = baos.toByteArray();
         String ImageString = Base64.encodeToString(data, Base64.DEFAULT);
-        GroupKey.child("image").setValue(ImageString).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-                Toast.makeText(Group_Info_Activity.this, "Image Stored", Toast.LENGTH_SHORT).show();
-            }
-        });
+        GroupKey.child("image")
+                .setValue(ImageString)
+                .addOnSuccessListener(unused -> Toast.makeText(Group_Info_Activity.this
+                        , "Image Stored"
+                        , Toast.LENGTH_SHORT).show());
     }
 
 
-        @Override
-        protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-            super.onActivityResult(requestCode, resultCode, data);
-            if (resultCode == RESULT_OK) {
-                if (requestCode == REQUEST_TAKE_PHOTO) {
-                    Bundle extras = data.getExtras();
-                    Bitmap bitmap = (Bitmap) extras.get("data");
-                    group_photo.setImageBitmap(bitmap);
-                    storeImage(groupID, getImageFromImageView());
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == REQUEST_TAKE_PHOTO) {
+                Bundle extras = data.getExtras();
+                Bitmap bitmap = (Bitmap) extras.get("data");
+                group_photo.setImageBitmap(bitmap);
+                storeImage(groupID, getImageFromImageView());
 
-                }
-                else if (resultCode == REQUEST_SELECT_PICTURE){
-                    Uri selectedImage = data.getData();
-                    if (selectedImage != null){
-                        group_photo.setImageURI(selectedImage);
-                    }
+            }
+            else if (resultCode == REQUEST_SELECT_PICTURE){
+                Uri selectedImage = data.getData();
+                if (selectedImage != null){
+                    group_photo.setImageURI(selectedImage);
                 }
             }
         }
+    }
 
-        private boolean isFilledZero(int[] arr) {
-            for (int i = 0; i <arr.length ; i++) {
-                if (arr[i] == 1) {return false;}
+    private boolean isFilledZero(int[] arr) {
+        for (int j : arr) {
+            if (j == 1) {
+                return false;
             }
-            return true;
         }
+        return true;
+    }
 
 
 
 
-        private void addFriend(String mail) {
+    private void addFriend(String mail) {
         ref.child("Users").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

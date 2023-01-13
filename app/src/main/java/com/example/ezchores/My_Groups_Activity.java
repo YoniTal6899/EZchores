@@ -123,7 +123,6 @@ public class My_Groups_Activity extends Activity implements View.OnClickListener
                                     Toast.makeText(My_Groups_Activity.this, "user permission", Toast.LENGTH_SHORT).show();
                                     startActivity(groups2user);
                                 } else {
-
                                     Intent groups2admin = new Intent(My_Groups_Activity.this, Group_Admin_Activity.class);
                                     groups2admin.putExtra("ID_name", listGroupid.get(position)+","+listGroupname.get(position));
                                     Toast.makeText(My_Groups_Activity.this, "admin permission", Toast.LENGTH_SHORT).show();
