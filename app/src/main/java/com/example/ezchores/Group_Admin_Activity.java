@@ -102,8 +102,8 @@ public class Group_Admin_Activity extends AppCompatActivity implements View.OnCl
                         @Override
                         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                             String taskID = taskId.get(i);
-                            ref.child("Users").child(userID).child("MyTasks").child(taskID).removeValue();
-                            ref.child("Groups").child(groupID).child("Tasks").child(taskID).removeValue();
+                            ref.child("Users").child(userID).child("MyTasks").child(taskID).child("isComplete").setValue(true);
+                            ref.child("Groups").child(groupID).child("Tasks").child(taskID).child("isComplete").setValue(true);
 
 
                             // Update points

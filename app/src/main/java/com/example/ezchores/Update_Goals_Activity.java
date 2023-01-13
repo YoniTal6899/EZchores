@@ -87,19 +87,26 @@ public class Update_Goals_Activity extends AppCompatActivity implements View.OnC
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 HashMap<String, Object> list = snapshot.getValue(new GenericTypeIndicator<HashMap<String, Object>>() {
                 });
-                if (list == null){
-                    Toast.makeText(Update_Goals_Activity.this,
-                            "You'r goal list is empty",
-                            Toast.LENGTH_SHORT
-                            ).show();
-                }else {
-                    for (String goalId : list.keySet()) {
-                        if (!listOfGoalIDs.contains(goalId)) {
-                            listOfGoalsGroupIds.add(list.get(goalId).toString());
-                            listOfGoalIDs.add(goalId);
-                        }
 
+                System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+                System.out.println(list.toString());
+                System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+
+
+                for (String goalId : list.keySet()) {
+                    System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+                    System.out.println("Goal ID: "+goalId);
+                    System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+                    if (!listOfGoalIDs.contains(goalId)){
+                        listOfGoalsGroupIds.add(list.get(goalId).toString());
+                        listOfGoalIDs.add(goalId);
+                        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+                        System.out.println("To the listOfGoalsGroupIds "+list.get(goalId).toString());
+                        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+                        System.out.println("To the listOfGoalIDs "+goalId);
+                        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
                     }
+
                 }
             }
 
@@ -215,8 +222,8 @@ public class Update_Goals_Activity extends AppCompatActivity implements View.OnC
         remaing_points = (remaing_points - numVal);
         available_points = available_points - numVal;
         if (remaing_points == 0) {
-            ref.child("Groups").child(listOfGoalsGroupIds.get(numIndex)).child("Goals").child(listOfGoalIDs.get(numIndex)).removeValue();
-            ref.child("Users").child(UserID).child("MyGoals").child(listOfGoalIDs.get(numIndex)).removeValue();
+            ref.child("Groups").child(listOfGoalsGroupIds.get(numIndex)).child("Goals").child(listOfGoalIDs.get(numIndex)).child("isComplete").setValue(true);
+            ref.child("Users").child(UserID).child("MyGoals").child(listOfGoalIDs.get(numIndex)).child("isComplete").setValue(true);
             Toast.makeText(Update_Goals_Activity.this, "Goal " + listOfGoalNames.get(numIndex) + " completed successfully! :)", Toast.LENGTH_SHORT).show();
             Intent BTGR = new Intent(this, Personal_Info_Activity.class);
             String[] toSend = sendToIntent.split(",");
