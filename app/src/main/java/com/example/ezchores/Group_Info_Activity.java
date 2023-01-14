@@ -18,6 +18,10 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Adapter;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -51,23 +55,19 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
     // Declaration of .xml file widgets
     AppCompatButton back, apply;
     ImageView group_photo;
+    Button trash;
     EditText new_name, mem_email;
-
-    FloatingActionButton add_mem;
+    FloatingActionButton icon, add_mem;
     TextView group_name;
     ListView memberList;
-    CustomAdapter FriendsDisplayArr;
-    int curr_userPoints;
+    CustomAdapter FriendsDisplay;
+    ArrayAdapter FriendsDisplayArr;
     // DB
     DatabaseReference ref;
     // Display the friends in the group
     ArrayList<String> FriendsName = new ArrayList<>();
     ArrayList<String> KeyList = new ArrayList<>();
-    private ArrayList<Integer> checkboxStates = new ArrayList<>();
 
-
-    // DB
-    private DatabaseReference ref;
 
     // handle change of pic initialisation
     private static final int REQUEST_TAKE_PHOTO = 1;
@@ -77,7 +77,6 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
     String myUserID;
     String groupName;
 
-
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,19 +84,17 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
 
         setContentView(R.layout.activity_group_info);
 
-        String args = (String) getIntent().getSerializableExtra("ARGS");
+        String id_name = (String) getIntent().getSerializableExtra("ID_name");
         System.out.println("*************************************");
-        System.out.println("Group name " + args);
+        System.out.println("Group name " + id_name);
         System.out.println("*************************************");
         ref = FirebaseDatabase.getInstance().getReference();
-        groupID = args.split(",")[0];
+        groupID = id_name.split(",")[0];
         group_name = (TextView) findViewById(R.id.group_name);
-        curr_userPoints = Integer.parseInt(args.split(",")[2]);
-        groupName=args.split(",")[1];
-        group_name.setText(groupName);
         //Init widgets
 
         back = (AppCompatButton) findViewById(R.id.to_gr);
+        trash = (Button) findViewById(R.id.trash_icon);
         apply = (AppCompatButton) findViewById(R.id.apply_group_changes);
         new_name = (EditText) findViewById(R.id.new_group_name_field);
         mem_email = (EditText) findViewById(R.id.new_member_mail);
@@ -119,7 +116,12 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
                         String groupInfo = (String) task.getResult().getData();
                         FriendsName = updatenlists(groupInfo, 'n');
                         KeyList = updatenlists(groupInfo, 'k');
-                        for(int i=0;i<FriendsName.size();i++){checkboxStates.add(0);}
+                        groupName=KeyList.get(KeyList.size()-1);
+                        groupName=groupName.substring(1,groupName.length()-1);
+                        KeyList.remove(KeyList.size()-1);
+                        group_name.setText(groupName);
+
+
 
                         System.out.println("*************************************");
                         System.out.println("Friends names " + FriendsName);
@@ -142,17 +144,22 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
                                 .child(groupID)
                                 .child("image");
 
-                        FriendsDisplayArr = new CustomAdapter(
+                        FriendsDisplayArr = new ArrayAdapter(
                                 getApplicationContext(),
-                                FriendsName,
-                                null,
-                                null,
-                                'u',
-                                checkboxStates
-                        );
+                                android.R.layout.simple_list_item_1,
+                                FriendsName);
 
                         memberList.setAdapter(FriendsDisplayArr);
+                        memberList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                int itemPosition = memberList.getPositionForView(view);
+                                System.out.println("We want to delete :" + FriendsName.get(itemPosition) + "at place " + itemPosition);
+                                refFriends.child(KeyList.get(itemPosition)).removeValue();
+                                updateUI();
 
+                            }
+                        });
 
 
                         refImage.addValueEventListener(new ValueEventListener() {
@@ -203,7 +210,6 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
         });
     }
 
-
     public static ArrayList<String> updatenlists(String jsonString, char c) {
         ObjectMapper objectMapper = new ObjectMapper();
         ArrayList<String> ret = new ArrayList<String>();
@@ -223,6 +229,7 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
                     String MemID = users[i].split(":")[0];
                     MemID = MemID.split("\"")[1];
                     ret.add(MemID);
+                    ret.add(gname);
                 }
             }
         } catch (IOException e) {
@@ -230,7 +237,7 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
         }
         return ret;
     }
-              
+
 
     // Override the 'onClick' method, divided by button id
     @Override
@@ -244,64 +251,19 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
 
             case R.id.apply_group_changes:
                 // Needs to save the new group info [name, icon
-
                 String N = new_name.getText().toString();
                 if (N != null) {
                     updateName(N);
                     Intent i = new Intent(this, Group_Admin_Activity.class);
-                    i.putExtra("ARGS", groupID + "," + curr_userPoints+","+N);
+                    i.putExtra("ID_name", groupID + "," + N);
                     startActivity(i);
                 } else {
                     Intent i = new Intent(this, Group_Admin_Activity.class);
-                    i.putExtra("ARGS", groupID + "," +curr_userPoints+","+groupName);
+
+                    i.putExtra("group_Id", groupID);
+                    i.putExtra("group_name", groupName);
                     startActivity(i);
                     Toast.makeText(Group_Info_Activity.this, "on click Something went wrong :(", Toast.LENGTH_SHORT).show();
-                }
-                // there was adding into the remove list
-                if (!isFilledZero(FriendsDisplayArr.getCheckBox())) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            // Code for creating and showing the AlertDialog
-                            AlertDialog.Builder builder = new AlertDialog.Builder(Group_Info_Activity.this);
-                            builder.setTitle("Remove");
-                            builder.setMessage("you have selected users to delete from the group , are you sure to remove them ?");
-                            builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-
-                                    DatabaseReference refFriends = FirebaseDatabase
-                                            .getInstance()
-                                            .getReference("Groups")
-                                            .child(groupID)
-                                            .child("Friends");
-                                    for (int j = 0; j < FriendsDisplayArr.getCheckBox().length ; j++) {
-                                        if (FriendsDisplayArr.getCheckBox()[j] == 1){
-                                            // if we want to remove the current user (admin)
-                                            if (myUserID.equals(KeyList.get(j))){
-                                                Toast.makeText(Group_Info_Activity.this,"You try to remove an administrator, this cannot be done",Toast.LENGTH_SHORT ).show();
-                                            }else {
-                                                refFriends.child(KeyList.get(j)).removeValue();
-                                                System.out.println("the user in place " + j + "was removed ");
-                                            }
-                                        }
-                                    }
-                                    updateUI();
-                                    startActivity(i);
-                                }
-                            });
-                            builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-
-                                    System.out.println("The user choose to not remove the specified users");
-                                    startActivity(i);
-                                }
-                            });
-                            AlertDialog alertDialog = builder.create();
-                            alertDialog.show();
-                        }
-                    });
                 }
                 break;
 
@@ -309,6 +271,8 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
                 String new_mem_email = mem_email.getText().toString();
                 addFriend(new_mem_email);
                 break;
+
+            case R.id.trash_icon:
 
             default:
                 break;
@@ -319,6 +283,7 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
     private void updateName(String newname) {
         group_name.setText(newname);
         ref.child("Groups").child(groupID).child("name").setValue(newname);
+
         ref.child("Groups").child(groupID).child("Friends").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -347,7 +312,6 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
         startActivity(intent);
     }
 
-
     private void takePicture() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         try {
@@ -368,7 +332,8 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
         // Get the drawable of the image view
         Drawable drawable = group_photo.getDrawable();
         // Convert the drawable to a bitmap
-        return ((BitmapDrawable)drawable).getBitmap();
+        Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+        return bitmap;
     }
 
     private void storeImage(String UserId, Bitmap image) {
@@ -377,11 +342,12 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
         image.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] data = baos.toByteArray();
         String ImageString = Base64.encodeToString(data, Base64.DEFAULT);
-        GroupKey.child("image")
-                .setValue(ImageString)
-                .addOnSuccessListener(unused -> Toast.makeText(Group_Info_Activity.this
-                        , "Image Stored"
-                        , Toast.LENGTH_SHORT).show());
+        GroupKey.child("image").setValue(ImageString).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Toast.makeText(Group_Info_Activity.this, "Image Stored", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 
@@ -394,24 +360,16 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
                 Bitmap bitmap = (Bitmap) extras.get("data");
                 group_photo.setImageBitmap(bitmap);
                 storeImage(groupID, getImageFromImageView());
-            }
-            else if (resultCode == REQUEST_SELECT_PICTURE){
+
+            } else if (resultCode == REQUEST_SELECT_PICTURE) {
                 Uri selectedImage = data.getData();
-                if (selectedImage != null){
+                if (selectedImage != null) {
                     group_photo.setImageURI(selectedImage);
                 }
             }
         }
     }
 
-    private boolean isFilledZero(int[] arr) {
-        for (int j : arr) {
-            if (j == 1) {
-                return false;
-            }
-        }
-        return true;
-    }
 
     private void addFriend(String mail) {
         ref.child("Users").addValueEventListener(new ValueEventListener() {

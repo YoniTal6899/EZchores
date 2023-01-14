@@ -56,13 +56,11 @@ public class Group_Admin_Activity extends AppCompatActivity implements View.OnCl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_admin);
+        groupn = (TextView) findViewById(R.id.group_name);
+        groupn.setText(groupName);
         args = (String) getIntent().getSerializableExtra("ARGS");
         curr_userPoints = Integer.parseInt(args.split(",")[1]);
         GroupID = args.split(",")[0];
-        groupName=args.split(",")[2];
-        groupn = (TextView) findViewById(R.id.group_name);
-        groupn.setText(groupName);
-
 
         userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
         group_info = (AppCompatButton) findViewById(R.id.group_info);
@@ -162,8 +160,7 @@ public class Group_Admin_Activity extends AppCompatActivity implements View.OnCl
     // Override the 'onClick' method, divided by button id
     @Override
     public void onClick(View v) {
-        String id_name = GroupID + "," + groupName+","+curr_userPoints;
-
+        String id_name = GroupID + "," + groupName;
         switch (v.getId()) {
             case R.id.back_to_groups:
                 Intent i = new Intent(this, My_Groups_Activity.class);
@@ -172,19 +169,19 @@ public class Group_Admin_Activity extends AppCompatActivity implements View.OnCl
 
             case R.id.group_info:
                 Intent k = new Intent(this, Group_Info_Activity.class);
-                k.putExtra("ARGS", id_name);
+                k.putExtra("ID_name", id_name);
                 startActivity(k);
                 break;
 
             case R.id.new_goal:
                 Intent r = new Intent(this, New_Goal_Activity.class);
-                r.putExtra("ARGS", id_name);
+                r.putExtra("ID_name", id_name);
                 startActivity(r);
                 break;
 
             case R.id.new_task:
                 Intent m = new Intent(this, New_Task_Acitivty.class);
-                m.putExtra("ARGS", id_name);
+                m.putExtra("ID_name", id_name);
                 startActivity(m);
                 break;
 
