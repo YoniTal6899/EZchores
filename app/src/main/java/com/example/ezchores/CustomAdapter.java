@@ -5,19 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.zip.Inflater;
 
 public class CustomAdapter extends BaseAdapter {
 
@@ -36,13 +30,13 @@ public class CustomAdapter extends BaseAdapter {
         }
         this.ctx = ctx;
         this.inflater = LayoutInflater.from(ctx);
-        if (pts != null && c!='u') {
+        if (pts != null) {
             this.points = new String[pts.size()];
             for (int i = 0; i < pts.size(); i++) {
                 this.points[i] = pts.get(i);
             }
         }
-        if (bars != null && c!= 'u') {
+        if (bars != null) {
             this.bars = new ProgressBar[bars.size()];
             for (int i = 0; i < bars.size(); i++) {
                 this.bars[i] = bars.get(i);
@@ -50,15 +44,12 @@ public class CustomAdapter extends BaseAdapter {
             }
         }
         this.classificator = c;
-        if (goal_prog != null && c!='u') {
+        if (goal_prog != null) {
             this.goal_prog = new int[goal_prog.size()];
             for (int i = 0; i < goal_prog.size(); i++) {
                 this.goal_prog[i] = (int) goal_prog.get(i);
 
             }
-        }else if (c == 'u'){
-            this.goal_prog = new int[goal_prog.size()];
-            this.goal_prog = goal_prog.stream().mapToInt(i -> i).toArray();
         }
 
     }
@@ -105,34 +96,9 @@ public class CustomAdapter extends BaseAdapter {
                 FloatingActionButton trash_Icon = (FloatingActionButton) view.findViewById(R.id.trash_icon);
                 member_name.setText(this.content[pos]);
                 return view;
-            case 'u':
-                RecyclerView.ViewHolder holder;
-                view = inflater.inflate(R.layout.name_and_checkbox_listview, null);
-                TextView nameTextView = (TextView) view.findViewById(R.id.name);
-                CheckBox checkBox = (CheckBox) view.findViewById(R.id.checkbox);
-                checkBox.setEnabled(true);
-                checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        if (isChecked){
-                            // the button is clicked at place position
-                            goal_prog[pos] =1;
-                            System.out.println("element number"+pos+" is validated");
-                        }else{
-                            goal_prog[pos] =0;
-                        }
-                    }
-                });
-                ImageView trash = (ImageView) view.findViewById(R.id.trash_icon);
-                nameTextView.setText(this.content[pos]);
-                return view;
             default:
                 break;
         }
         return null;
-    }
-
-    public int[] getCheckBox(){
-        return this.goal_prog;
     }
 }
