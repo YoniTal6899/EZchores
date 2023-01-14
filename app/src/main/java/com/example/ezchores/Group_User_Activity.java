@@ -57,10 +57,11 @@ public class Group_User_Activity extends AppCompatActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_user);
+        args = (String) getIntent().getSerializableExtra("ARGS");
+        curr_userPoints = Integer.parseInt(args.split(",")[1]);
+        GroupID = args.split(",")[0];
+        groupName=args.split(",")[2];
         groupn = (TextView) findViewById(R.id.group_name);
-        if (groupn == null) {
-            System.out.println("the findByView function didn't succeed");
-        }
         groupn.setText(groupName);
 
         // Init of the .xml file
@@ -70,9 +71,6 @@ public class Group_User_Activity extends AppCompatActivity implements View.OnCli
         // Listeners
         to_gr.setOnClickListener(this);
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        args = (String) getIntent().getSerializableExtra("ARGS");
-        curr_userPoints = Integer.parseInt(args.split(",")[1]);
-        GroupID = args.split(",")[0];
         ref = FirebaseDatabase.getInstance().getReference();
 
         Map<String, Object> data = new HashMap<>();

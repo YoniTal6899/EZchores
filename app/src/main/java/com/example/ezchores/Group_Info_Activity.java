@@ -57,17 +57,17 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
     ImageView group_photo;
     Button trash;
     EditText new_name, mem_email;
-    FloatingActionButton icon, add_mem;
+    FloatingActionButton add_mem;
     TextView group_name;
     ListView memberList;
-    CustomAdapter FriendsDisplay;
-    ArrayAdapter FriendsDisplayArr;
+    CustomAdapter FriendsDisplayArr;
+    int curr_userPoints;
     // DB
     DatabaseReference ref;
     // Display the friends in the group
     ArrayList<String> FriendsName = new ArrayList<>();
     ArrayList<String> KeyList = new ArrayList<>();
-
+    private ArrayList<Integer> checkboxStates = new ArrayList<>();
 
     // handle change of pic initialisation
     private static final int REQUEST_TAKE_PHOTO = 1;
@@ -84,13 +84,16 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
 
         setContentView(R.layout.activity_group_info);
 
-        String id_name = (String) getIntent().getSerializableExtra("ID_name");
+        String args = (String) getIntent().getSerializableExtra("ARGS");
         System.out.println("*************************************");
-        System.out.println("Group name " + id_name);
+        System.out.println("Group name " + args);
         System.out.println("*************************************");
         ref = FirebaseDatabase.getInstance().getReference();
-        groupID = id_name.split(",")[0];
+        groupID = args.split(",")[0];
         group_name = (TextView) findViewById(R.id.group_name);
+        curr_userPoints = Integer.parseInt(args.split(",")[2]);
+        groupName=args.split(",")[1];
+        group_name.setText(groupName);
         //Init widgets
 
         back = (AppCompatButton) findViewById(R.id.to_gr);
@@ -116,12 +119,7 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
                         String groupInfo = (String) task.getResult().getData();
                         FriendsName = updatenlists(groupInfo, 'n');
                         KeyList = updatenlists(groupInfo, 'k');
-                        groupName=KeyList.get(KeyList.size()-1);
-                        groupName=groupName.substring(1,groupName.length()-1);
-                        KeyList.remove(KeyList.size()-1);
-                        group_name.setText(groupName);
-
-
+                        for(int i=0;i<FriendsName.size();i++){checkboxStates.add(0);}
 
                         System.out.println("*************************************");
                         System.out.println("Friends names " + FriendsName);
@@ -144,22 +142,16 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
                                 .child(groupID)
                                 .child("image");
 
-                        FriendsDisplayArr = new ArrayAdapter(
+                        FriendsDisplayArr = new CustomAdapter(
                                 getApplicationContext(),
-                                android.R.layout.simple_list_item_1,
-                                FriendsName);
+                                FriendsName,
+                                null,
+                                null,
+                                'u',
+                                checkboxStates
+                        );
 
                         memberList.setAdapter(FriendsDisplayArr);
-                        memberList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                int itemPosition = memberList.getPositionForView(view);
-                                System.out.println("We want to delete :" + FriendsName.get(itemPosition) + "at place " + itemPosition);
-                                refFriends.child(KeyList.get(itemPosition)).removeValue();
-                                updateUI();
-
-                            }
-                        });
 
 
                         refImage.addValueEventListener(new ValueEventListener() {
@@ -229,7 +221,6 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
                     String MemID = users[i].split(":")[0];
                     MemID = MemID.split("\"")[1];
                     ret.add(MemID);
-                    ret.add(gname);
                 }
             }
         } catch (IOException e) {
@@ -255,13 +246,11 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
                 if (N != null) {
                     updateName(N);
                     Intent i = new Intent(this, Group_Admin_Activity.class);
-                    i.putExtra("ID_name", groupID + "," + N);
+                    i.putExtra("ARGS", groupID + "," + curr_userPoints+","+N);
                     startActivity(i);
                 } else {
                     Intent i = new Intent(this, Group_Admin_Activity.class);
-
-                    i.putExtra("group_Id", groupID);
-                    i.putExtra("group_name", groupName);
+                    i.putExtra("ARGS", groupID + "," +curr_userPoints+","+groupName);
                     startActivity(i);
                     Toast.makeText(Group_Info_Activity.this, "on click Something went wrong :(", Toast.LENGTH_SHORT).show();
                 }
