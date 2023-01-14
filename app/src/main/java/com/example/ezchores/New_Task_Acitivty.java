@@ -45,9 +45,10 @@ public class New_Task_Acitivty extends AppCompatActivity implements View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_task_acitivty);
-        String[] groupInfo = getIntent().getSerializableExtra("ID_name").toString().split(",");
-        groupID = groupInfo[0];
-        groupName = groupInfo[1];
+        String args = (String) getIntent().getSerializableExtra("ARGS");
+        int curr_userPoints = Integer.parseInt(args.split(",")[2]);
+        groupID = args.split(",")[0];
+        groupName=args.split(",")[1];
         // Init .xml widgets
         back = (AppCompatButton) findViewById(R.id.back_to_groups);
         create = (AppCompatButton) findViewById(R.id.create_task);
