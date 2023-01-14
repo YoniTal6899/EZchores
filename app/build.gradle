@@ -50,6 +50,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:23.1.1'
     implementation 'com.google.firebase:firebase-firestore:24.4.1'
 
+    implementation 'com.google.firebase:firebase-core:17.4.3'
+    implementation 'com.google.firebase:firebase-functions:17.4.3'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.11.3'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

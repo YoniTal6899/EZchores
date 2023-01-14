@@ -80,6 +80,12 @@ public class Update_Goals_Activity extends AppCompatActivity implements View.OnC
         DropDown();
 
     }
+    public String ExtractGroupID(String s){
+        String ans=s.split(",")[0];
+        ans=ans.split("=")[1];
+        return ans;
+    }
+
 
     private void GetGoalsFromDB() {
         ref.child("Users").child(UserID).child("MyGoals").addValueEventListener(new ValueEventListener() {
@@ -88,25 +94,16 @@ public class Update_Goals_Activity extends AppCompatActivity implements View.OnC
                 HashMap<String, Object> list = snapshot.getValue(new GenericTypeIndicator<HashMap<String, Object>>() {
                 });
 
-                System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-                System.out.println(list.toString());
-                System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+                
+                if(list!=null) {
+                    for (String goalId : list.keySet()) {
+                        if (!listOfGoalIDs.contains(goalId)) {
+                            listOfGoalsGroupIds.add(ExtractGroupID(list.get(goalId).toString()));
+                            listOfGoalIDs.add(goalId);                       
+                        }
 
 
-                for (String goalId : list.keySet()) {
-                    System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-                    System.out.println("Goal ID: "+goalId);
-                    System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-                    if (!listOfGoalIDs.contains(goalId)){
-                        listOfGoalsGroupIds.add(list.get(goalId).toString());
-                        listOfGoalIDs.add(goalId);
-                        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-                        System.out.println("To the listOfGoalsGroupIds "+list.get(goalId).toString());
-                        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-                        System.out.println("To the listOfGoalIDs "+goalId);
-                        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
                     }
-
                 }
             }
 
@@ -222,6 +219,8 @@ public class Update_Goals_Activity extends AppCompatActivity implements View.OnC
         remaing_points = (remaing_points - numVal);
         available_points = available_points - numVal;
         if (remaing_points == 0) {
+            int updated_currPoints = (listOfGoalcurrPoints.get(numIndex)+numVal);
+            ref.child("Groups").child(listOfGoalsGroupIds.get(numIndex)).child("Goals").child(listOfGoalIDs.get(numIndex)).child("currentPoints").setValue(updated_currPoints);
             ref.child("Groups").child(listOfGoalsGroupIds.get(numIndex)).child("Goals").child(listOfGoalIDs.get(numIndex)).child("isComplete").setValue(true);
             ref.child("Users").child(UserID).child("MyGoals").child(listOfGoalIDs.get(numIndex)).child("isComplete").setValue(true);
             Toast.makeText(Update_Goals_Activity.this, "Goal " + listOfGoalNames.get(numIndex) + " completed successfully! :)", Toast.LENGTH_SHORT).show();

@@ -23,8 +23,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 
-
-
 //import com.google.android.material.textfield.TextInputEditText;
 
 
@@ -38,32 +36,27 @@ public class SignUp_Activity extends AppCompatActivity implements View.OnClickLi
     //Buttons & EditTexts
     private AppCompatButton back, commit_login;
     private AppCompatEditText mail_field, password_field, full_name_field;
-
     // Firebase
     private FirebaseAuth mAuth;
-
-    private String UserID;
     DatabaseReference database;
+    // Other variables
+    private String UserID;
     String regTK;
 
     @SuppressLint({"WrongViewCast", "MissingInflatedId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        regTK= (String)getIntent().getSerializableExtra("Registration Token");
-
+        regTK = (String) getIntent().getSerializableExtra("Registration Token");
         //Firebase init
         mAuth = FirebaseAuth.getInstance();
-
         setContentView(R.layout.activity_sign_up);
-
         // Buttons & EditTexts init
         back = findViewById(R.id.back_home1);
         commit_login = findViewById(R.id.commit_login);
         mail_field = findViewById(R.id.Email_field);
         password_field = findViewById(R.id.password);
         full_name_field = findViewById(R.id.full_name);
-
         //Listeners
         back.setOnClickListener(this);
         commit_login.setOnClickListener(this);
@@ -76,23 +69,20 @@ public class SignUp_Activity extends AppCompatActivity implements View.OnClickLi
             case R.id.back_home1:
                 finish(); // Finish current activity
                 break;
-
             case R.id.commit_login:
-
                 //LOGIN();
                 createUser();
-
                 break;
-
             default:
                 break;
         }
     }
 
-    private void LOGIN(){
-        Intent i= new Intent(this,My_Groups_Activity.class);
+    private void LOGIN() {
+        Intent i = new Intent(this, My_Groups_Activity.class);
         startActivity(i);
     }
+
     // create user function
     private void createUser() {
 
@@ -127,13 +117,13 @@ public class SignUp_Activity extends AppCompatActivity implements View.OnClickLi
                         Toast.makeText(SignUp_Activity.this, "User registered successfully", Toast.LENGTH_SHORT).show();
 
 
-                        UserID=mAuth.getCurrentUser().getUid();
-                        User user=new User(full_name,email,password,regTK,0);
+                        UserID = mAuth.getCurrentUser().getUid();
+                        User user = new User(full_name, email, password, regTK, 0);
 
-                        database= FirebaseDatabase.getInstance().getReference();
+                        database = FirebaseDatabase.getInstance().getReference();
                         database.child("Users").child(UserID).setValue(user);
-                        database.child("Users").child(UserID).child("regTK").setValue(regTK);
-                        Intent i= new Intent(SignUp_Activity.this,LogIn_Activity.class);
+                        //database.child("Users").child(UserID).child("regTK").setValue(regTK);
+                        Intent i = new Intent(SignUp_Activity.this, LogIn_Activity.class);
                         i.putExtra("Registration Token", regTK);
                         startActivity(i);
                     } else {
