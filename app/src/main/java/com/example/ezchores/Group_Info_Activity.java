@@ -66,9 +66,6 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
     private ArrayList<Integer> checkboxStates = new ArrayList<>();
 
 
-    // DB
-    private DatabaseReference ref;
-
     // handle change of pic initialisation
     private static final int REQUEST_TAKE_PHOTO = 1;
     private static final int REQUEST_SELECT_PICTURE = 2;
@@ -288,15 +285,14 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
                                         }
                                     }
                                     updateUI();
-                                    startActivity(i);
+                                    //startActivity(i);
                                 }
                             });
                             builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-
                                     System.out.println("The user choose to not remove the specified users");
-                                    startActivity(i);
+                                    //tartActivity(i);
                                 }
                             });
                             AlertDialog alertDialog = builder.create();
