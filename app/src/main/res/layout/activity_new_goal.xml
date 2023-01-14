@@ -83,9 +83,8 @@
             android:layout_height="wrap_content"
             android:background="@drawable/round_button"
             android:layout_margin="20dp"
-            android:tint="@color/bg"
             android:src="@drawable/refresh_icon"
-            />
+            app:tint="@color/bg" />
     </LinearLayout>
 
     <LinearLayout
