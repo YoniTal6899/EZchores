@@ -69,6 +69,7 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
     ArrayList<String> KeyList = new ArrayList<>();
     private ArrayList<Integer> checkboxStates = new ArrayList<>();
 
+
     // handle change of pic initialisation
     private static final int REQUEST_TAKE_PHOTO = 1;
     private static final int REQUEST_SELECT_PICTURE = 2;
@@ -94,6 +95,7 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
         curr_userPoints = Integer.parseInt(args.split(",")[2]);
         groupName=args.split(",")[1];
         group_name.setText(groupName);
+
         //Init widgets
 
         back = (AppCompatButton) findViewById(R.id.to_gr);
@@ -152,6 +154,7 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
                         );
 
                         memberList.setAdapter(FriendsDisplayArr);
+
 
 
                         refImage.addValueEventListener(new ValueEventListener() {

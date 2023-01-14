@@ -62,6 +62,7 @@ public class Group_User_Activity extends AppCompatActivity implements View.OnCli
         GroupID = args.split(",")[0];
         groupName=args.split(",")[2];
         groupn = (TextView) findViewById(R.id.group_name);
+
         groupn.setText(groupName);
 
         // Init of the .xml file
@@ -125,6 +126,7 @@ public class Group_User_Activity extends AppCompatActivity implements View.OnCli
             public void onComplete(@NonNull Task<HttpsCallableResult> task) {
                 if (task.isSuccessful()) {
                     if (task.isComplete()) {
+
                         String userGoals = (String) task.getResult().getData();
                         HashMap<String, JsonNode> data = jsonListToHashMap(userGoals,'g');
                         System.out.println("*******************************************************");

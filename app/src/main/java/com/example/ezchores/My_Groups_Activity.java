@@ -98,13 +98,17 @@ public class My_Groups_Activity extends Activity implements View.OnClickListener
 
                                 if(isAdmin.equals("true")){
                                     Intent groups2admin = new Intent(My_Groups_Activity.this, Group_Admin_Activity.class);
+
                                     groups2admin.putExtra("ARGS", listGroupid.get(position)+","+current_points+","+listGroupname.get(position));
+
                                     Toast.makeText(My_Groups_Activity.this, "admin permission", Toast.LENGTH_SHORT).show();
                                     startActivity(groups2admin);
                                 }
                                 else{
                                     Intent groups2user = new Intent(My_Groups_Activity.this, Group_User_Activity.class);
+
                                     groups2user.putExtra("ARGS", listGroupid.get(position)+","+current_points+","+listGroupname.get(position));
+
                                     Toast.makeText(My_Groups_Activity.this, "user permission", Toast.LENGTH_SHORT).show();
                                     startActivity(groups2user);
                                 }

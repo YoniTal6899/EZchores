@@ -163,6 +163,7 @@ public class Group_Admin_Activity extends AppCompatActivity implements View.OnCl
     @Override
     public void onClick(View v) {
         String id_name = GroupID + "," + groupName+","+curr_userPoints;
+
         switch (v.getId()) {
             case R.id.back_to_groups:
                 Intent i = new Intent(this, My_Groups_Activity.class);
