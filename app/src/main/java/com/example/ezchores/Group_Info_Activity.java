@@ -95,6 +95,7 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
         curr_userPoints = Integer.parseInt(args.split(",")[2]);
         groupName=args.split(",")[1];
         group_name.setText(groupName);
+
         //Init widgets
 
         back = (AppCompatButton) findViewById(R.id.to_gr);
