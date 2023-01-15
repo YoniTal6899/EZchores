@@ -66,8 +66,6 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
     private ArrayList<Integer> checkboxStates = new ArrayList<>();
 
 
-    // DB
-    private DatabaseReference ref;
 
     // handle change of pic initialisation
     private static final int REQUEST_TAKE_PHOTO = 1;
@@ -86,14 +84,12 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
         setContentView(R.layout.activity_group_info);
 
         String args = (String) getIntent().getSerializableExtra("ARGS");
-        System.out.println("*************************************");
-        System.out.println("Group name " + args);
-        System.out.println("*************************************");
+        System.out.println("GIA- CONTENT OF ARGS : "+ args);
         ref = FirebaseDatabase.getInstance().getReference();
         groupID = args.split(",")[0];
         group_name = (TextView) findViewById(R.id.group_name);
-        curr_userPoints = Integer.parseInt(args.split(",")[2]);
-        groupName=args.split(",")[1];
+        curr_userPoints = Integer.parseInt(args.split(",")[1]);
+        groupName=args.split(",")[2];
         group_name.setText(groupName);
 
         //Init widgets
@@ -105,6 +101,7 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
         group_photo = (ImageView) findViewById(R.id.group_photo);
         add_mem = (FloatingActionButton) findViewById(R.id.add_member);
         memberList = (ListView) findViewById(R.id.view_memberAsList);
+        memberList.setVerticalScrollBarEnabled(true);
         //Listeners
         back.setOnClickListener(this);
         apply.setOnClickListener(this);
@@ -238,31 +235,27 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.to_gr:
-                Intent myGroups = new Intent(this, My_Groups_Activity.class);
-                myGroups.putExtra("ID_name", groupID + "," + groupName);
+                Intent myGroups = new Intent(this, Group_Admin_Activity.class);
+                myGroups.putExtra("ARGS", groupID + "," + curr_userPoints+ "," + groupName );
                 startActivity(myGroups);
                 break;
 
             case R.id.apply_group_changes:
                 // Needs to save the new group info [name, icon
+                Intent i = new Intent(this, Group_Info_Activity.class);
 
                 String N = new_name.getText().toString();
-                if (N != null) {
+                if (!N.equals("")) {
                     updateName(N);
-                    Intent i = new Intent(this, Group_Admin_Activity.class);
                     i.putExtra("ARGS", groupID + "," + curr_userPoints+","+N);
-                    startActivity(i);
                 } else {
-                    Intent i = new Intent(this, Group_Admin_Activity.class);
                     i.putExtra("ARGS", groupID + "," +curr_userPoints+","+groupName);
-                    startActivity(i);
-                    Toast.makeText(Group_Info_Activity.this, "on click Something went wrong :(", Toast.LENGTH_SHORT).show();
                 }
                 // there was adding into the remove list
                 if (!isFilledZero(FriendsDisplayArr.getCheckBox())) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
+//                    runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
                             // Code for creating and showing the AlertDialog
                             AlertDialog.Builder builder = new AlertDialog.Builder(Group_Info_Activity.this);
                             builder.setTitle("Remove");
@@ -287,8 +280,7 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
                                             }
                                         }
                                     }
-                                    updateUI();
-                                    //startActivity(i);
+                                    startActivity(i);
 
                                 }
                             });
@@ -296,15 +288,15 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     System.out.println("The user choose to not remove the specified users");
-                                    //tartActivity(i);
-
+                                    startActivity(i);
                                 }
                             });
                             AlertDialog alertDialog = builder.create();
                             alertDialog.show();
-                        }
-                    });
+//                        }
+//                    });
                 }
+//                startActivity(i);
                 break;
 
             case R.id.add_member:
@@ -329,7 +321,7 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
 
                 for (String friendId : list.keySet()) {
                     ref.child("Users").child(friendId).child("Groups").child(groupID).setValue(newname);
-                    Toast.makeText(Group_Info_Activity.this, "group name has changed...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Group_Info_Activity.this, "Changing name succeed", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -345,7 +337,7 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
 
     private void updateUI() {
         Intent intent = new Intent(this, Group_Info_Activity.class);
-        intent.putExtra("ID_name", groupID + "," + groupName);
+        intent.putExtra("ARGS", groupID + "," + curr_userPoints +"," + groupName);
         startActivity(intent);
     }
 
@@ -441,6 +433,7 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
                         Toast.makeText(Group_Info_Activity.this, "Member doesn't exist :(", Toast.LENGTH_SHORT).show();
                     }
                 } catch (Exception e) {
+                    System.out.println(e);
                     Toast.makeText(Group_Info_Activity.this, "Something went wrong :(", Toast.LENGTH_SHORT).show();
                 }
             }

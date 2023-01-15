@@ -69,6 +69,8 @@ public class Group_User_Activity extends AppCompatActivity implements View.OnCli
         to_gr = (AppCompatButton) findViewById(R.id.back_to_groups);
         task_list = (ListView) findViewById(R.id.tasks_list);
         goals_list = (ListView) findViewById(R.id.goals_list);
+        task_list.setVerticalScrollBarEnabled(true);
+        goals_list.setVerticalScrollBarEnabled(true);
         // Listeners
         to_gr.setOnClickListener(this);
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -108,7 +110,7 @@ public class Group_User_Activity extends AppCompatActivity implements View.OnCli
                                     ref.child("Users").child(userId).child("curr_points").setValue(new_points);
                                     Toast.makeText(Group_User_Activity.this, "Successfully completed task:" + tasks_names.get(i), Toast.LENGTH_SHORT).show();
                                     Intent user2user = new Intent(Group_User_Activity.this, Group_User_Activity.class);
-                                    user2user.putExtra("ARGS", GroupID + "," + new_points);
+                                    user2user.putExtra("ARGS", GroupID + "," + new_points + ","+groupName);
                                     startActivity(user2user);
                                 }
                             });
@@ -182,7 +184,7 @@ public class Group_User_Activity extends AppCompatActivity implements View.OnCli
         switch (v.getId()) {
             case R.id.back_to_groups:
                 Intent i = new Intent(this, My_Groups_Activity.class);
-                i.putExtra("ID_name", GroupID + "," + groupName);
+                i.putExtra("ARGS", GroupID + "," + curr_userPoints+ "," + groupName);
                 startActivity(i);
                 break;
             default:

@@ -231,7 +231,8 @@ public class Personal_Info_Activity extends AppCompatActivity implements View.On
         userKey.child("image").setValue(ImageString).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-                Toast.makeText(Personal_Info_Activity.this, "Image Stored", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(Personal_Info_Activity.this, "Image Stored", Toast.LENGTH_SHORT).show();
+                System.out.println("The new Image was Stored");
             }
         });
     }

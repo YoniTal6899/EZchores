@@ -59,6 +59,7 @@ public class My_Groups_Activity extends Activity implements View.OnClickListener
         personal_info = (AppCompatButton) findViewById(R.id.personal_info);
         firebaseAuth = FirebaseAuth.getInstance();
         listview = findViewById(R.id.listview);
+        listview.setVerticalScrollBarEnabled(true);
         UserId = firebaseAuth.getCurrentUser().getUid();
         List<String> listGroupid = new ArrayList<>();
         List<String> listGroupname = new ArrayList<>();
@@ -92,7 +93,8 @@ public class My_Groups_Activity extends Activity implements View.OnClickListener
                         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-                                Toast.makeText(My_Groups_Activity.this, "you click group name:" + listGroupname.get(position), Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(My_Groups_Activity.this, "you click group name:" + listGroupname.get(position), Toast.LENGTH_SHORT).show();
+                                System.out.println("Clicked group Name :"+listGroupname.get(position));
                                 String GroupId= listGroupid.get(position);
                                 String isAdmin= data.get(GroupId).get("isAdmin").toString();
 
@@ -101,7 +103,8 @@ public class My_Groups_Activity extends Activity implements View.OnClickListener
 
                                     groups2admin.putExtra("ARGS", listGroupid.get(position)+","+current_points+","+listGroupname.get(position));
 
-                                    Toast.makeText(My_Groups_Activity.this, "admin permission", Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(My_Groups_Activity.this, "admin permission", Toast.LENGTH_SHORT).show();
+                                    System.out.println("The user level is admin");
                                     startActivity(groups2admin);
                                 }
                                 else{
@@ -109,7 +112,8 @@ public class My_Groups_Activity extends Activity implements View.OnClickListener
 
                                     groups2user.putExtra("ARGS", listGroupid.get(position)+","+current_points+","+listGroupname.get(position));
 
-                                    Toast.makeText(My_Groups_Activity.this, "user permission", Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(My_Groups_Activity.this, "user permission", Toast.LENGTH_SHORT).show();
+                                    System.out.println("the user level is regular-user");
                                     startActivity(groups2user);
                                 }
                             }
