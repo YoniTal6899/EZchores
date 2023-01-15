@@ -32,6 +32,7 @@ public class New_Task_Acitivty extends AppCompatActivity implements View.OnClick
     ImageView refreshUsers;
 
     String groupID,groupName;
+    int curr_userPoints;
 
     //DB
     DatabaseReference ref;
@@ -46,9 +47,9 @@ public class New_Task_Acitivty extends AppCompatActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_task_acitivty);
         String args = (String) getIntent().getSerializableExtra("ARGS");
-        int curr_userPoints = Integer.parseInt(args.split(",")[2]);
+        curr_userPoints = Integer.parseInt(args.split(",")[1]);
         groupID = args.split(",")[0];
-        groupName=args.split(",")[1];
+        groupName=args.split(",")[2];
         // Init .xml widgets
         back = (AppCompatButton) findViewById(R.id.back_to_groups);
         create = (AppCompatButton) findViewById(R.id.create_task);
@@ -98,7 +99,7 @@ public class New_Task_Acitivty extends AppCompatActivity implements View.OnClick
         switch (v.getId()) {
             case R.id.back_to_groups:
                 Intent BTGR = new Intent(this, Group_Admin_Activity.class);
-                BTGR.putExtra("ID_name",groupID+","+groupName);
+                BTGR.putExtra("ARGS",groupID+","+ curr_userPoints+","+ groupName);
                 startActivity(BTGR);
                 break;
 
@@ -164,7 +165,7 @@ public class New_Task_Acitivty extends AppCompatActivity implements View.OnClick
         ref.child("Users").child(assignID).child("MyTasks").child(taskID).child("isComplete").setValue(false);
         Toast.makeText(New_Task_Acitivty.this, "Task added successfully", Toast.LENGTH_SHORT).show();
         Intent CRG = new Intent(this, Group_Admin_Activity.class);
-        CRG.putExtra("ID_name",groupID+","+groupName);
+        CRG.putExtra("ARGS",groupID+","+curr_userPoints+","+ groupName);
         startActivity(CRG);
     }
 }

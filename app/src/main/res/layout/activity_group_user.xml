@@ -41,6 +41,7 @@
                 android:layout_margin="10dp"
                 android:layout_height="200dp"
                 android:scrollbars="vertical"
+                android:overScrollMode="always"
                 android:background="@drawable/listview_rounded_border" />
 
             <TextView
@@ -61,6 +62,7 @@
         android:layout_height="200dp"
         android:layout_margin="10dp"
         android:scrollbars="vertical"
+        android:overScrollMode="always"
         android:background="@drawable/listview_rounded_border" />
 
 

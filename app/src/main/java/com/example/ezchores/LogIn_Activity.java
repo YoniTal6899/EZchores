@@ -92,7 +92,8 @@ public class LogIn_Activity extends AppCompatActivity implements View.OnClickLis
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
-                        Toast.makeText(LogIn_Activity.this, "User logged in successfully", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(LogIn_Activity.this, "User logged in successfully", Toast.LENGTH_SHORT).show();
+                        System.out.println("The user Logged-In successfully");
                         update_regTK();
                         Intent i = new Intent(LogIn_Activity.this,My_Groups_Activity.class);
                         startActivity(i);

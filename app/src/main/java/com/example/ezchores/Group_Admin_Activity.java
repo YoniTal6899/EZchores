@@ -62,7 +62,7 @@ public class Group_Admin_Activity extends AppCompatActivity implements View.OnCl
         groupName=args.split(",")[2];
         groupn = (TextView) findViewById(R.id.group_name);
         groupn.setText(groupName);
-
+        System.out.println("GAA-CONTENT OF ARGS : "+args);
 
         userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
         group_info = (AppCompatButton) findViewById(R.id.group_info);
@@ -79,6 +79,8 @@ public class Group_Admin_Activity extends AppCompatActivity implements View.OnCl
         add_goal.setOnClickListener(this);
         tasks = (ListView) findViewById(R.id.tasks_list);
         goals = (ListView) findViewById(R.id.goals_list);
+        tasks.setVerticalScrollBarEnabled(true);
+        goals.setVerticalScrollBarEnabled(true);
         Map<String, Object> data = new HashMap<>();
         data.put("groupId", GroupID);
         FirebaseFunctions.getInstance().getHttpsCallable("getAllTasksInGroup").call(data).addOnCompleteListener(new OnCompleteListener<HttpsCallableResult>() {
@@ -88,9 +90,7 @@ public class Group_Admin_Activity extends AppCompatActivity implements View.OnCl
                     if (task.isComplete()) {
                         String userTasks = (String) task.getResult().getData();
                         HashMap<String, JsonNode> data = jsonListToHashMap(userTasks, 't');
-                        System.out.println("*******************************************************");
-                        System.out.println(data.toString());
-                        System.out.println("*******************************************************");
+                        System.out.println("GAA-CONTENT OF TASKS :"+ data.toString());
                         try {
                             for (String TaskID : data.keySet()) {
                                 String TaskName = data.get(TaskID).get("taskName").asText();
@@ -112,14 +112,15 @@ public class Group_Admin_Activity extends AppCompatActivity implements View.OnCl
                                     ref.child("Users").child(userID).child("curr_points").setValue(new_points);
                                     Toast.makeText(Group_Admin_Activity.this, "Successfully completed task:" + tasks_names.get(i), Toast.LENGTH_SHORT).show();
                                     Intent user2user = new Intent(Group_Admin_Activity.this, Group_User_Activity.class);
-                                    user2user.putExtra("ARGS", GroupID + "," + new_points);
+                                    user2user.putExtra("ARGS", GroupID + "," + new_points +","+ groupName);
                                     startActivity(user2user);
                                 }
                             });
 
                         } catch (Exception e) {
                             e.printStackTrace();
-                            Toast.makeText(Group_Admin_Activity.this, "No tasks", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(Group_Admin_Activity.this, "No tasks", Toast.LENGTH_SHORT).show();
+                            System.out.println("GAA-There is no Task");
                         }
                     }
                 }
@@ -132,9 +133,7 @@ public class Group_Admin_Activity extends AppCompatActivity implements View.OnCl
                     if (task.isComplete()) {
                         String userGoals = (String) task.getResult().getData();
                         HashMap<String, JsonNode> data = jsonListToHashMap(userGoals, 'g');
-                        System.out.println("*******************************************************");
-                        System.out.println(data.toString());
-                        System.out.println("*******************************************************");
+                        System.out.println("GAA-CONTENT OF GOALS :"+data.toString());
                         try {
                             for (String GoalID : data.keySet()) {
                                 String GoalName = data.get(GoalID).get("goalName").asText();
@@ -151,7 +150,8 @@ public class Group_Admin_Activity extends AppCompatActivity implements View.OnCl
 
                         } catch (Exception e) {
                             e.printStackTrace();
-                            Toast.makeText(Group_Admin_Activity.this, "No tasks", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(Group_Admin_Activity.this, "No tasks", Toast.LENGTH_SHORT).show();
+                            System.out.println("There is no Task");
                         }
                     }
                 }
@@ -162,7 +162,7 @@ public class Group_Admin_Activity extends AppCompatActivity implements View.OnCl
     // Override the 'onClick' method, divided by button id
     @Override
     public void onClick(View v) {
-        String id_name = GroupID + "," + groupName+","+curr_userPoints;
+        String id_name = GroupID + "," +curr_userPoints+","+groupName;
 
         switch (v.getId()) {
             case R.id.back_to_groups:

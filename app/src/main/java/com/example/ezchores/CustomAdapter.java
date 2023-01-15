@@ -102,7 +102,7 @@ public class CustomAdapter extends BaseAdapter {
             case 'm':
                 view = inflater.inflate(R.layout.activity_member_list_view, null);
                 TextView member_name = (TextView) view.findViewById(R.id.participant_name);
-                FloatingActionButton trash_Icon = (FloatingActionButton) view.findViewById(R.id.trash_icon);
+                FloatingActionButton trash_Icon = (FloatingActionButton) view.findViewById(R.id.trash);
                 member_name.setText(this.content[pos]);
                 return view;
             case 'u':
@@ -123,7 +123,7 @@ public class CustomAdapter extends BaseAdapter {
                         }
                     }
                 });
-                ImageView trash = (ImageView) view.findViewById(R.id.trash_icon);
+                ImageView trash = (ImageView) view.findViewById(R.id.trash);
                 nameTextView.setText(this.content[pos]);
                 return view;
             default:

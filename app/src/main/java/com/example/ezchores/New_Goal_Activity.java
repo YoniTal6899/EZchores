@@ -34,6 +34,7 @@ public class New_Goal_Activity extends AppCompatActivity implements View.OnClick
     ImageView refreshUsers;
 
     String groupID,groupName;
+    String currPts;
 
     //DB
     DatabaseReference ref;
@@ -47,9 +48,10 @@ public class New_Goal_Activity extends AppCompatActivity implements View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_goal);
-        String[] groupInfo = getIntent().getSerializableExtra("ID_name").toString().split(",");
+        String[] groupInfo = getIntent().getSerializableExtra("ARGS").toString().split(",");
         groupID = groupInfo[0];
-        groupName = groupInfo[1];
+        groupName = groupInfo[2];
+        currPts = groupInfo[1];
         // Init .xml widgets
         back = (AppCompatButton) findViewById(R.id.back_to_groups);
         create = (AppCompatButton) findViewById(R.id.create_goal);
@@ -99,7 +101,7 @@ public class New_Goal_Activity extends AppCompatActivity implements View.OnClick
         switch (v.getId()) {
             case R.id.back_to_groups:
                 Intent i = new Intent(this, Group_Admin_Activity.class);
-                i.putExtra("ID_name",groupID+","+groupName);
+                i.putExtra("ARGS",groupID+","+ currPts + ","+groupName);
                 startActivity(i);
                 break;
 
@@ -166,7 +168,7 @@ public class New_Goal_Activity extends AppCompatActivity implements View.OnClick
         ref.child("Users").child(assignID).child("MyGoals").child(goalID).child("isComplete").setValue(false);
         Toast.makeText(New_Goal_Activity.this, "Goal added successfully", Toast.LENGTH_SHORT).show();
         Intent CRG = new Intent(this, Group_Admin_Activity.class);
-        CRG.putExtra("ID_name",groupID+","+groupName);
+        CRG.putExtra("ARGS",groupID+","+ currPts +groupName);
         startActivity(CRG);
     }
 
