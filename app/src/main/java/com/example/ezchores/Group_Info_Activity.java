@@ -95,6 +95,7 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
         curr_userPoints = Integer.parseInt(args.split(",")[2]);
         groupName=args.split(",")[1];
         group_name.setText(groupName);
+
         //Init widgets
 
         back = (AppCompatButton) findViewById(R.id.to_gr);
@@ -287,15 +288,16 @@ public class Group_Info_Activity extends AppCompatActivity implements View.OnCli
                                         }
                                     }
                                     updateUI();
-                                    startActivity(i);
+                                    //startActivity(i);
+
                                 }
                             });
                             builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-
                                     System.out.println("The user choose to not remove the specified users");
-                                    startActivity(i);
+                                    //tartActivity(i);
+
                                 }
                             });
                             AlertDialog alertDialog = builder.create();
